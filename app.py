@@ -1,4 +1,4 @@
-# app.py - Versão Revisada
+# app.py - Versão Revisada e Atualizada
 import logging
 import os
 import sys
