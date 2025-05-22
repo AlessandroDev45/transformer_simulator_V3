@@ -1,0 +1,374 @@
+/* assets/custom.css */
+
+/* Estilos personalizados para o simulador */
+
+/* Estilos para campos desabilitados */
+.disabled-field input {
+    background-color: #f9f9f9;
+    cursor: not-allowed;
+}
+
+/* Estilo para campos desabilitados (tema escuro) */
+.disabled-field:disabled {
+    background-color: #2c3034 !important;
+    color: #adb5bd !important;
+    border-color: #495057 !important;
+    opacity: 0.8 !important;
+    cursor: not-allowed !important;
+}
+
+.help-tip {
+    font-size: 0.8rem;
+    color: #777;
+    margin-left: 6px;
+}
+
+/* Estilos para campos calculados automaticamente */
+input:disabled {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    color: #666;
+    cursor: not-allowed;
+}
+
+/* Tema escuro: Estilos para campos desabilitados */
+body:not(.light-theme) input:disabled {
+    background-color: #3a3a3a !important;
+    border: 1px solid #444 !important;
+    color: #aaa !important;
+}
+
+/* Tema escuro: Estilos para texto e elementos de interface */
+body:not(.light-theme) {
+    color: #e0e0e0 !important;
+    background-color: #1a1a1a !important;
+}
+
+body:not(.light-theme) .card {
+    background-color: #2c2c2c !important;
+    border-color: #444 !important;
+}
+
+body:not(.light-theme) .card-header {
+    background-color: #1f1f1f !important;
+    border-color: #444 !important;
+    color: #fff !important;
+}
+
+body:not(.light-theme) input, 
+body:not(.light-theme) select, 
+body:not(.light-theme) textarea {
+    background-color: #3a3a3a !important;
+    border-color: #555 !important;
+    color: #e0e0e0 !important;
+}
+
+body:not(.light-theme) .dropdown-menu {
+    background-color: #2c2c2c !important;
+    border-color: #444 !important;
+}
+
+body:not(.light-theme) .dropdown-item {
+    color: #e0e0e0 !important;
+}
+
+body:not(.light-theme) .dropdown-item:hover {
+    background-color: #3a3a3a !important;
+}
+
+body:not(.light-theme) .table {
+    color: #e0e0e0 !important;
+}
+
+body:not(.light-theme) .table thead th {
+    background-color: #1f1f1f !important;
+    color: #fff !important;
+    border-color: #444 !important;
+}
+
+body:not(.light-theme) .table td {
+    border-color: #444 !important;
+}
+
+body:not(.light-theme) .nav-link {
+    color: #e0e0e0 !important;
+}
+
+body:not(.light-theme) .nav-link.active {
+    background-color: #26427A !important;
+    color: #fff !important;
+}
+
+/* Estilos para campos de isolamento */
+.isolation-field {
+    margin-bottom: 10px;
+}
+
+.isolation-field label {
+    font-weight: 500;
+}
+
+/* Estilos para o botão de override */
+.override-checkbox {
+    margin-top: 4px;
+    font-size: 0.8rem;
+}
+
+/* Estilo para checkbox de override (tema escuro) */
+.override-checkbox .form-check-label {
+    color: #adb5bd;
+}
+
+body:not(.light-theme) .override-checkbox .form-check-label {
+    color: #e0e0e0;
+}
+
+/* Estilo para o checkbox quando marcado */
+.override-checkbox input:checked + .form-check-label {
+    color: #00bc8c;
+}
+
+/* Tema claro: Estilos para garantir legibilidade */
+body.light-theme {
+    color: #212529 !important;
+    background-color: #f0f2f5 !important;
+}
+
+body.light-theme .card {
+    background-color: #ffffff !important;
+    border-color: #dee2e6 !important;
+}
+
+body.light-theme .card-header {
+    background-color: #e9ecef !important;
+    border-color: #dee2e6 !important;
+    color: #212529 !important;
+}
+
+body.light-theme input, 
+body.light-theme select, 
+body.light-theme textarea {
+    background-color: #ffffff !important;
+    border-color: #ced4da !important;
+    color: #212529 !important;
+}
+
+body.light-theme .table {
+    color: #212529 !important;
+}
+
+body.light-theme .table thead th {
+    background-color: #26427A !important;
+    color: #ffffff !important;
+    border-color: #dee2e6 !important;
+}
+
+body.light-theme .table td {
+    border-color: #dee2e6 !important;
+}
+
+body.light-theme .nav-link {
+    color: #495057 !important;
+}
+
+body.light-theme .nav-link.active {
+    background-color: #26427A !important;
+    color: #ffffff !important;
+}
+
+/* Estilos para destacar o botão de limpar campos */
+#global-clear-button {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+#global-clear-button:hover {
+    background-color: #e0a800 !important;
+    border-color: #d39e00 !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5) !important;
+}
+
+/* Estilos para o botão de alternar tema */
+.theme-toggle {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Classe de transição para suavizar a mudança de tema */
+.theme-transition {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+}
+
+/* Estilos específicos para garantir que o tema claro seja aplicado corretamente */
+body.light-theme .navbar {
+    background-color: #26427A !important;
+}
+
+body.light-theme .sidebar {
+    background-color: #f8f9fa !important;
+    border-right: 1px solid #dee2e6 !important;
+}
+
+/* Estilos específicos para garantir que o tema escuro seja aplicado corretamente */
+body:not(.light-theme) .navbar {
+    background-color: #1f1f1f !important;
+    border-bottom: 1px solid #444 !important;
+}
+
+body:not(.light-theme) .sidebar {
+    background-color: #2c2c2c !important;
+    border-right: 1px solid #444 !important;
+}
+
+/* Estilos para destacar o botão de limpar campos quando ativo */
+#global-clear-button:active, 
+#global-clear-button:focus {
+    background-color: #d39e00 !important;
+    border-color: #c69500 !important;
+    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5) !important;
+}
+
+/* Correções específicas para o tema escuro */
+body:not(.light-theme) .btn-primary {
+    background-color: #26427A !important;
+    border-color: #1d325d !important;
+    color: #FFFFFF !important;
+}
+
+body:not(.light-theme) .btn-primary:hover {
+    background-color: #345694 !important;
+    border-color: #26427A !important;
+}
+
+body:not(.light-theme) .btn-secondary {
+    background-color: #444 !important;
+    border-color: #333 !important;
+    color: #FFFFFF !important;
+}
+
+body:not(.light-theme) .btn-secondary:hover {
+    background-color: #555 !important;
+    border-color: #444 !important;
+}
+
+body:not(.light-theme) .btn-warning {
+    color: #212529 !important;
+}
+
+body:not(.light-theme) .modal-content {
+    background-color: #2c2c2c !important;
+    border-color: #444 !important;
+    color: #e0e0e0 !important;
+}
+
+body:not(.light-theme) .modal-header {
+    background-color: #1f1f1f !important;
+    border-color: #444 !important;
+    color: #FFFFFF !important;
+}
+
+body:not(.light-theme) .modal-footer {
+    border-color: #444 !important;
+}
+
+body:not(.light-theme) .close {
+    color: #e0e0e0 !important;
+    text-shadow: none !important;
+}
+
+body:not(.light-theme) .close:hover {
+    color: #FFFFFF !important;
+}
+
+/* Correções específicas para o tema claro */
+body.light-theme .btn-primary {
+    background-color: #26427A !important;
+    border-color: #1d325d !important;
+    color: #FFFFFF !important;
+}
+
+body.light-theme .btn-primary:hover {
+    background-color: #345694 !important;
+    border-color: #26427A !important;
+}
+
+/* Correções para elementos específicos */
+body:not(.light-theme) .dcc-graph {
+    background-color: #2c2c2c !important;
+}
+
+body:not(.light-theme) .dash-table-container {
+    background-color: #2c2c2c !important;
+}
+
+body:not(.light-theme) .dash-spreadsheet-container {
+    background-color: #2c2c2c !important;
+}
+
+body:not(.light-theme) .dash-spreadsheet-inner th {
+    background-color: #1f1f1f !important;
+    color: #FFFFFF !important;
+}
+
+body:not(.light-theme) .dash-spreadsheet-inner td {
+    background-color: #2c2c2c !important;
+    color: #e0e0e0 !important;
+}
+
+/* Correções para tooltips e popovers */
+body:not(.light-theme) .tooltip-inner {
+    background-color: #1f1f1f !important;
+    color: #e0e0e0 !important;
+}
+
+body:not(.light-theme) .popover {
+    background-color: #2c2c2c !important;
+    border-color: #444 !important;
+}
+
+body:not(.light-theme) .popover-header {
+    background-color: #1f1f1f !important;
+    border-color: #444 !important;
+    color: #FFFFFF !important;
+}
+
+body:not(.light-theme) .popover-body {
+    color: #e0e0e0 !important;
+}
+
+/* Correções para alertas */
+body:not(.light-theme) .alert {
+    background-color: #2c2c2c !important;
+    border-color: #444 !important;
+    color: #e0e0e0 !important;
+}
+
+body:not(.light-theme) .alert-success {
+    background-color: rgba(40, 167, 69, 0.2) !important;
+    border-color: rgba(40, 167, 69, 0.4) !important;
+    color: #28a745 !important;
+}
+
+body:not(.light-theme) .alert-danger {
+    background-color: rgba(220, 53, 69, 0.2) !important;
+    border-color: rgba(220, 53, 69, 0.4) !important;
+    color: #dc3545 !important;
+}
+
+body:not(.light-theme) .alert-warning {
+    background-color: rgba(255, 193, 7, 0.2) !important;
+    border-color: rgba(255, 193, 7, 0.4) !important;
+    color: #ffc107 !important;
+}
+
+body:not(.light-theme) .alert-info {
+    background-color: rgba(0, 191, 255, 0.2) !important;
+    border-color: rgba(0, 191, 255, 0.4) !important;
+    color: #00BFFF !important;
+}
