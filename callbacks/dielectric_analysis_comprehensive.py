@@ -9,10 +9,12 @@ import dash_bootstrap_components as dbc
 from dash import Input, Output, State, callback, html, no_update
 from dash.exceptions import PreventUpdate
 
-from components.ui_elements import create_comparison_table
+COLORS = {
+    "primary": "#26427A",
+    "accent": "#007BFF",
+}
 
 # Importar estilos padronizados
-from layouts import COLORS
 from utils.mcp_utils import patch_mcp  # Importar função patch_mcp
 
 
@@ -31,6 +33,31 @@ def safe_float_convert(value, default=0.0):
 
 
 log = logging.getLogger(__name__)
+
+
+# --- Local implementation of create_comparison_table (was missing) ---
+def create_comparison_table(title, nbr_data, ieee_data):
+    import dash_bootstrap_components as dbc
+    from dash import html
+    # Simple two-column comparison table
+    rows = []
+    all_keys = set(nbr_data.keys()) | set(ieee_data.keys())
+    for key in all_keys:
+        rows.append(
+            html.Tr([
+                html.Td(key, style={"fontWeight": "bold"}),
+                html.Td(nbr_data.get(key, "-")),
+                html.Td(ieee_data.get(key, "-") if ieee_data else "-")
+            ])
+        )
+    return dbc.Table([
+        html.Thead(html.Tr([
+            html.Th("Parâmetro"),
+            html.Th("NBR/IEC"),
+            html.Th("IEEE")
+        ])),
+        html.Tbody(rows)
+    ], bordered=True, hover=True, size="sm", className="mb-3")
 
 
 # --- Helper Functions ---

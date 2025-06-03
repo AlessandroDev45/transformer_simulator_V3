@@ -12,12 +12,19 @@ from dash import Input, Output, State, ctx, html, no_update
 from dash.exceptions import PreventUpdate
 
 from app_core.calculations import calculate_impedance_variation, calculate_short_circuit_params
-from config import colors  # Importar cores para estilos de status
+from utils.elec import safe_float
+
+COLORS = {
+    "pass": "#198754",
+    "fail": "#dc3545",
+    "warning": "#ffc107",
+    "primary": "#26427A",
+    "accent": "#007BFF",
+}
 
 # Importações da aplicação
 # Não importar app diretamente para evitar importações circulares
 from utils import constants  # Para limites de variação de impedância
-from utils.callback_helpers import safe_float
 from utils.mcp_utils import patch_mcp  # Importar função patch_mcp
 from utils.store_diagnostics import convert_numpy_types
 from components.validators import validate_dict_inputs  # Para validação
@@ -36,17 +43,17 @@ BASE_STATUS_STYLE = {
 # Define specific status styles by merging base with colors
 PASS_STYLE = {
     **BASE_STATUS_STYLE,
-    "color": colors.get("pass", "#198754"),
+    "color": COLORS.get("pass", "#198754"),
     "backgroundColor": "#d1e7dd",
 }  # Green text, light green bg
 FAIL_STYLE = {
     **BASE_STATUS_STYLE,
-    "color": colors.get("fail", "#dc3545"),
+    "color": COLORS.get("fail", "#dc3545"),
     "backgroundColor": "#f8d7da",
 }  # Red text, light red bg
 WARNING_STYLE = {
     **BASE_STATUS_STYLE,
-    "color": colors.get("warning", "#ffc107"),
+    "color": COLORS.get("warning", "#ffc107"),
     "backgroundColor": "#fff3cd",
 }  # Yellow text, light yellow bg
 
@@ -243,8 +250,8 @@ def register_short_circuit_callbacks(app_instance):
                     color="Tipo",
                     title=f"Variação da Impedância vs Limite ({limit_text})",
                     color_discrete_map={
-                        "Medido": colors.get("primary", "royalblue"),
-                        "Limite": colors.get("fail", "firebrick"),
+                        "Medido": COLORS.get("primary", "royalblue"),
+                        "Limite": COLORS.get("fail", "firebrick"),
                     },
                     text="Valor (%)",
                     height=300,
@@ -558,8 +565,8 @@ def register_short_circuit_callbacks(app_instance):
                     color="Tipo",
                     title=f"Variação da Impedância vs Limite ({limit_text})",
                     color_discrete_map={
-                        "Medido": colors.get("primary", "royalblue"),
-                        "Limite": colors.get("fail", "firebrick"),
+                        "Medido": COLORS.get("primary", "royalblue"),
+                        "Limite": COLORS.get("fail", "firebrick"),
                     },
                     text="Valor (%)",
                     height=300,
@@ -645,3 +652,7 @@ def register_short_circuit_callbacks(app_instance):
                 style={"color": "red", "fontSize": "0.7rem"},
             )
             return None, None, None, "-", empty_fig, error_msg, no_update
+
+# Adicionar proteção de execução
+if __name__ == "__main__":
+    app.run_server(debug=True)

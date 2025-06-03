@@ -16,7 +16,9 @@ O Transformer Test Simulator é uma aplicação modular para simulação e anál
 - **Função**: Fonte única da verdade para todos os dados básicos do transformador
 - **Armazenamento**: `transformer-inputs-store`
 - **Responsabilidades**:
-  - Coleta de informações fundamentais (potência, tensões, conexões)
+  - Coleta de informações fundamentais (potência, tensões, conexões, pesos, etc.)
+  - Validação de dados de entrada
+
   - Cálculo de correntes nominais
   - Propagação de dados para outros módulos
 
@@ -29,7 +31,7 @@ O Transformer Test Simulator é uma aplicação modular para simulação e anál
   - Cálculo de corrente de excitação
   - Cálculo de potência magnética
   - Cálculo de tensão de curto-circuito
-  - Análise de eficiência em diferentes condições de carga
+  - Análise de corrente do EPS
 
 ### 3. Impulse (Impulso)
 - **Função**: Simulação de ensaios de impulso

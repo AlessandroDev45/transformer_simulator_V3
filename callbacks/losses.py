@@ -1,4 +1,5 @@
 # callbacks/losses.py
+
 import datetime
 import itertools
 import logging
@@ -10,22 +11,54 @@ import numpy as np
 import pandas as pd
 from dash import Input, Output, State, html, no_update, ctx
 from dash.exceptions import PreventUpdate
+from typing import Any, Optional
 
-from app import app
-from config import (
-    CARD_HEADER_STYLE,
-    ERROR_STYLE,
-    PLACEHOLDER_STYLE,
-    TABLE_HEADER_STYLE_MD,
-    TABLE_HEADER_STYLE_SM,
-    TABLE_PARAM_STYLE_MD,
-    TABLE_PARAM_STYLE_SM,
-    TABLE_STATUS_STYLE,
-    TABLE_VALUE_STYLE_MD,
-    TABLE_VALUE_STYLE_SM,
-    TABLE_WRAPPER_STYLE,
-)
-from config import colors as CONFIG_COLORS
+from app import app  # Garante que app está disponível
+from app_core.transformer_mcp_enhanced import TransformerMCPEnhanced # Importar o tipo correto
+# Garante que mcp está disponível corretamente
+mcp: Optional[TransformerMCPEnhanced] = getattr(app, "mcp", None) # Adicionar anotação de tipo com Optional
+# --- Local Style Constants (fallbacks) ---
+CARD_HEADER_STYLE = {"fontSize": "0.85rem", "fontWeight": "bold", "color": "#f8f9fa"}
+ERROR_STYLE = {"color": "#dc3545", "fontWeight": "bold", "padding": "1rem", "textAlign": "center"}
+PLACEHOLDER_STYLE = {"fontSize": "0.75rem", "color": "#6c757d", "textAlign": "center", "height": "100%", "display": "flex", "alignItems": "center", "justifyContent": "center"}
+TABLE_HEADER_STYLE_MD = {"fontSize": "0.85rem", "fontWeight": "bold", "backgroundColor": "#495057", "color": "#f8f9fa"}
+TABLE_HEADER_STYLE_SM = {"fontSize": "0.75rem", "fontWeight": "bold", "backgroundColor": "#495057", "color": "#f8f9fa"}
+TABLE_PARAM_STYLE_MD = {"fontSize": "0.85rem", "color": "#f8f9fa"}
+TABLE_PARAM_STYLE_SM = {"fontSize": "0.75rem", "color": "#f8f9fa"}
+TABLE_STATUS_STYLE = {"fontSize": "0.75rem", "fontWeight": "bold", "color": "#f8f9fa"}
+TABLE_VALUE_STYLE_MD = {"fontSize": "0.85rem", "color": "#f8f9fa"}
+TABLE_VALUE_STYLE_SM = {"fontSize": "0.75rem", "color": "#f8f9fa"}
+TABLE_WRAPPER_STYLE = {"padding": "0.5rem", "backgroundColor": "#343a40", "borderRadius": "4px"}
+
+# --- Local Style Dictionaries for Table/Component Styles ---
+COLORS = {
+    "border": "#495057",
+    "border_strong": "#343a40",
+    "border_light": "#6c757d",
+    "background_header": "#495057",
+    "background_faint": "#343a40",
+    "background_card": "#343a40",
+    "text_header": "#f8f9fa",
+    "danger": "#dc3545",
+}
+COMPONENTS = {
+    "card": {"backgroundColor": "#343a40", "border": "1px solid #495057", "borderRadius": "4px"},
+    "card_header": {"backgroundColor": "#495057", "padding": "0.5rem 1rem", "borderBottom": "1px solid #495057"},
+    "card_body": {"padding": "1rem"},
+}
+# Add fallback CONFIG_COLORS for status colors used in losses.py
+CONFIG_COLORS = {
+    # Danger/Warning/OK/Info backgrounds and text (dark theme defaults)
+    "danger_bg": "#5c1c1c",
+    "danger_bg_faint": "rgba(220, 53, 69, 0.3)",
+    "danger_text": "#f8d7da",
+    "warning_bg_faint": "rgba(255, 193, 7, 0.3)",
+    "warning_high_bg_faint": "rgba(255, 165, 0, 0.3)",
+    "warning_text": "#fff3cd",
+    "ok_bg_faint": "rgba(40, 167, 69, 0.3)",
+    "ok_text": "#d1e7dd",
+    "info_bg_faint": "rgba(0, 191, 255, 0.2)",
+}
 from utils.constants import (
     CAPACITORS_BY_VOLTAGE,
     CS_SWITCHES_BY_VOLTAGE_MONO,
@@ -40,15 +73,20 @@ from utils.constants import (
     perdas_nucleo_data,
     potencia_magnet_data,
 )
-
 # Importar funções de utilidade para stores
 from utils.store_diagnostics import convert_numpy_types
+from utils.mcp_utils import patch_mcp
+
+# Verificar se o atributo mcp está disponível
+if not hasattr(app, 'mcp'):
+    raise AttributeError("O atributo 'mcp' não está disponível no app.")
 
 # Importar estilos do módulo centralizado
-from utils.styles import COLORS, COMPONENTS, TYPOGRAPHY
+# from utils.styles import COLORS, COMPONENTS, TYPOGRAPHY
 
 # Importações da aplicação
 from components.validators import validate_dict_inputs
+# from utils.components import create_input_row # Adicionado import para create_input_row
 
 log = logging.getLogger(__name__)
 
@@ -79,46 +117,6 @@ try:
 except Exception as e:
     log.error(f"Erro criando DataFrames: {e}")
     df_potencia_magnet, df_perdas_nucleo = pd.DataFrame(), pd.DataFrame()
-
-
-# Helpers
-def create_input_row(label, id, placeholder, input_type="number"):
-    """Creates a standard input row with label."""
-    label_style = TYPOGRAPHY.get(
-        "label", {"fontSize": "0.65rem", "fontWeight": "bold", "color": COLORS["text_light"]}
-    )
-    input_base_style = COMPONENTS.get(
-        "input",
-        {
-            "fontSize": "0.7rem",
-            "color": COLORS["text_light"],
-            "backgroundColor": COLORS["background_input"],
-            "border": f"1px solid {COLORS['border']}",
-        },
-    )
-    final_input_style = {
-        **input_base_style,
-        "height": "26px",
-        "padding": "0.15rem 0.3rem",
-        "width": "75%",
-    }
-    return dbc.Row(
-        [
-            dbc.Col(dbc.Label(label, style=label_style), width=9, className="text-end pe-1"),
-            dbc.Col(
-                dbc.Input(
-                    type=input_type,
-                    id=id,
-                    placeholder=placeholder,
-                    persistence=True,
-                    persistence_type="local",
-                    style=final_input_style,
-                ),
-                width=3,
-            ),
-        ],
-        className="g-1 mb-1",
-    )
 
 
 # --- Render Functions (Assumed to be in layouts/losses.py) ---
@@ -252,7 +250,7 @@ def losses_populate_carga_inputs(active_tab, losses_data_from_store):
     if active_tab != "tab-carga":
         raise PreventUpdate
 
-    # Tentar usar os dados do store primeiro
+    
     # Tentar usar os dados do store primeiro
     losses_data = losses_data_from_store
 
@@ -300,6 +298,10 @@ def losses_populate_carga_inputs(active_tab, losses_data_from_store):
 
 # --- Callback para atualizar o painel de informações do transformador na página de perdas ---
 # --- Callback Perdas em Vazio (Unchanged from previous version) ---
+# Adicionar gravação de dados com patch_mcp
+# Exemplo de uso:
+# patch_mcp("losses-store", data, app)
+
 @dash.callback(
     [
         Output("parametros-gerais-card-body", "children"),
@@ -319,7 +321,7 @@ def losses_populate_carga_inputs(active_tab, losses_data_from_store):
             "corrente-excitacao-1-1",
             "corrente-excitacao-1-2",
         ]
-    ] + [State("losses-store", "data")],  # Adicionado State do losses-store
+    ] + [State("losses-store", "data")],
     prevent_initial_call=True,
 )
 def losses_handle_perdas_vazio(
@@ -349,7 +351,7 @@ def losses_handle_perdas_vazio(
     initial_legend_obs = html.Div()
 
     # Verificar se o MCP está disponível
-    if not hasattr(app, "mcp") or app.mcp is None:
+    if not hasattr(app, "mcp") or app.mcp is None: # type: ignore
         error_div = html.Div(
             "MCP não disponível. Não é possível processar os dados.", style=ERROR_STYLE
         )
@@ -365,7 +367,7 @@ def losses_handle_perdas_vazio(
         return error_div, initial_dut_volt, initial_sut, initial_legend_obs, no_update
 
     # Obter dados do transformador do MCP
-    transformer_data = app.mcp.get_data("transformer-inputs-store")
+    transformer_data = mcp.get_data("transformer-inputs-store") if mcp is not None else None
     if not transformer_data:
         log.error("Dados básicos do transformador não encontrados no MCP.")
         error_div = html.Div("Dados básicos do transformador não encontrados.", style=ERROR_STYLE)
@@ -612,7 +614,7 @@ def losses_handle_perdas_vazio(
             ] = potencia_ensaio_1_2pu_projeto_kva
 
         # --- SUT/EPS Analysis (Vazio - Simple Reflection) ---
-        sut_analysis_data = {"1.0": None, "1.1": None, "1.2": None}
+        sut_analysis_data: dict[str, dict[str, str | list[Any]] | None] = {"1.0": None, "1.1": None, "1.2": None}
         for pu_level in ["1.0", "1.1", "1.2"]:
             V_teste_dut_lv_kv, I_exc_dut_lv = (None, None)
             if pu_level == "1.0":
@@ -638,7 +640,7 @@ def losses_handle_perdas_vazio(
             taps_sut_hv = np.arange(tensao_sut_at_min, tensao_sut_at_max + step_sut_at, step_sut_at)
             taps_sut_hv = taps_sut_hv[taps_sut_hv > epsilon]
             if len(taps_sut_hv) == 0:
-                sut_analysis_data[pu_level] = {"status": "Faixa SUT inválida", "taps_info": []}
+                sut_analysis_data[pu_level] = {"status": "Faixa SUT inválida", "taps_info": []}  # Ensure type matches the annotation
                 continue
 
             taps_adequados = [
@@ -1364,11 +1366,11 @@ def losses_handle_perdas_vazio(
         serializable_data = convert_numpy_types(store_para_salvar, debug_path="losses_vazio_update")
 
         # Armazenar no MCP
-        app.mcp.set_data("losses-store", serializable_data)
+        app.mcp.set_data("losses-store", serializable_data) # type: ignore
         log.critical(f"[LOSSES CALC VAZIO] losses-store atualizado com: {serializable_data.get('resultados_perdas_vazio')}")
 
         # Verificar se os dados foram armazenados corretamente
-        verification_data = app.mcp.get_data("losses-store")
+        verification_data = app.mcp.get_data("losses-store") # type: ignore
         if verification_data and "resultados_perdas_vazio" in verification_data and isinstance(verification_data["resultados_perdas_vazio"], dict) and "perdas_vazio_kw" in verification_data["resultados_perdas_vazio"]:
             log.info(f"[LOSSES CALC VAZIO] Verificação: dados armazenados corretamente no MCP. perdas_vazio_kw = {verification_data['resultados_perdas_vazio'].get('perdas_vazio_kw')}")
         else:
@@ -1398,6 +1400,34 @@ def losses_handle_perdas_vazio(
 
 
 # --- Capacitor Bank Suggestion Helper Functions (Unchanged from previous version) ---
+# Adicionar gravação de dados com patch_mcp
+# patch_mcp("losses-store", losses_data_from_store, app)  # Removed: losses_data_from_store is not defined here
+
+def check_mcp_availability(app):
+    """Verifica se o MCP está disponível."""
+    if not hasattr(app, "mcp") or app.mcp is None:
+        raise ValueError("MCP não disponível.")
+
+def validate_inputs(required_fields, required_transformer_fields, app):
+    """Valida os campos obrigatórios e verifica o MCP."""
+    # Verificar campos obrigatórios
+    if any(field is None for field in required_fields):
+        raise ValueError("Campos obrigatórios ausentes.")
+
+    # Verificar se o MCP está disponível
+    if not hasattr(app, "mcp") or app.mcp is None:
+        raise ValueError("MCP não disponível.")
+
+    return True
+
+def save_losses_data_to_store(current_losses_store_data, app):
+    """Saves losses data to the store using patch_mcp."""
+    patch_mcp("losses-store", current_losses_store_data, app)
+
+# Adicionar proteção de execução
+if __name__ == "__main__":
+    app.run_server(debug=True)
+
 def generate_q_combinations(num_switches=5):
     """Generates all non-empty combinations of Q switch indices (1-based)."""
     q_indices = list(range(1, num_switches + 1))
@@ -1815,7 +1845,7 @@ def calculate_sut_eps_current_compensated(
             "perdas-carga-kw_U_max",
             "temperatura-referencia",
         ]
-    ] + [State("losses-store", "data")],  # Adicionado State do losses-store
+    ] + [State("losses-store", "data")],
     prevent_initial_call=True,
 )
 def losses_handle_perdas_carga(
@@ -1837,6 +1867,9 @@ def losses_handle_perdas_carga(
     if ctx.triggered_id != "calcular-perdas-carga":
         log.warning(f"[losses_handle_perdas_carga] Bloqueando gravação fantasma. Trigger: {ctx.triggered_id}")
         raise PreventUpdate
+
+    # Salvar os dados de perdas no store
+    save_losses_data_to_store(current_losses_store_data, app)
 
     initial_detailed_content = html.Div("Aguardando cálculo...", style=PLACEHOLDER_STYLE)
     error_div = None  # Initialize error div
@@ -3535,7 +3568,7 @@ def losses_handle_perdas_carga(
                     if apply_highlighting and param_type is not None and param_type != "default":
                         try:
                             highlight_style = highlight_cell(
-                                float(value) if value is not None else None, param_type
+                                safe_float(value), param_type # Usar safe_float para garantir tipo numérico
                             )
                         except (ValueError, TypeError):
                             pass  # Ignore highlighting if not numeric

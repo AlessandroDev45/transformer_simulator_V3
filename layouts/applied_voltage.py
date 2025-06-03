@@ -10,29 +10,71 @@ import logging
 import dash_bootstrap_components as dbc
 from dash import dcc, html
 
-from components.help_button import create_help_button
+# Remove broken import for create_help_button and define fallback
+def create_help_button(module_name, tooltip_text):
+    return None
 
-# Importar componentes reutilizáveis
+# --- Paleta de Cores Escura Completa (garante todas as chaves usadas) ---
+COLORS = {
+    "primary": "#26427A",
+    "secondary": "#6c757d",
+    "accent": "#00BFFF",
+    "accent_alt": "#FFD700",
+    "background_main": "#1a1a1a",
+    "background_card": "#2c2c2c",
+    "background_card_header": "#1f1f1f",
+    "background_input": "#3a3a3a",
+    "background_header": "#1f1f1f",
+    "background_faint": "#333333",
+    "text_light": "#e0e0e0",
+    "text_dark": "#e0e0e0",
+    "text_muted": "#a0a0a0",
+    "text_header": "#FFFFFF",
+    "border": "#444444",
+    "border_light": "#555555",
+    "border_strong": "#666666",
+    "success": "#28a745",
+    "danger": "#dc3545",
+    "warning": "#ffc107",
+    "info": "#00BFFF",
+    "pass": "#28a745",
+    "fail": "#dc3545",
+    "pass_bg": "rgba(40, 167, 69, 0.2)",
+    "fail_bg": "rgba(220, 53, 69, 0.2)",
+    "warning_bg": "rgba(255, 193, 7, 0.2)",
+}
+COMPONENTS = {
+    "card": {"backgroundColor": COLORS["background_card"], "border": f'1px solid {COLORS["border"]}', "borderRadius": "4px", "boxShadow": "0 2px 5px rgba(0,0,0,0.25)", "marginBottom": "0.75rem"},
+    "card_header": {"backgroundColor": COLORS["background_card_header"], "color": COLORS["text_header"], "padding": "0.4rem 0.75rem", "fontSize": "1rem", "fontWeight": "bold", "letterSpacing": "0.02em", "textTransform": "uppercase", "borderBottom": f'1px solid {COLORS["border_strong"]}'},
+    "card_body": {"padding": "0.75rem", "backgroundColor": COLORS["background_card"]},
+    "button": {"backgroundColor": COLORS["primary"], "color": COLORS["text_header"]},
+    "container": {"padding": "0.5rem 0.5rem 2rem 0.5rem", "maxWidth": "1400px", "margin": "0 auto"}
+}
+TYPOGRAPHY = {
+    "label": {"fontSize": "0.75rem", "fontWeight": "500"},
+    "section_title": {"fontSize": "0.9rem", "fontWeight": "bold", "marginTop": "1rem", "marginBottom": "0.5rem"},
+    "card_header": {"fontSize": "1rem", "fontWeight": "bold"},
+    "title": {"fontSize": "1.1rem", "fontWeight": "bold", "color": COLORS["accent"]},
+    "small_text": {"fontSize": "0.7rem", "color": COLORS["text_muted"]},
+    "button": {"fontSize": "0.85rem", "fontWeight": "bold", "letterSpacing": "0.02em"},
+    "error_text": {"fontSize": "0.8rem", "color": COLORS["danger"]}
+}
+SPACING = {"row_margin": "mb-3", "row_gutter": "g-3", "col_padding": "px-2"}
 
 log = logging.getLogger(__name__)
 
-# Importar estilos padronizados
-from layouts import COLORS, COMPONENTS, TYPOGRAPHY
+# Definir estilos locais para evitar duplicação
+label_style = {
+    "fontSize": "0.7rem",
+    "marginBottom": "0",
+    "fontWeight": "bold",
+    "color": COLORS["text_light"],
+}
 
+input_style = {"fontSize": "0.7rem", "height": "22px", "padding": "0 0.3rem"}
 
 def create_input_row(label, id, placeholder, input_type="number"):
     """Função auxiliar para criar linhas de input com estilo consistente"""
-    # Importar estilos padronizados
-
-    # Definir estilos locais para evitar duplicação
-    label_style = {
-        "fontSize": "0.7rem",
-        "marginBottom": "0",
-        "fontWeight": "bold",
-        "color": COLORS["text_light"],
-    }
-
-    input_style = {"fontSize": "0.7rem", "height": "22px", "padding": "0 0.3rem"}
 
     return dbc.Row(
         [

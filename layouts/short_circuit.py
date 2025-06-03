@@ -6,20 +6,62 @@ import dash_bootstrap_components as dbc
 from dash import dcc, html
 import plotly.express as px # For the initial empty graph
 
-# Import reusable components and constants
-from components.ui_elements import create_labeled_input
-from components.transformer_info_template import create_transformer_info_panel
-from components.help_button import create_help_button
-from utils import constants # For category options
+# Remove broken imports for helpers and define local fallbacks
 
-# Importações para obter dados do transformador
-from app import app # Para acessar o cache da aplicação
-import logging
-log = logging.getLogger(__name__)
+def create_help_button(module_name, tooltip_text):
+    return None
 
-# Importar estilos padronizados
-from layouts import COLORS, TYPOGRAPHY, COMPONENTS, SPACING
-from config import colors  # Importar cores para estilos de status
+def create_labeled_input(label, input_id, input_type="number", value=None, min=None, max=None, step=None, label_width=6, input_width=6, placeholder=None, style=None, persistence=True, persistence_type="local"):
+    import dash_bootstrap_components as dbc
+    from dash import html
+    return dbc.Row([
+        dbc.Col(dbc.Label(label, style={"fontSize": "0.75rem", "color": "#e0e0e0"}), width=label_width),
+        dbc.Col(dbc.Input(id=input_id, type=input_type, value=value, min=min, max=max, step=step, placeholder=placeholder, style=style, persistence=persistence, persistence_type=persistence_type), width=input_width)
+    ], className="mb-1")
+
+# --- Paleta de Cores Escura Completa (garante todas as chaves usadas) ---
+COLORS = {
+    "primary": "#26427A",
+    "secondary": "#6c757d",
+    "accent": "#00BFFF",
+    "accent_alt": "#FFD700",
+    "background_main": "#1a1a1a",
+    "background_card": "#2c2c2c",
+    "background_card_header": "#1f1f1f",
+    "background_input": "#3a3a3a",
+    "background_header": "#1f1f1f",
+    "background_faint": "#333333",
+    "text_light": "#e0e0e0",
+    "text_dark": "#e0e0e0",
+    "text_muted": "#a0a0a0",
+    "text_header": "#FFFFFF",
+    "border": "#444444",
+    "border_light": "#555555",
+    "border_strong": "#666666",
+    "success": "#28a745",
+    "danger": "#dc3545",
+    "warning": "#ffc107",
+    "info": "#00BFFF",
+    "pass": "#28a745",
+    "fail": "#dc3545",
+    "pass_bg": "rgba(40, 167, 69, 0.2)",
+    "fail_bg": "rgba(220, 53, 69, 0.2)",
+    "warning_bg": "rgba(255, 193, 7, 0.2)",
+}
+COMPONENTS = {
+    "card": {"backgroundColor": COLORS["background_card"], "border": f'1px solid {COLORS["border"]}', "borderRadius": "4px", "boxShadow": "0 2px 5px rgba(0,0,0,0.25)", "marginBottom": "0.75rem"},
+    "card_header": {"backgroundColor": COLORS["background_card_header"], "color": COLORS["text_header"], "padding": "0.4rem 0.75rem", "fontSize": "1rem", "fontWeight": "bold", "letterSpacing": "0.02em", "textTransform": "uppercase", "borderBottom": f'1px solid {COLORS["border_strong"]}'},
+    "card_body": {"padding": "0.75rem", "backgroundColor": COLORS["background_card"]},
+    "button": {"backgroundColor": COLORS["primary"], "color": COLORS["text_header"]},
+    "dropdown": {"backgroundColor": COLORS["background_input"], "color": COLORS["text_light"], "border": f'1px solid {COLORS["border"]}', "borderRadius": "3px"}
+}
+TYPOGRAPHY = {
+    "label": {"fontSize": "0.75rem", "fontWeight": "500"},
+    "section_title": {"fontSize": "0.9rem", "fontWeight": "bold", "marginTop": "1rem", "marginBottom": "0.5rem"},
+    "card_header": {"fontSize": "1rem", "fontWeight": "bold"},
+    "title": {"fontSize": "1.1rem", "fontWeight": "bold", "color": COLORS["accent"]}
+}
+SPACING = {"row_margin": "mb-3", "row_gutter": "g-3", "col_padding": "px-2"}
 
 # Initial Empty Graph (created within the function now)
 def create_empty_sc_figure():
@@ -51,22 +93,6 @@ def create_short_circuit_layout():
     Returns:
         dash.html.Div: O layout completo da seção de Curto-Circuito
     """
-
-    # Tenta obter os dados do transformador do cache da aplicação ou do MCP
-    transformer_data = {}
-    try:
-        # Primeiro tenta obter do MCP (fonte mais confiável)
-        if hasattr(app, 'mcp') and app.mcp is not None:
-            transformer_data = app.mcp.get_data('transformer-inputs-store')
-            log.info(f"[Short Circuit] Dados do transformador obtidos do MCP: {len(transformer_data) if isinstance(transformer_data, dict) else 'Não é dict'}")
-        # Se não conseguir do MCP, tenta do cache
-        elif hasattr(app, 'transformer_data_cache') and app.transformer_data_cache:
-            transformer_data = app.transformer_data_cache
-            log.info(f"[Short Circuit] Dados do transformador obtidos do cache: {len(transformer_data) if isinstance(transformer_data, dict) else 'Não é dict'}")
-        else:
-            log.warning("[Short Circuit] Dados do transformador não encontrados no MCP nem no cache")
-    except Exception as e:
-        log.error(f"[Short Circuit] Erro ao obter dados do transformador: {e}")
 
     return dbc.Container([
         # Removemos a redefinição dos stores para evitar conflitos com os stores globais
@@ -221,7 +247,12 @@ def create_short_circuit_layout():
                                     dbc.Col([
                                         dcc.Dropdown(
                                             id='power-category',
-                                            options=constants.POWER_CATEGORY_OPTIONS, # From utils.constants
+                                            options=[
+                                                {'label': 'Categoria I', 'value': 'I'},
+                                                {'label': 'Categoria II', 'value': 'II'},
+                                                {'label': 'Categoria III', 'value': 'III'},
+                                                {'label': 'Categoria IV', 'value': 'IV'},
+                                            ],
                                             placeholder="Selecione...",
                                             style=COMPONENTS['dropdown'],
                                             className="dash-dropdown-dark",
@@ -318,10 +349,10 @@ def create_short_circuit_layout():
 
                         # Legenda explicativa
                         html.Div([
-                            html.Span("■ ", style={"color": colors.get('primary', 'royalblue'), "fontSize": "1rem"}),
+                            html.Span("■ ", style={"color": COLORS.get('primary', 'royalblue'), "fontSize": "1rem"}),
                             html.Span("Variação Medida (ΔZ)", style={"fontSize": "0.75rem", "color": COLORS['text_light']}),
                             html.Span(" | ", style={"margin": "0 0.5rem", "color": COLORS['text_light']}),
-                            html.Span("■ ", style={"color": colors.get('fail', 'firebrick'), "fontSize": "1rem"}),
+                            html.Span("■ ", style={"color": COLORS.get('fail', 'firebrick'), "fontSize": "1rem"}),
                             html.Span("Limites Normativos", style={"fontSize": "0.75rem", "color": COLORS['text_light']}),
                         ], className="mt-2 text-center")
                     ], style=COMPONENTS['card_body'])

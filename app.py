@@ -37,7 +37,7 @@ except ImportError:
         USAGE_COUNT_FILE = "usage_count.txt"
         USAGE_LIMIT = 61  # Example fallback
         HOST = "127.0.0.1"
-        PORT = 8050  # Match the PORT in config.py
+        PORT = 8060
         DEBUG_MODE = False  # Default to False in fallback
 
     config = ConfigFallback()
@@ -116,7 +116,9 @@ def verificar_e_incrementar_uso(incrementar=True):
 
 # --- 4. Initialize Dash App (sem mudanças) ---
 log.info(f"Inicializando a aplicação Dash: {config.APP_TITLE}")
-app = dash.Dash(
+from app_core.transformer_mcp_enhanced import DashWithMCP
+
+app = DashWithMCP(
     __name__,
     external_stylesheets=[config.DEFAULT_THEME_URL],
     suppress_callback_exceptions=True,
@@ -135,42 +137,31 @@ log.info(f"Pasta assets: {config.ASSETS_DIR}")
 
 # --- 5. Initialize Master Control Program (MCP) ---
 try:
-    from app_core.transformer_mcp_enhanced import TransformerMCPEnhanced as TransformerMCP
+    from app_core.transformer_mcp import TransformerMCP
 
     setattr(app, 'mcp', TransformerMCP(
         load_from_disk=True
     ))  # Atribui à instância do app e carrega dados do disco
-    log.info("TransformerMCP (app.mcp) inicializado com sucesso (versão Enhanced).")
-
-    # --- MCP Data Recovery: Ensure authoritative data is always complete ---
-    try:
-        from utils.mcp_diagnostics import fix_mcp_data
-        recovery_result = fix_mcp_data(app, verbose=True)
-        if recovery_result.get("status") == "ok":
-            log.info("[MCP Recovery] MCP data recovery and healing completed successfully.")
-        else:
-            log.warning(f"[MCP Recovery] Issues during MCP data recovery: {recovery_result}")
-    except Exception as e:
-        log.error(f"[MCP Recovery] Exception during MCP data recovery: {e}", exc_info=True)
+    log.info("TransformerMCP (app.mcp) inicializado com sucesso.")
 
     # Inicializar o MCP com dados padrão do arquivo transformer.json
     try:
-        from app_core.startup import seed_mcp
-
+        # from app_core.startup import seed_mcp  # REMOVIDO: módulo não existe
         # Tentar carregar dados padrão do arquivo JSON
-        seed_success = seed_mcp(app_instance=app)
-        if seed_success:
-            log.info("MCP inicializado com dados padrão do arquivo transformer.json")
-        else:
-            log.warning(
-                "Não foi possível inicializar o MCP com dados padrão do arquivo transformer.json"
-            )
+        # seed_success = seed_mcp(app_instance=app)
+        # if seed_success:
+        #     log.info("MCP inicializado com dados padrão do arquivo transformer.json")
+        # else:
+        #     log.warning(
+        #         "Não foi possível inicializar o MCP com dados padrão do arquivo transformer.json"
+        #     )
+        pass  # Não faz nada, pois o módulo não existe
     except ImportError as e:
         log.error(f"Erro ao importar módulo de startup: {e}", exc_info=True)
     except Exception as e:
         log.error(f"Erro ao inicializar MCP com dados padrão: {e}", exc_info=True)
 
-    # Verificar se o MCP foi inicializado corretamente
+    
     # Verificar se o MCP foi inicializado corretamente
     mcp_instance = getattr(app, 'mcp', None)
     if mcp_instance is not None:
@@ -202,7 +193,7 @@ try:
                 )
 
                 # Atualizar o MCP com os dados atualizados diretamente
-                mcp_instance.set_data("transformer-inputs-store", transformer_data, app_instance=app)
+                mcp_instance.set_data("transformer-inputs-store", transformer_data)
                 log.info("MCP atualizado com correntes calculadas na inicialização")
                 # Propagar dados para outros stores usando o novo utilitário
                 try:
@@ -235,34 +226,16 @@ try:
                         else:
                             log.warning(f"Não foi necessário propagar dados para {store}")
 
-                    log.info("Propagando dados do transformer-inputs-store para outros stores...")
-
-                    # Importar o utilitário de persistência do MCP
-                    from utils.mcp_persistence import ensure_mcp_data_propagation
-
-                    # Lista de stores para os quais propagar os dados
-                    target_stores = [
-                        "losses-store",
-                        "impulse-store",
-                        "dieletric-analysis-store",
-                        "applied-voltage-store",
-                        "induced-voltage-store",
-                        "short-circuit-store",
-                        "temperature-rise-store",
-                        "comprehensive-analysis-store",
-                    ]
-
-                    # Propagar dados para todos os stores
-                    propagation_results = ensure_mcp_data_propagation(
-                        app, "transformer-inputs-store", target_stores
-                    )
-
-                    # Registrar resultados
-                    for store, success in propagation_results.items():
-                        if success:
-                            log.info(f"Dados propagados para {store}")
+                    # Sincronizar valores de isolamento entre todos os stores
+                    try:
+                        from utils.mcp_persistence import sync_isolation_values
+                        sync_result = sync_isolation_values(app)
+                        if sync_result:
+                            log.info("Valores de isolamento sincronizados com sucesso entre todos os stores")
                         else:
-                            log.warning(f"Não foi necessário propagar dados para {store}")
+                            log.warning("Não foi possível sincronizar valores de isolamento entre os stores")
+                    except Exception as e:
+                        log.error(f"Erro ao sincronizar valores de isolamento: {e}", exc_info=True)
 
                 except Exception as e:
                     log.error(f"Erro ao propagar dados para outros stores: {e}", exc_info=True)
@@ -270,18 +243,6 @@ try:
                 log.error(f"Erro ao calcular correntes na inicialização: {e}", exc_info=True)
         else:
             log.warning("MCP inicializado, mas sem dados padrão")
-
-    # Sincronizar valores de isolamento entre todos os stores (movido para fora do try/except de propagação)
-    try:
-        from utils.mcp_persistence import sync_isolation_values
-        sync_result = sync_isolation_values(app)
-        if sync_result:
-            log.info("Valores de isolamento sincronizados com sucesso entre todos os stores na inicialização.")
-        else:
-            log.warning("Não foi possível sincronizar valores de isolamento entre os stores na inicialização.")
-    except Exception as e:
-        log.error(f"Erro ao sincronizar valores de isolamento na inicialização: {e}", exc_info=True)
-
 except ImportError as e:
     log.critical(f"FALHA CRÍTICA ao importar TransformerMCP: {e}", exc_info=True)
     setattr(app, 'mcp', None)
@@ -336,11 +297,7 @@ if not layout_creation_failed:
             "navigation_dcc_links",
             "losses",
             "dieletric_analysis",
-            "report_generation",
             "dielectric_analysis_comprehensive",
-            "global_updates",
-            "standards_consultation",  # Adicionado
-            "standards_management",  # Adicionado
         ]
         for module_name in decorated_modules:
             try:
@@ -366,12 +323,7 @@ if not layout_creation_failed:
             "applied_voltage": "register_applied_voltage_callbacks",
             "induced_voltage": "register_induced_voltage_callbacks",
             "history": "register_history_callbacks",
-            "global_actions": "register_global_actions_callbacks",  # Adicionado
-            "insulation_level_callbacks": "register_insulation_level_callbacks",  # Corrigido para o nome correto do ficheiro/função
-            "temperature_rise": "register_temperature_rise_callbacks"  # Callbacks de elevação de temperatura
-            # 'standards_consultation': 'register_standards_consultation_callbacks', # Já são decorados
-            # 'standards_management': 'register_standards_management_callbacks' # Já são decorados
-            # "client_side_callbacks": "register_client_side_callbacks",  # Client-side - Removido: arquivo não existe
+            "insulation_level_callbacks": "register_insulation_level_callbacks",
         }
 
         # Vamos registrar os callbacks explicitamente
@@ -399,20 +351,19 @@ if not layout_creation_failed:
                     exc_info=True,
                 )
 
-        # Inicializar banco de dados de normas
-        try:
-            from utils.standards_db import create_standards_tables
-
-            create_standards_tables()
-            log.debug("Banco de dados de normas técnicas inicializado/verificado.")
-        except Exception as e:
-            log.error(f"Erro ao inicializar banco de dados de normas: {e}", exc_info=True)
-
         log.info(f"Callbacks registrados. Total: {len(app.callback_map)}")
     except Exception as e:
         log.critical("ERRO CRÍTICO AO REGISTRAR CALLBACKS", exc_info=True)
         log.critical(f"Erro inesperado durante o registro de callbacks: {e}", exc_info=True)
         layout_creation_failed = True  # Marca falha se registro der erro
+
+# Garantir que o MCP está configurado antes de registrar callbacks
+if not hasattr(app, 'mcp'):
+    from app_core.transformer_mcp import TransformerMCP
+    setattr(app, 'mcp', TransformerMCP(load_from_disk=True))
+    log.info("TransformerMCP (app.mcp) configurado com sucesso.")
+else:
+    log.info("O atributo 'mcp' já está configurado no app.")
 
 # --- 9. Browser Opening Logic (modificado) ---
 # Flag global para controlar a abertura do navegador
@@ -474,13 +425,13 @@ if __name__ == "__main__":
                         log.info("MCP state saved successfully on exit")
                     except Exception as e:
                         log.error(f"Error saving MCP state on exit: {e}", exc_info=True)
-            
+
             atexit.register(save_mcp_on_exit)
 
             app.run(
                 debug=False,  # Forçar debug=False para evitar reinicialização do MCP
                 host=host,
-                port=str(port),  # Converter a porta para string corretamente
+                port=str(port), # Converte a porta para string
                 use_reloader=False,  # Desativar reloader para evitar reinicialização do MCP
                 threaded=True,  # Usar threading para melhor desempenho e estabilidade
             )

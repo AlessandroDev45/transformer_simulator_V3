@@ -6,10 +6,31 @@ import dash_bootstrap_components as dbc
 from dash import dcc, html
 
 from components.global_stores import create_global_stores
-from layouts import COLORS, COMPONENTS, SPACING, TYPOGRAPHY
 from utils.routes import ROUTE_LABELS, VALID_ROUTES
 
 log = logging.getLogger(__name__)
+
+# Exemplo de dicionário de cores local (ajuste conforme necessário):
+COLORS = {
+    "text_light": "#f8f9fa",
+    "accent": "#ffc107",
+    "primary": "#0d6efd",  # Bootstrap primary
+    "border": "#dee2e6",   # Bootstrap border
+    "background_card_header": "#212529",  # Bootstrap dark
+    "background_main": "#181a1b",  # Custom dark background
+    "background_card": "#23272b",  # Custom card background
+    "text_muted": "#adb5bd",  # Bootstrap muted text
+    "info": "#0dcaf0",  # Bootstrap info
+}
+
+# Exemplo de dicionário de tipografia local (ajuste conforme necessário):
+TYPOGRAPHY = {
+    "title": {
+        "fontWeight": "bold",
+        "fontFamily": "Arial, sans-serif",
+        "color": "#222",
+    }
+}
 
 
 def create_main_layout(uso_atual=0, limite_atingido=False, app=None):
@@ -182,7 +203,6 @@ def create_main_layout(uso_atual=0, limite_atingido=False, app=None):
                                     disabled=limite_atingido,
                                     size="sm",
                                     style={
-                                        **COMPONENTS["button_primary"],
                                         "boxShadow": "0 1px 3px rgba(0,0,0,0.2)",
                                         "transition": "all 0.2s ease-in-out",
                                         "border": "1px solid rgba(255,255,255,0.1)",
@@ -200,7 +220,6 @@ def create_main_layout(uso_atual=0, limite_atingido=False, app=None):
                                     color="warning",
                                     size="sm",
                                     style={
-                                        **COMPONENTS["button_secondary"],
                                         "boxShadow": "0 1px 3px rgba(0,0,0,0.2)",
                                         "transition": "all 0.2s ease-in-out",
                                         "border": "1px solid rgba(255,255,255,0.1)",
@@ -390,7 +409,6 @@ def create_main_layout(uso_atual=0, limite_atingido=False, app=None):
                 color="info",
                 className="m-3",
                 style={
-                    **COMPONENTS.get("alert", {}),
                     "boxShadow": "0 2px 4px rgba(0,0,0,0.1)",
                     "borderLeft": f"4px solid {COLORS.get('info','#0dcaf0')}",
                 },
@@ -485,7 +503,7 @@ def create_main_layout(uso_atual=0, limite_atingido=False, app=None):
                             dbc.Col(sidebar, width=2, className="pe-0"),
                             dbc.Col(content_area, width=10, className="ps-2"),
                         ],
-                        className=SPACING["row_gutter"],
+                        className="g-0",
                         style={
                             "marginTop": "0",
                             "marginBottom": "0",

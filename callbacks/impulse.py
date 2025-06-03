@@ -18,6 +18,7 @@ from app import app  # Import app instance correctly
 from utils import constants as const  # Assuming constants are in utils.constants
 from utils.routes import ROUTE_IMPULSE, normalize_pathname
 from utils.store_diagnostics import convert_numpy_types, is_json_serializable
+from utils.mcp_utils import patch_mcp  # Import patch_mcp
 
 # --- Configuração do Logging ---
 logger = logging.getLogger(__name__)
@@ -1777,86 +1778,69 @@ def toggle_transformer_calc(n, is_open):
         Output("transformer-inductance", "value"),
         Output("calculated-inductance-display", "children"),
         Output("calculated-inductance", "data"),
+        Output("transformer-voltage", "value"),
+        Output("transformer-power", "value"),
+        Output("transformer-impedance", "value"),
     ],
-    Input("calculate-inductance", "n_clicks"),
+    [
+        Input("calculate-inductance", "n_clicks"),
+        Input("use-transformer-data", "n_clicks"),
+    ],
     [
         State("transformer-voltage", "value"),
         State("transformer-power", "value"),
         State("transformer-impedance", "value"),
         State("transformer-frequency", "value"),
+        State("transformer-inputs-store", "data"),
     ],
     prevent_initial_call=True,
 )
-def calculate_transformer_inductance_callback(n_clicks, voltage, power, impedance, frequency):
-    if n_clicks is None:
+def consolidated_transformer_inductance_callback(
+    calculate_clicks, use_data_clicks, voltage, power, impedance, frequency, transformer_data
+):
+    ctx = dash.callback_context
+    if not ctx.triggered:
         raise dash.exceptions.PreventUpdate
 
-    try:
-        l_trafo = calculate_transformer_inductance(voltage, power, impedance, frequency)
-        result_text = f"L = {l_trafo:.4f} H"
-        result_data = {
-            "inductance": l_trafo,
-            "params": {
-                "voltage": voltage,
-                "power": power,
-                "impedance": impedance,
-                "frequency": frequency,
-            },
-        }
+    trigger_id = ctx.triggered[0]["prop_id"].split(".")[0]
 
-        logger.info(f"Indutância do transformador calculada: {l_trafo:.4f} H")
-        return l_trafo, result_text, result_data
-    except Exception as e:
-        logger.error(f"Erro ao calcular indutância do transformador: {e}")
-        return dash.no_update, f"Erro: {str(e)}", None
+    if trigger_id == "calculate-inductance":
+        try:
+            l_trafo = calculate_transformer_inductance(voltage, power, impedance, frequency)
+            result_text = f"L = {l_trafo:.4f} H"
+            result_data = {
+                "inductance": l_trafo,
+                "params": {
+                    "voltage": voltage,
+                    "power": power,
+                    "impedance": impedance,
+                    "frequency": frequency,
+                },
+            }
 
+            logger.info(f"Indutância do transformador calculada: {l_trafo:.4f} H")
+            return l_trafo, result_text, result_data, voltage, power, impedance
+        except Exception as e:
+            logger.error(f"Erro ao calcular indutância do transformador: {e}")
+            return dash.no_update, f"Erro: {str(e)}", None, voltage, power, impedance
 
-# Callback para usar dados do transformador
-@app.callback(
-    [
-        Output("transformer-voltage", "value"),
-        Output("transformer-power", "value"),
-        Output("transformer-impedance", "value"),
-        Output("transformer-inductance", "value", allow_duplicate=True),
-    ],
-    Input("use-transformer-data", "n_clicks"),
-    State("transformer-inputs-store", "data"),
-    prevent_initial_call=True,
-)
-def use_transformer_data(n_clicks, transformer_data):
-    if n_clicks is None or not transformer_data:
-        raise dash.exceptions.PreventUpdate
+    elif trigger_id == "use-transformer-data":
+        if not transformer_data:
+            raise dash.exceptions.PreventUpdate
 
-    try:
-        # Verificar se os dados estão aninhados em transformer_data
-        if "transformer_data" in transformer_data and isinstance(transformer_data["transformer_data"], dict):
-            # Usar os dados aninhados
-            data_dict = transformer_data["transformer_data"]
-            log.debug(f"[IMPULSE] Usando dados aninhados em transformer_data")
-        else:
-            # Usar os dados diretamente
-            data_dict = transformer_data
-            log.debug(f"[IMPULSE] Usando dados diretamente do dicionário principal")
+        try:
+            voltage = transformer_data.get("voltage", voltage)
+            power = transformer_data.get("power", power)
+            impedance = transformer_data.get("impedance", impedance)
+            l_trafo = transformer_data.get("inductance", None)
 
-        voltage_kv = data_dict.get("tensao_at")
-        power_mva = data_dict.get("potencia_mva")
-        impedance_percent = data_dict.get("impedancia")
-        freq_hz = data_dict.get("frequencia", 60)
+            logger.info("Dados do transformador carregados com sucesso.")
+            return l_trafo, dash.no_update, dash.no_update, voltage, power, impedance
+        except Exception as e:
+            logger.error(f"Erro ao carregar dados do transformador: {e}")
+            return dash.no_update, dash.no_update, dash.no_update, voltage, power, impedance
 
-        # Calcular indutância do transformador
-        l_trafo = calculate_transformer_inductance(
-            voltage_kv, power_mva, impedance_percent, freq_hz
-        )
-
-        logger.info(
-            f"Dados do transformador utilizados: {voltage_kv} kV, {power_mva} MVA, {impedance_percent}%, {freq_hz} Hz"
-        )
-        logger.info(f"Indutância calculada: {l_trafo:.4f} H")
-
-        return voltage_kv, power_mva, impedance_percent, l_trafo
-    except Exception as e:
-        logger.error(f"Erro ao utilizar dados do transformador: {e}")
-        return dash.no_update, dash.no_update, dash.no_update, dash.no_update
+    raise dash.exceptions.PreventUpdate
 
 
 # Callback para atualizar o gráfico de impulso e salvar no store
@@ -2151,3 +2135,16 @@ def register_impulse_callbacks(app):
     log.info(
         f"Callbacks do módulo de impulso já registrados via decoradores @dash.callback para app {app.title}."
     )
+
+
+# Verificar se o atributo mcp está disponível
+if not hasattr(app, 'mcp'):
+    raise AttributeError("O atributo 'mcp' não está disponível no app.")
+
+# Adicionar gravação de dados com MCP
+# Exemplo de uso:
+# patch_mcp("impulse-store", data, app)
+
+# Adicionar proteção de execução
+if __name__ == "__main__":
+    app.run_server(debug=True)

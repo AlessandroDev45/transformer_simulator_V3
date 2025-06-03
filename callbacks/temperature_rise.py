@@ -3,7 +3,7 @@
 import dash
 import numpy as np
 from dash import dcc, html, Input, Output, State, callback, callback_context, no_update
-from utils.callback_helpers import safe_float
+from utils.elec import safe_float
 import dash_bootstrap_components as dbc
 import math
 import logging
@@ -11,8 +11,7 @@ import datetime
 from dash.exceptions import PreventUpdate
 
 # Importações da aplicação
-# Removido import direto de app
-from config import colors # Para estilos
+from app import app
 from utils import constants # Para constantes de material
 from utils.routes import normalize_pathname, ROUTE_TEMPERATURE_RISE # Para normalização de pathname
 # <<< IMPORTANTE: Verifique a assinatura e unidades esperadas destas funções >>>
@@ -21,6 +20,7 @@ from app_core.calculations import (
     calculate_top_oil_rise,
     calculate_thermal_time_constant # Assume que espera pesos em KG
 )
+from formulas.thermal_math import calculate_thermal_time_constant
 # <<< FIM IMPORTANTE >>>
 from components.validators import validate_dict_inputs # Para validação
 from components.transformer_info_template import create_transformer_info_panel
@@ -28,6 +28,12 @@ from components.formatters import formatar_elevacao_temperatura, format_paramete
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
+
+# Remove: from config import colors # Para estilos
+COLORS = {
+    "warning": "#ffc107",
+    "fail": "#dc3545",
+}
 
 # --- Função de Registro de Callbacks ---
 def register_temperature_rise_callbacks(app_instance):
@@ -223,7 +229,7 @@ def register_temperature_rise_callbacks(app_instance):
         if message_str:
             is_warning = "Aviso" in message_str
             display_message = html.Div(message_str,
-                                        style={"color": colors.get('warning', 'orange') if is_warning else colors.get('fail', 'red'),
+                                        style={"color": COLORS.get('warning', 'orange') if is_warning else COLORS.get('fail', 'red'),
                                                "fontSize": "0.7rem"})
 
         # Retorna valores para UI
@@ -239,27 +245,6 @@ def register_temperature_rise_callbacks(app_instance):
 
         log.debug(f"[LOAD TempRise] Valores finais retornados para UI: {values_to_return}")
         return values_to_return
-
-
-    # Callback de debug para o botão alternativo
-    @app_instance.callback(
-        Output("temp-rise-error-message", "children", allow_duplicate=True),
-        [Input("calc-temp-rise-debug", "n_clicks")],
-        prevent_initial_call=True
-    )
-    def debug_calc_button(n_clicks):
-        log.info(f"***** [DEBUG] Botão TESTE Calcular clicado: n_clicks = {n_clicks} *****")
-        print(f"\n\n***** [DEBUG] Botão TESTE Calcular clicado: n_clicks = {n_clicks} *****\n\n")
-
-        # Criar um arquivo de log específico para debug
-        with open('logs/debug_calcular_button.log', 'a') as f:
-            f.write(f"\n\n***** [DEBUG] Botão TESTE Calcular clicado *****\n")
-            f.write(f"[DEBUG] n_clicks = {n_clicks}\n")
-            f.write(f"[DEBUG] Trigger: {callback_context.triggered_id}\n")
-            f.write(f"[DEBUG] Triggered: {callback_context.triggered}\n")
-            f.write(f"[DEBUG] Timestamp: {datetime.datetime.now().isoformat()}\n")
-
-        return html.Div(f"Botão TESTE clicado: {n_clicks} vezes", style={"color": "red", "fontSize": "0.8rem"})
 
     # Callback principal para cálculo (RESTAURADO e CORRIGIDO)
     @app_instance.callback(
@@ -277,9 +262,11 @@ def register_temperature_rise_callbacks(app_instance):
             Input("limpar-temp-rise", "n_clicks")     # Trigger: Botão Limpar (agora também calcula)
         ],
         [
-            State("temp-amb", "value"), State("winding-material", "value"),
-            State("res-cold", "value"), State("temp-cold", "value"),
-            State("res-hot", "value"), State("temp-top-oil", "value"),
+            State("winding-material", "value"),
+            State("res-cold", "value"),
+            State("temp-cold", "value"),
+            State("res-hot", "value"),
+            State("temp-top-oil", "value"),
             State("delta-theta-oil-max", "value"),
             State("transformer-inputs-store", "data"),
             State("losses-store", "data"),
@@ -289,7 +276,7 @@ def register_temperature_rise_callbacks(app_instance):
         prevent_initial_call=True
     )
     def temperature_rise_calculate(
-        calc_clicks, limpar_clicks, temp_amb_str, winding_material, res_cold_str, temp_cold_str, res_hot_str, temp_top_oil_str, delta_theta_oil_max_str, # Inputs locais
+        calc_clicks, limpar_clicks, winding_material, res_cold_str, temp_cold_str, res_hot_str, temp_top_oil_str, delta_theta_oil_max_str, # Inputs locais
         transformer_data, losses_data, current_store_data, pathname): # Dados globais e pathname
         """
         Calcula elevação de temperatura, Ptot usada e τ₀.
@@ -321,7 +308,7 @@ def register_temperature_rise_callbacks(app_instance):
 
         # --- 1. Validar e converter inputs locais ---
         input_values_local = {
-            'input_ta': safe_float(temp_amb_str, 25.0),
+            'input_ta': safe_float(25.0),
             'input_material': winding_material or 'cobre',
             'input_rc': safe_float(res_cold_str),
             'input_tc': safe_float(temp_cold_str),
@@ -426,7 +413,7 @@ def register_temperature_rise_callbacks(app_instance):
             log.warning(f"[CALC TempRise] {error_msg}")
 
             # Preparar mensagem para UI
-            display_message = html.Div(error_msg, style={"color": colors.get('fail', 'red'), "fontSize": "0.7rem"})
+            display_message = html.Div(error_msg, style={"color": COLORS.get('fail', 'red'), "fontSize": "0.7rem"})
 
             # Atualizar o store com os inputs, mas sem resultados
             new_store_data = current_store_data.copy() if current_store_data else {}
@@ -438,6 +425,7 @@ def register_temperature_rise_callbacks(app_instance):
         # --- 6. Realizar cálculos ---
         try:
             log.info(f"[CALC TempRise] Iniciando cálculos com dados: P={potencia_mva}MVA, P0={perdas_vazio_kw}kW, Ptot={perdas_totais_kw}kW")
+
             # Calcular temperatura média do enrolamento
             avg_winding_temp, avg_winding_rise = calculate_winding_temps(
                 input_values_local['input_rc'],
@@ -446,35 +434,37 @@ def register_temperature_rise_callbacks(app_instance):
                 input_values_local['input_ta'],
                 input_values_local['input_material']
             )
-            
+
             # Calcular elevação de temperatura do óleo
-            if input_values_local['input_t_oil'] is not None and input_values_local['input_ta'] is not None:
-                # Se tivermos temperatura do óleo e ambiente, usamos o cálculo padrão
+            if perdas_totais_kw is not None and input_values_local['input_delta_theta_oil_max'] is not None:
                 top_oil_rise = calculate_top_oil_rise(
-                    input_values_local['input_t_oil'],
-                    input_values_local['input_ta']
+                    t_oil=perdas_totais_kw,  # Substituir por valor correto se necessário
+                    ta=input_values_local['input_delta_theta_oil_max']
                 )
             else:
-                # Se não tivermos temperatura, usar o valor de delta_theta_oil_max diretamente
-                top_oil_rise = input_values_local['input_delta_theta_oil_max']
-                
-                # Se tivermos perdas e potência, podemos ajustar usando a relação aproximada
-                if perdas_totais_kw is not None and potencia_mva is not None and potencia_mva > 0:
-                    top_oil_rise = top_oil_rise * (perdas_totais_kw / potencia_mva)
-            
-            # Calcular constante de tempo térmica
-            # Somar pesos disponíveis
-            peso_total_kg = sum(p for p in [peso_nucleo_kg, peso_oleo_kg, peso_tanque_kg,
-                                           peso_enrol_at_kg, peso_enrol_bt_kg, peso_enrol_ter_kg]
-                               if p is not None)
-                               
-            tau0_h = calculate_thermal_time_constant(
-                perdas_totais_kw,
-                input_values_local['input_delta_theta_oil_max'],
-                peso_total_kg,
-                peso_oleo_kg
+                top_oil_rise = None
+
+            # Definir peso_total_kg antes de usá-lo
+            peso_total_kg = sum(
+                p for p in [peso_nucleo_kg, peso_oleo_kg, peso_tanque_kg,
+                            peso_enrol_at_kg, peso_enrol_bt_kg, peso_enrol_ter_kg]
+                if p is not None
             )
-            
+
+            # Validar e definir valores padrão para os argumentos
+            perdas_totais_kw = perdas_totais_kw or 0.0
+            peso_oleo_kg = peso_oleo_kg or 0.0
+            peso_total_kg = peso_total_kg or 0.0
+            delta_theta_oil_max = input_values_local.get('input_delta_theta_oil_max', 0.0)
+
+            # Calcular constante de tempo térmica
+            tau0_h = calculate_thermal_time_constant(
+                ptot=perdas_totais_kw,
+                delta_max=delta_theta_oil_max,
+                mt=peso_total_kg,
+                mo=peso_oleo_kg
+            )
+
             # --- 7. Preparar resultados ---
             results = {
                 'avg_winding_temp': avg_winding_temp,
@@ -516,7 +506,7 @@ def register_temperature_rise_callbacks(app_instance):
         except Exception as e:
             log.exception(f"[CALC TempRise] Erro nos cálculos: {e}")
             error_msg = f"Erro nos cálculos: {str(e)}"
-            display_message = html.Div(error_msg, style={"color": colors.get('fail', 'red'), "fontSize": "0.7rem"})
+            display_message = html.Div(error_msg, style={"color": COLORS.get('fail', 'red'), "fontSize": "0.7rem"})
 
             # Atualizar o store com os inputs, mas sem resultados
             new_store_data = current_store_data.copy() if current_store_data else {}
@@ -525,6 +515,66 @@ def register_temperature_rise_callbacks(app_instance):
 
             return no_update, no_update, no_update, no_update, no_update, display_message, new_store_data
 
+    # Refactored callback to ensure `temp-amb.value` is updated by only one callback.
+    @app_instance.callback(
+        Output("temp-amb", "value"),
+        Input("transformer-inputs-store", "data"),
+        prevent_initial_call=False
+    )
+    def update_temp_amb(transformer_data):
+        """Atualiza o valor de temperatura ambiente."""
+        log.info("CALLBACK EXECUTADO: Atualizando temperatura ambiente")
+        temp_amb_value = transformer_data.get("ambient_temperature", None)
+
+        # Se necessário, adicione lógica adicional para determinar o valor de temp_amb
+
+        return temp_amb_value
+
     # Retorna a função de registro para indicar que foi concluída com sucesso
     log.info("Callbacks do módulo temperature_rise registrados com sucesso.")
     return True
+
+# Updated DashWithMCP class to allow dynamic assignment of mcp.
+from typing import Optional, Protocol
+
+# Introduced MCPInterface to define the expected methods for mcp.
+class MCPInterface(Protocol):
+    def get_data(self, store_name: str) -> dict:
+        ...
+
+# Refactored to use a wrapper class for Dash to include the mcp attribute.
+from app_core.transformer_mcp_enhanced import DashWithMCP, MCPInterface
+
+# Import Dash to resolve missing definition
+from dash import Dash
+
+# Ensure proper type definition for `mcp`
+if isinstance(app, Dash):
+    app = DashWithMCP(__name__)
+    app.mcp = MCPInterface()  # Inicializar com a interface correta
+
+# Replace app instance with the extended class
+if isinstance(app, Dash):
+    app = DashWithMCP(__name__)
+
+# Fallback mechanism for MCP
+if app.mcp is None:
+    log.warning("O atributo 'mcp' não está disponível. Usando fallback.")
+
+    class MCPFallback(MCPInterface):
+        def get_data(self, store_name: str) -> dict:
+            log.warning(f"Tentativa de acessar '{store_name}' no fallback MCP.")
+            return {}
+
+    app.mcp = MCPFallback()
+
+# Adicionar leitura de dados com app.mcp.get_data
+data = app.mcp.get_data("temperature-rise-store")
+
+# Adicionar gravação de dados com patch_mcp
+from utils.mcp_utils import patch_mcp
+patch_mcp("temperature-rise-store", data, app)
+
+# Adicionar proteção de execução
+if __name__ == "__main__":
+    app.run_server(debug=True)

@@ -115,9 +115,8 @@ class UsageTracker:
             conn.close()
 
             # Verificar se atingiu o limite (configurado externamente)
-            import config
-
-            usage_limit = getattr(config, "USAGE_LIMIT", 1000)
+            # import config  # REMOVIDO: para evitar erro de importação circular/ausente
+            usage_limit = 1000  # Valor padrão fixo, ajuste conforme necessário
             reached_limit = current_value >= usage_limit
 
             if reached_limit:

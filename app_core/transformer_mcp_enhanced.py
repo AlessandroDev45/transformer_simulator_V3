@@ -7,7 +7,7 @@ import logging
 import json
 import copy
 import math
-from typing import Dict, Any, List, Optional, Tuple, Set
+from typing import Dict, Any, List, Optional, Tuple, Set, Callable
 
 from utils.store_diagnostics import convert_numpy_types, is_json_serializable, fix_store_data
 from utils.db_manager import save_test_session, get_test_session_details as db_get_session_details, session_name_exists, delete_test_session as db_delete_session
@@ -37,8 +37,8 @@ STORE_IDS = [
 DEFAULT_TRANSFORMER_INPUTS = {
     'tipo_transformador': 'Trifásico',
     'frequencia': 60.0,
-    'conexao_at': 'estrela',
-    'conexao_bt': 'triangulo',
+    'conexao_at': None,
+    'conexao_bt': None,
     'conexao_terciario': '',
     'liquido_isolante': 'Mineral',
     'tipo_isolamento': 'uniforme',
@@ -58,7 +58,7 @@ DEFAULT_TRANSFORMER_INPUTS = {
     'impedancia_tap_menor': None,
     'teste_tensao_aplicada_at': None,
     'teste_tensao_induzida_at': None,
-    'teste_tensao_induzida': None,  # Mantido para compatibilidade
+    'teste_tensao_induzida': None,   
     'tensao_bt': None,
     'classe_tensao_bt': None,
     'elevacao_enrol_bt': None,
@@ -254,6 +254,9 @@ class TransformerMCPEnhanced:
         if limit is None:
             return copy.deepcopy(self._change_history)
         else:
+            # Corrige: se limit for None ou não for int, retorna tudo
+            if not isinstance(limit, int) or limit <= 0:
+                return copy.deepcopy(self._change_history)
             return copy.deepcopy(self._change_history[-limit:])
 
     def get_all_data(self) -> Dict[str, Dict[str, Any]]:
@@ -311,7 +314,7 @@ class TransformerMCPEnhanced:
                 except Exception as e:
                     log.error(f"[MCP NOTIFY] Erro ao notificar listener para store '{store_id}': {e}")
 
-    def add_listener(self, store_id: str, listener: callable) -> None:
+    def add_listener(self, store_id: str, listener: Callable) -> None:
         """
         Adiciona um listener para um store específico.
 
@@ -322,10 +325,13 @@ class TransformerMCPEnhanced:
         if store_id not in self._listeners:
             self._listeners[store_id] = []
 
+        # Corrige: verifica se listener é uma função
+        if not callable(listener):
+            raise TypeError("Listener deve ser uma função ou método.")
         self._listeners[store_id].append(listener)
         log.debug(f"[MCP ADD_LISTENER] Listener adicionado para store '{store_id}'.")
 
-    def remove_listener(self, store_id: str, listener: callable) -> None:
+    def remove_listener(self, store_id: str, listener: Callable) -> None:
         """
         Remove um listener de um store específico.
 
@@ -494,7 +500,8 @@ class TransformerMCPEnhanced:
 
         # Salvar no banco de dados
         try:
-            session_id = save_test_session(session_name, notes, json_data)
+            # Corrige: passa o dicionário de dados como primeiro argumento, nome da sessão como segundo, notas como terceiro
+            session_id = save_test_session(data_prepared_for_db, session_name, notes)
             if session_id > 0:
                 log.info(f"[MCP SAVE SESSION] Sessão '{session_name}' salva com sucesso. ID: {session_id}")
                 return session_id
@@ -602,7 +609,9 @@ class TransformerMCPEnhanced:
         """
         try:
             from utils.elec import calculate_nominal_currents
-            return calculate_nominal_currents(transformer_data)
+            result = calculate_nominal_currents(transformer_data)
+            # Remove valores None para garantir Dict[str, float]
+            return {k: v for k, v in result.items() if v is not None}
         except Exception as e:
             log.error(f"[MCP CALCULATE CURRENTS] Erro ao calcular correntes nominais: {e}")
             return {}
@@ -615,3 +624,21 @@ class TransformerMCPEnhanced:
             Optional[str]: Mensagem do último erro de salvamento ou None se não houver erro
         """
         return self.last_save_error
+
+from dash import Dash
+from typing import Optional
+
+class MCPInterface:
+    def __init__(self):
+        self.store_data = {
+            store_id: {} for store_id in STORE_IDS
+        }
+
+    def get_data(self, store_name: str) -> dict:
+        """Retrieve data from the specified store."""
+        return self.store_data.get(store_name, {})
+
+class DashWithMCP(Dash):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.mcp: Optional[MCPInterface] = MCPInterface()

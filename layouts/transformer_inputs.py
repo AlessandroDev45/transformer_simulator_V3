@@ -17,69 +17,44 @@ if __name__ == "__main__":
 import dash_bootstrap_components as dbc
 from dash import dcc, html
 
-# Importar estilos diretamente de utils.styles
-try:
-    from utils.styles import COLORS, COMPONENTS, SPACING, TYPOGRAPHY
-    log.debug("Estilos importados com sucesso de utils.styles")
-except ImportError as e:
-    # Fallback básico se a importação falhar
-    log.error(f"Falha ao importar estilos: {e}. Usando fallbacks.")
-    COLORS = {
-        "primary": "#007bff",
-        "secondary": "#6c757d",
-        "info": "#17a2b8",
-        "warning": "#ffc107",
-        "danger": "#dc3545",
-        "light": "#f8f9fa",
-        "dark": "#343a40",
-        "text_light": "#f8f9fa",
-        "text_dark": "#212529",
-        "text_muted": "#6c757d",
-        "text_header": "#ffffff",
-        "background_main": "#282c34",
-        "background_card": "#343a40",
-        "background_card_header": "#495057",
-        "background_input": "#495057",
-        "border": "#495057",
-        "border_strong": "#adb5bd",
-        "accent": "#17a2b8",
-    }
-    TYPOGRAPHY = {
-        "label": {"fontSize": "0.75rem", "fontWeight": "500"},
-        "section_title": {
-            "fontSize": "0.9rem",
-            "fontWeight": "bold",
-            "marginTop": "1rem",
-            "marginBottom": "0.5rem",
-        },
-        "card_header": {"fontSize": "1rem", "fontWeight": "bold"},
-    }
-    COMPONENTS = {
-        "card": {},
-        "card_header": {},
-        "card_body": {},
-        "input": {},
-        "dropdown": {},
-        "read_only": {"backgroundColor": "#e9ecef", "cursor": "default"},
-        "button_secondary": {},
-        "button_primary": {},
-    }
-    SPACING = {"row_margin": "mb-3", "row_gutter": "g-3", "col_padding": "px-2"}
-
+# --- Paleta de Cores Escura Completa (garante todas as chaves usadas) ---
+COLORS = {
+    "primary": "#26427A",
+    "secondary": "#6c757d",
+    "accent": "#00BFFF",
+    "accent_alt": "#FFD700",
+    "background_main": "#1a1a1a",
+    "background_card": "#2c2c2c",
+    "background_card_header": "#1f1f1f",
+    "background_input": "#3a3a3a",
+    "background_header": "#1f1f1f",
+    "background_faint": "#333333",
+    "text_light": "#e0e0e0",
+    "text_dark": "#e0e0e0",
+    "text_muted": "#a0a0a0",
+    "text_header": "#FFFFFF",
+    "border": "#444444",
+    "border_light": "#555555",
+    "border_strong": "#666666",
+    "success": "#28a745",
+    "danger": "#dc3545",
+    "warning": "#ffc107",
+    "info": "#00BFFF",
+    "pass": "#28a745",
+    "fail": "#dc3545",
+    "pass_bg": "rgba(40, 167, 69, 0.2)",
+    "fail_bg": "rgba(220, 53, 69, 0.2)",
+    "warning_bg": "rgba(255, 193, 7, 0.2)",
+}
 
 # Importar componente de botão de ajuda
-try:
-    from components.help_button import create_help_button
-except ImportError:
-    log.warning("Help button component not found.")
-
-    def create_help_button(module_name, tooltip_text):
-        return html.Div()  # Fallback
+def create_help_button(module_name, tooltip_text):
+    from dash import html
+    return html.Div()  # Fallback
 
 
 # Estilos locais baseados nos estilos importados/fallback
 LABEL_STYLE = {
-    **TYPOGRAPHY.get("label", {}),
     "textAlign": "left",
     "whiteSpace": "nowrap",
     "marginBottom": "0.2rem",
@@ -89,7 +64,6 @@ LABEL_STYLE = {
     "fontSize": "0.8rem",
 }
 INPUT_STYLE = {
-    **COMPONENTS.get("input", {}),
     "height": "32px",
     "fontSize": "0.8rem",
     "backgroundColor": COLORS.get("background_input", "#444"),
@@ -99,7 +73,6 @@ INPUT_STYLE = {
     "width": "100%", # Input ocupa 100% da coluna pai
 }
 DROPDOWN_STYLE = {
-    **COMPONENTS.get("dropdown", {}),
     "height": "32px",
     "minHeight": "32px",
     "fontSize": "0.8rem",
@@ -110,7 +83,6 @@ DROPDOWN_STYLE = {
     "border": f"1px solid {COLORS.get('border', '#555')}",
 }
 READ_ONLY_STYLE = {
-    **COMPONENTS.get("read_only", {}),
     "height": "32px",
     "fontSize": "0.8rem",
     "backgroundColor": COLORS.get("background_card_header", "#555"),
@@ -120,7 +92,6 @@ READ_ONLY_STYLE = {
     "width": "100%",
 }
 SECTION_TITLE_STYLE = {
-    **TYPOGRAPHY.get("section_title", {}),
     "marginTop": "0.75rem",
     "marginBottom": "0.75rem",
     "color": COLORS.get("text_light", "#f0f0f0"),
@@ -143,7 +114,6 @@ SUBSECTION_TITLE_STYLE = {
     "fontWeight": "bold",
 }
 BUTTON_STYLE_SECONDARY = {
-    **COMPONENTS.get("button_secondary", {}),
     "padding": "0.2rem 0.3rem", # Ajustar se necessário
     "fontSize": "0.75rem", # Ajustar para caber
     "height": "32px", # Mesma altura dos inputs
@@ -156,23 +126,33 @@ BUTTON_STYLE_SECONDARY = {
     # "border": f"1px solid {COLORS.get('border_strong')}"
 }
 CARD_HEADER_STYLE_PRIMARY = {
-    **COMPONENTS.get("card_header", {}),
     "backgroundColor": COLORS.get("primary", "#007bff"),
     "padding": "0.75rem",
     "fontSize": "1.1rem",
     "fontWeight": "bold",
 }
 CARD_BODY_STYLE = {
-    **COMPONENTS.get("card_body", {}),
     "padding": "1rem",
     "backgroundColor": COLORS.get("background_card", "#343a40"),
 }
 CARD_STYLE = {
-    **COMPONENTS.get("card", {}),
     "marginBottom": "1rem",
     "border": f"1px solid {COLORS.get('border_strong', '#adb5bd')}",
     "borderRadius": "5px",
     "boxShadow": "0 4px 6px rgba(0, 0, 0, 0.1)",
+}
+
+# --- COMPONENTS e outros estilos locais robustos ---
+COMPONENTS = {
+    "card": {"backgroundColor": COLORS["background_card"], "border": f'1px solid {COLORS["border"]}', "borderRadius": "4px", "boxShadow": "0 2px 5px rgba(0,0,0,0.25)", "marginBottom": "0.75rem"},
+    "card_header": {"backgroundColor": COLORS["background_card_header"], "color": COLORS["text_header"], "padding": "0.4rem 0.75rem", "fontSize": "1rem", "fontWeight": "bold", "letterSpacing": "0.02em", "textTransform": "uppercase", "borderBottom": f'1px solid {COLORS["border_strong"]}'},
+    "card_body": {"padding": "0.75rem", "backgroundColor": COLORS["background_card"]},
+    "input": {"backgroundColor": COLORS["background_input"], "color": COLORS["text_light"], "border": f'1px solid {COLORS["border"]}', "borderRadius": "3px"},
+    "dropdown": {"backgroundColor": COLORS["background_input"], "color": COLORS["text_light"], "border": f'1px solid {COLORS["border"]}', "borderRadius": "3px"},
+    "read_only": {"backgroundColor": COLORS["background_card_header"], "color": COLORS["text_muted"], "border": f'1px solid {COLORS["border"]}', "borderRadius": "3px"},
+    "button_primary": {"backgroundColor": COLORS["primary"], "color": COLORS["text_header"]},
+    "button_secondary": {"backgroundColor": COLORS["secondary"], "color": COLORS["text_header"]},
+    "container": {"padding": "0.5rem 0.5rem 2rem 0.5rem", "maxWidth": "1400px", "margin": "0 auto"},
 }
 
 
@@ -241,15 +221,15 @@ def create_transformer_inputs_layout():
                                 [
                                     dbc.Col([
                                         dbc.Label("Potência (MVA):", style=LABEL_STYLE, html_for="potencia_mva"),
-                                        dbc.Input(type="number", id="potencia_mva", placeholder="MVA", style=INPUT_STYLE, step=0.1, max=9999.9, persistence=True, persistence_type="local")
+                                        dbc.Input(type="number", id="potencia_mva", placeholder="MVA", style=INPUT_STYLE, step=0.1, max=9999.9)
                                     ]),
                                     dbc.Col([
                                         dbc.Label("Frequência (Hz):", style=LABEL_STYLE, html_for="frequencia"),
-                                        dbc.Input(type="number", id="frequencia", placeholder="Hz", style=INPUT_STYLE, value=60, persistence=True, persistence_type="local")
+                                        dbc.Input(type="number", id="frequencia", placeholder="Hz", style=INPUT_STYLE, value=60)
                                     ]),
                                     dbc.Col([
                                         dbc.Label("Tipo Trafo:", style=LABEL_STYLE, html_for="tipo_transformador"),
-                                        dcc.Dropdown(id="tipo_transformador", options=[{"label": "Trifásico", "value": "Trifásico"}, {"label": "Monofásico", "value": "Monofásico"}], value="Trifásico", clearable=False, style=DROPDOWN_STYLE, persistence=True, persistence_type="local", className="dash-dropdown-dark")
+                                        dcc.Dropdown(id="tipo_transformador", options=[{"label": "Trifásico", "value": "Trifásico"}, {"label": "Monofásico", "value": "Monofásico"}], value="Trifásico", clearable=False, style=DROPDOWN_STYLE, className="dash-dropdown-dark")
                                     ]),
                                     dbc.Col([
                                         dbc.Label("Grupo Ligação:", style=LABEL_STYLE, html_for="grupo_ligacao"),
@@ -261,11 +241,11 @@ def create_transformer_inputs_layout():
                                     ]),
                                     dbc.Col([
                                         dbc.Label("Tipo Isolamento:", style=LABEL_STYLE, html_for="tipo_isolamento"),
-                                        dcc.Dropdown(id="tipo_isolamento", options=[{"label": "Uniforme", "value": "Uniforme"}, {"label": "Progressivo", "value": "Progressivo"}], value="Uniforme", clearable=False, style=DROPDOWN_STYLE, persistence=True, persistence_type="local", className="dash-dropdown-dark")
+                                        dcc.Dropdown(id="tipo_isolamento", options=[{"label": "Uniforme", "value": "Uniforme"}, {"label": "Progressivo", "value": "Progressivo"}], value="Uniforme", clearable=False, style=DROPDOWN_STYLE, className="dash-dropdown-dark")
                                     ]),
                                     dbc.Col([
                                         dbc.Label("Norma:", style=LABEL_STYLE, html_for="norma_iso"),
-                                        dcc.Dropdown(id="norma_iso", options=[{"label": "IEC NBR 5356", "value": "IEC"},{"label": "IEEE C57.12", "value": "IEEE"}], value="IEC", clearable=False, style=DROPDOWN_STYLE, persistence=True, persistence_type="local", className="dash-dropdown-dark")
+                                        dcc.Dropdown(id="norma_iso", options=[{"label": "IEC NBR 5356", "value": "IEC"},{"label": "IEEE C57.12", "value": "IEEE"}], value="IEC", clearable=False, style=DROPDOWN_STYLE, className="dash-dropdown-dark")
                                     ]),
                                 ],
                                 className="g-2 mb-3", # g-2 para gutter (espaçamento), mb-3 para margem inferior

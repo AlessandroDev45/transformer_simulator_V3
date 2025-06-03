@@ -64,23 +64,23 @@ from utils.constants import DEFAULT_FREQUENCY, EPSILON_0, MU_0, PI
 # Importação de Estilos
 # -----------------------------------------------------------------------------
 # Importar estilos centralizados de utils/styles.py
-from utils.styles import COLORS, COMPONENTS, MESSAGE_STYLES, SPACING, TABLE_STYLES, TYPOGRAPHY
+# from utils.styles import COLORS, COMPONENTS, MESSAGE_STYLES, SPACING, TABLE_STYLES, TYPOGRAPHY  # REMOVIDO
 
-# Aliases para compatibilidade com código existente
-colors = COLORS
-TABLE_HEADER_STYLE_SM = TABLE_STYLES["header_sm"]
-TABLE_HEADER_STYLE_MD = TABLE_STYLES["header_md"]
-TABLE_PARAM_STYLE_SM = TABLE_STYLES["param_sm"]
-TABLE_PARAM_STYLE_MD = TABLE_STYLES["param_md"]
-TABLE_VALUE_STYLE_SM = TABLE_STYLES["value_sm"]
-TABLE_VALUE_STYLE_MD = TABLE_STYLES["value_md"]
-TABLE_STATUS_STYLE = TABLE_STYLES["status"]
-TABLE_WRAPPER_STYLE = TABLE_STYLES["wrapper"]
-PLACEHOLDER_STYLE = MESSAGE_STYLES["placeholder"]
-ERROR_STYLE = MESSAGE_STYLES["error"]
-LABEL_STYLE = TYPOGRAPHY["label"]
-INPUT_STYLE = COMPONENTS["input"]
-DROPDOWN_STYLE = COMPONENTS["dropdown"]
-READ_ONLY_STYLE = COMPONENTS["read_only"]
-SECTION_TITLE_STYLE = TYPOGRAPHY["section_title"]
-CARD_HEADER_STYLE = COMPONENTS["card_header"]
+# Remova aliases e variáveis relacionadas a estilos que dependiam de utils.styles
+# colors = COLORS
+# TABLE_HEADER_STYLE_SM = TABLE_STYLES["header_sm"]
+# TABLE_HEADER_STYLE_MD = TABLE_STYLES["header_md"]
+# TABLE_PARAM_STYLE_SM = TABLE_STYLES["param_sm"]
+# TABLE_PARAM_STYLE_MD = TABLE_STYLES["param_md"]
+# TABLE_VALUE_STYLE_SM = TABLE_STYLES["value_sm"]
+# TABLE_VALUE_STYLE_MD = TABLE_STYLES["value_md"]
+# TABLE_STATUS_STYLE = TABLE_STYLES["status"]
+# TABLE_WRAPPER_STYLE = TABLE_STYLES["wrapper"]
+# PLACEHOLDER_STYLE = MESSAGE_STYLES["placeholder"]
+# ERROR_STYLE = MESSAGE_STYLES["error"]
+# LABEL_STYLE = TYPOGRAPHY["label"]
+# INPUT_STYLE = COMPONENTS["input"]
+# DROPDOWN_STYLE = COMPONENTS["dropdown"]
+# READ_ONLY_STYLE = COMPONENTS["read_only"]
+# SECTION_TITLE_STYLE = TYPOGRAPHY["section_title"]
+# CARD_HEADER_STYLE = COMPONENTS["card_header"]

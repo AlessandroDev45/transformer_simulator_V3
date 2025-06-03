@@ -24,7 +24,11 @@ from app_core.calculations import calculate_capacitive_load  # Função de cálc
 from components.formatters import (  # Formatadores
     format_parameter_value,
 )
-from layouts import COLORS  # Para estilos padronizados
+# Remove: from layouts import COLORS  # Para estilos padronizados
+COLORS = {
+    "primary": "#26427A",
+    "accent": "#007BFF",
+}
 from utils import constants  # Para RESOANT_SYSTEM_CONFIGS
 from utils.store_diagnostics import convert_numpy_types
 from components.validators import validate_dict_inputs  # Para validação
@@ -334,10 +338,8 @@ def applied_voltage_calculate_and_analyze(
     inputs = {
         "Cap. AT (pF)": cap_at_pf,
         "Cap. BT (pF)": cap_bt_pf,
-        "Cap. Terciário (pF)": cap_ter_pf,
         "Tensão AT (kV)": tensao_at_kv_str,
         "Tensão BT (kV)": tensao_bt_kv_str,
-        "Tensão Terciário (kV)": tensao_ter_kv_str,
         "Frequência (Hz)": frequencia_str,
     }
     # Cap Ter e Tensão Ter são opcionais
@@ -348,10 +350,8 @@ def applied_voltage_calculate_and_analyze(
     validation_rules = {
         "Cap. AT (pF)": {"required": True, "min": 0},
         "Cap. BT (pF)": {"required": True, "min": 0},
-        "Cap. Terciário (pF)": {"min": 0},
         "Tensão AT (kV)": {"required": True, "positive": True},
         "Tensão BT (kV)": {"required": True, "positive": True},
-        "Tensão Terciário (kV)": {"positive": True},
         "Frequência (Hz)": {"required": True, "positive": True},
     }
     # Valida os inputs numéricos principais
@@ -378,10 +378,8 @@ def applied_voltage_calculate_and_analyze(
         # Converte inputs validados com valores padrão para capacitâncias
         cap_at = num_inputs["Cap. AT (pF)"] or 1000  # Valor padrão de 1000 pF se for None
         cap_bt = num_inputs["Cap. BT (pF)"] or 1000  # Valor padrão de 1000 pF se for None
-        cap_ter = num_inputs["Cap. Terciário (pF)"] or 1000  # Valor padrão de 0 pF se for None
         tensao_at_kv = num_inputs["Tensão AT (kV)"]
         tensao_bt_kv = num_inputs["Tensão BT (kV)"]
-        tensao_ter_kv = num_inputs["Tensão Terciário (kV)"]
         freq_hz = num_inputs["Frequência (Hz)"]
         # Usa valores já tratados para terciário
         cap_ter = cap_ter_pf_val or 0  # Garante que não seja None
@@ -392,8 +390,6 @@ def applied_voltage_calculate_and_analyze(
             log.info("[CALC Applied] Usando valor padrão para Cap. AT (pF): 1000 pF")
         if num_inputs["Cap. BT (pF)"] is None or num_inputs["Cap. BT (pF)"] == 0:
             log.info("[CALC Applied] Usando valor padrão para Cap. BT (pF): 1000 pF")
-        if num_inputs["Cap. Terciário (pF)"] is None or num_inputs["Cap. Terciário (pF)"] == 0:
-            log.info("[CALC Applied] Usando valor padrão para Cap. Terciário (pF): 0 pF")
 
         # Registra os valores que serão usados nos cálculos
         print("=" * 80)
@@ -414,10 +410,6 @@ def applied_voltage_calculate_and_analyze(
         # Adiciona capacitância fixa dependendo da tensão
         # Para tensão > 450 kV: adicionar 330 pF (capacitância do divisor de tensão)
         # Para tensão ≤ 450 kV: adicionar 660 pF (capacitância do divisor de tensão)
-        tensao_at_kv = tensao_at_kv or 0  # Default to 0 if None
-        tensao_bt_kv = tensao_bt_kv or 0  # Default to 0 if None
-        tensao_ter_kv = tensao_ter_kv or 0  # Default to 0 if None
-
         cap_at_adicional = 330 if tensao_at_kv > 450 else 660
         cap_bt_adicional = 330 if tensao_bt_kv > 450 else 660
         cap_ter_adicional = 330 if tensao_ter_kv > 450 else 660
@@ -436,20 +428,20 @@ def applied_voltage_calculate_and_analyze(
             log.debug(
                 f"[CALC Applied] Capacitância Terciário ajustada: {cap_ter} + {cap_ter_adicional} = {cap_ter_ajustado} pF (divisor de tensão)"
             )
-        zc_at, i_at_ma, p_at_kvar = calculate_capacitive_load(
-            cap_at_ajustado, (tensao_at_kv or 0) * 1000, freq_hz
+
+        log.debug(
+            f"[CALC Applied] Chamando calculate_capacitive_load para AT com cap_at={cap_at_ajustado}, tensao_at_kv={tensao_at_kv}, freq_hz={freq_hz}"
         )
-        
         zc_at, i_at_ma, p_at_kvar = calculate_capacitive_load(
             cap_at_ajustado, tensao_at_kv * 1000, freq_hz
         )
         log.debug(
             f"[CALC Applied] calculate_capacitive_load para AT retornou: zc_at={zc_at}, i_at_ma={i_at_ma}, p_at_kvar={p_at_kvar}"
         )
-        zc_bt, i_bt_ma, p_bt_kvar = calculate_capacitive_load(
-            cap_bt_ajustado, (tensao_bt_kv or 0) * 1000, freq_hz
+
+        log.debug(
+            f"[CALC Applied] Chamando calculate_capacitive_load para BT com cap_bt={cap_bt_ajustado}, tensao_bt_kv={tensao_bt_kv}, freq_hz={freq_hz}"
         )
-        
         zc_bt, i_bt_ma, p_bt_kvar = calculate_capacitive_load(
             cap_bt_ajustado, tensao_bt_kv * 1000, freq_hz
         )
@@ -457,17 +449,17 @@ def applied_voltage_calculate_and_analyze(
             f"[CALC Applied] calculate_capacitive_load para BT retornou: zc_bt={zc_bt}, i_bt_ma={i_bt_ma}, p_bt_kvar={p_bt_kvar}"
         )
 
-        zc_ter, i_ter_ma, p_ter_kvar = calculate_capacitive_load(
-            cap_ter_ajustado, (tensao_ter_kv or 0) * 1000, freq_hz
-        
-        )
-        zc_ter, i_ter_ma, p_ter_kvar = calculate_capacitive_load(
-            cap_ter_ajustado, tensao_ter_kv * 1000, freq_hz
-        )
-        log.debug(
-            f"[CALC Applied] calculate_capacitive_load para Terciário retornou: zc_ter={zc_ter}, i_ter_ma={i_ter_ma}, p_ter_kvar={p_ter_kvar}"
-        )
-        if cap_ter <= 0:
+        if cap_ter_ajustado > 0:
+            log.debug(
+                f"[CALC Applied] Chamando calculate_capacitive_load para Terciário com cap_ter={cap_ter_ajustado}, tensao_ter_kv={tensao_ter_kv}, freq_hz={freq_hz}"
+            )
+            zc_ter, i_ter_ma, p_ter_kvar = calculate_capacitive_load(
+                cap_ter_ajustado, tensao_ter_kv * 1000, freq_hz
+            )
+            log.debug(
+                f"[CALC Applied] calculate_capacitive_load para Terciário retornou: zc_ter={zc_ter}, i_ter_ma={i_ter_ma}, p_ter_kvar={p_ter_kvar}"
+            )
+        else:
             zc_ter, i_ter_ma, p_ter_kvar = None, None, None
             log.debug("[CALC Applied] Terciário não calculado (cap_ter <= 0)")
 
@@ -637,15 +629,15 @@ def applied_voltage_calculate_and_analyze(
                 "cap_at_ajustado_pf": cap_at_ajustado,
                 "cap_bt_ajustado_pf": cap_bt_ajustado,
                 "cap_ter_ajustado_pf": cap_ter_ajustado,
-                "tensao_at_kv": data_dict.get(
+                "tensao_at_kv": transformer_data.get(
                     "teste_tensao_aplicada_at"
-                ),  # Usa o data_dict para valores de tensão
-                "tensao_bt_kv": data_dict.get(
+                ),  # Usa valor do transformer_data
+                "tensao_bt_kv": transformer_data.get(
                     "teste_tensao_aplicada_bt"
-                ),  # Usa o data_dict para valores de tensão
-                "tensao_ter_kv": data_dict.get(
+                ),  # Usa valor do transformer_data
+                "tensao_ter_kv": transformer_data.get(
                     "teste_tensao_aplicada_terciario"
-                ),  # Usa o data_dict para valores de tensão
+                ),  # Usa valor do transformer_data
                 "frequencia_hz": frequencia_str,
             },
             "resultados": {
@@ -794,7 +786,7 @@ def load_applied_voltage_inputs(pathname, applied_voltage_store_data):
     clean_path = normalize_pathname(pathname) if pathname else ""
     if clean_path != ROUTE_APPLIED_VOLTAGE and triggered_id == 'url':
         log.debug(f"[LOAD AppliedInputs] Não na página de Tensão Aplicada ({clean_path}). Abortando trigger de URL.")
-        return dash.no_update
+        raise dash.no_update
 
     # Se o trigger foi a mudança de URL e estamos na página correta, ou se foi a mudança do store, atualiza.
     if (triggered_id == 'url' and clean_path == ROUTE_APPLIED_VOLTAGE) or triggered_id == 'applied-voltage-store':
@@ -831,7 +823,7 @@ def load_applied_voltage_inputs(pathname, applied_voltage_store_data):
         log.info(f"[LOAD AppliedInputs] Valores carregados: cap_at={cap_at}, cap_bt={cap_bt}, cap_ter={cap_ter}")
         return cap_at, cap_bt, cap_ter
 
-    return dash.no_update
+    raise dash.no_update
 
 
 # Função para registrar todos os callbacks
@@ -842,11 +834,13 @@ def register_applied_voltage_callbacks(app):
     Args:
         app: A instância do aplicativo Dash
     """
-    log.info("Registrando callbacks de tensão aplicada...")    # Callback para atualizar as informações do transformador removido
+    log.info("Registrando callbacks de tensão aplicada...")
+
+    # Callback para atualizar as informações do transformador removido
     # Este callback foi removido pois a atualização é feita pelo callback global em global_updates.py
 
     # Callback para atualizar os displays de tensão e frequência
-    @app.callback(
+    app.callback(
         [
             Output("tensao-at-display", "children"),
             Output("tensao-bt-display", "children"),
@@ -855,43 +849,23 @@ def register_applied_voltage_callbacks(app):
         ],
         [Input("transformer-inputs-store", "data")],
         prevent_initial_call=False,
-    )
-    def update_transformer_info_displays(transformer_data):
-        if not transformer_data or not isinstance(transformer_data, dict):
-            log.warning("[Display Applied] Dados do transformador inválidos ou ausentes")
-            return ["-", "-", "-", "60 Hz"]
-        
-        # Verificar se os dados estão aninhados em transformer_data
-        if "transformer_data" in transformer_data and isinstance(transformer_data["transformer_data"], dict):
-            # Usar os dados aninhados
-            data_dict = transformer_data["transformer_data"]
-            log.debug(f"[Display Applied] Usando dados aninhados em transformer_data: {list(data_dict.keys()) if isinstance(data_dict, dict) else 'não é dict'}")
-        else:
-            # Usar os dados diretamente
-            data_dict = transformer_data
-            log.debug(f"[Display Applied] Usando dados diretamente do dicionário principal: {list(data_dict.keys()) if isinstance(data_dict, dict) else 'não é dict'}")
-            
-        # Obtém os valores de tensão do dicionário apropriado
-        tensao_at_kv = data_dict.get("teste_tensao_aplicada_at", "-")
-        tensao_bt_kv = data_dict.get("teste_tensao_aplicada_bt", "-")
-        tensao_ter_kv = data_dict.get("teste_tensao_aplicada_terciario", "-")
-        frequencia = data_dict.get("frequencia", 60)
-        
-        log.debug(f"[Display Applied] Valores obtidos: AT={tensao_at_kv}, BT={tensao_bt_kv}, Ter={tensao_ter_kv}, Freq={frequencia}")
-        
-        return [
-            f"{tensao_at_kv} kV",
-            f"{tensao_bt_kv} kV",
-            f"{tensao_ter_kv} kV",
-            f"{frequencia} Hz",
+    )(
+        lambda transformer_data: ["-", "-", "-", "60 Hz"]
+        if not transformer_data or not isinstance(transformer_data, dict)
+        else [
+            f"{transformer_data.get('teste_tensao_aplicada_at', '-')} kV",
+            f"{transformer_data.get('teste_tensao_aplicada_bt', '-')} kV",
+            f"{transformer_data.get('teste_tensao_aplicada_terciario', '-')} kV",
+            f"{transformer_data.get('frequencia', 60)} Hz",
         ]
+    )
 
     # Removido callback para preencher campos de tensão - agora usamos displays em vez de campos de entrada
 
     # Removido callback que causava ciclo de dependência
 
     # Callback para carregar dados iniciais quando a página é carregada
-    @app.callback(
+    app.callback(
         [
             Output("cap-at", "value"),
             Output("cap-bt", "value"),
@@ -902,12 +876,10 @@ def register_applied_voltage_callbacks(app):
             Input("applied-voltage-store", "data"),
         ],
         prevent_initial_call=False,
-    )
-    def load_applied_voltage_inputs_wrapper(pathname, applied_voltage_store_data):
-        return load_applied_voltage_inputs(pathname, applied_voltage_store_data)
+    )(load_applied_voltage_inputs)
 
     # Callback principal para cálculo e análise de viabilidade
-    @app.callback(
+    app.callback(
         [
             Output("applied-voltage-results", "children"),
             Output("resonant-system-recommendation", "children"),
@@ -924,9 +896,7 @@ def register_applied_voltage_callbacks(app):
             State("applied-voltage-store", "data"),
         ],  # Lê estado atual do store
         prevent_initial_call=True,
-    )
-    def applied_voltage_calculate_and_analyze_wrapper(n_clicks, cap_at_pf, cap_bt_pf, cap_ter_pf, transformer_data, current_store_data):
-        return applied_voltage_calculate_and_analyze(n_clicks, cap_at_pf, cap_bt_pf, cap_ter_pf, transformer_data, current_store_data)
+    )(applied_voltage_calculate_and_analyze)
 
     log.info("Callbacks de tensão aplicada registrados com sucesso.")
 
@@ -935,16 +905,6 @@ def register_applied_voltage_callbacks(app):
 if __name__ == "__main__":
     print("Testando o módulo de tensão aplicada...")
 
-    # Import Dash and create an app instance for testing
-    from dash import Dash
-    app = Dash(__name__)
-
-    # Register the callbacks with the app
-    register_applied_voltage_callbacks(app)
-
-    # Run the app for testing (optional)
-    app.run_server(debug=True)
-
     # Teste das funções auxiliares
     print("\nTestando a função safe_float:")
     test_values = [10, "20", "abc", None, ""]
@@ -952,3 +912,56 @@ if __name__ == "__main__":
         result = safe_float(val)
         print(f"  safe_float({val}) = {result}")
 
+    print(
+        "\nTestando a função analyze_resonant_system_viability com prioridade para Módulos 1||2||3 (3 Par.):"
+    )
+    test_cases = [
+        (
+            0.5,
+            100,
+            "AT",
+        ),  # Caso típico - Deve usar outra configuração (capacitância abaixo do mínimo para Módulos 1||2||3)
+        (5.0, 500, "BT"),  # Tensão alta - Deve ser inviável (acima do máximo)
+        (0.1, 50, "Terciário"),  # Capacitância baixa - Deve usar outra configuração
+        (None, 100, "AT"),  # Valor inválido - Deve retornar erro
+        # Testes específicos para Módulos 1||2||3 (3 Par.)
+        (
+            3.0,
+            450,
+            "AT",
+        ),  # Dentro do range para Módulos 1||2||3 (3 Par.) 450kV - Deve ser recomendado
+        (
+            20.0,
+            450,
+            "BT",
+        ),  # Dentro do range para Módulos 1||2||3 (3 Par.) 450kV - Deve ser recomendado
+        (
+            25.0,
+            270,
+            "Terciário",
+        ),  # Dentro do range para Módulos 1||2||3 (3 Par.) 270kV - Deve ser recomendado
+        (
+            35.0,
+            270,
+            "AT",
+        ),  # Dentro do range para Módulos 1||2||3 (3 Par.) 270kV - Deve ser recomendado
+        # Testes de limites
+        (
+            1.9,
+            450,
+            "BT",
+        ),  # Abaixo do mínimo para Módulos 1||2||3 (3 Par.) - Deve usar outra configuração
+        (
+            23.7,
+            450,
+            "Terciário",
+        ),  # No limite entre as duas configurações - Deve usar Módulos 1||2||3 (3 Par.) 270kV
+        (39.4, 270, "AT"),  # Acima do máximo para Módulos 1||2||3 (3 Par.) - Deve ser inviável
+        (30.0, 300, "BT"),  # Tensão entre 270kV e 450kV - Deve ser inviável
+    ]
+    for cap, voltage, winding in test_cases:
+        result = analyze_resonant_system_viability(cap, voltage, winding)
+        print(f"  Análise para {winding}: Cap={cap}nF, Tensão={voltage}kV")
+        print(f"    Resultado: {result['viabilidade']} - {result['recommendation']}")
+
+    print("\nTeste concluído com sucesso!")

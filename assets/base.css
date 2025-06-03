@@ -1,5 +1,9 @@
-/* assets/base.css */
+/* assets/base.css - Reset, utilitários e variáveis globais para toda a aplicação Dash */
+
+/* Reset universal e box-sizing */
 * { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Importa utilitários, componentes e variáveis de tema */
 @import url('utilities.css');
 @import url('components.css');
 @import url('theme-dark-vars.css'); /* Importa vars escuras como padrão */
@@ -11,39 +15,310 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.5;
-    transition: background-color 0.3s ease, color 0.3s ease; /* Transição base */
+    background: var(--dark-background-main, #181a1b);
+    color: var(--dark-text-light, #f8f9fa);
+    transition: background-color 0.3s, color 0.3s;
 }
 
-a { text-decoration: none; }
-a:hover { text-decoration: underline; }
-
-/* Estilos de tabela mais genéricos (para tabelas não-dbc) */
-table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
-th, td { padding: 0.5rem; border: 1px solid var(--dark-border); /* Usa var padrão */ }
-th { font-weight: bold; text-align: left; }
-
-/* Transições para alternância de tema */
-.theme-transition,
-.theme-transition *,
-.theme-transition *:before,
-.theme-transition *:after {
-    transition: all 0.3s ease-in-out !important;
-    transition-delay: 0 !important;
+html, body, #root, #app, .dash-app {
+    min-height: 100vh;
+    width: 100vw;
 }
 
-/* Scrollbar Styling (Dark Theme Default) */
+/* Links */
+a, .dbc-link {
+    color: var(--dark-info, #0dcaf0);
+    text-decoration: underline dotted;
+    transition: color 0.2s;
+}
+a:hover, .dbc-link:hover {
+    color: #fff;
+    background: var(--dark-info, #0dcaf0);
+    text-decoration: underline;
+}
+
+/* Tabelas globais */
+table, .dbc-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+    background: var(--dark-background-card, #23272b);
+    color: var(--dark-text-light, #f8f9fa);
+    border-radius: 4px;
+    font-size: 0.97rem;
+}
+th, td {
+    padding: 0.5rem;
+    border: 1px solid var(--dark-border, #495057);
+}
+th {
+    font-weight: bold;
+    text-align: left;
+    background: var(--dark-background-card-header, #212529);
+    color: var(--dark-text-light, #f8f9fa);
+}
+
+/* Inputs globais */
+input, select, textarea, .dbc-input, .dbc-dropdown {
+    background: var(--dark-background-input, #343a40) !important;
+    color: var(--dark-text-light, #f8f9fa) !important;
+    border: 1px solid var(--dark-border, #495057) !important;
+    border-radius: 3px !important;
+    font-size: 0.97rem;
+    padding: 0.25rem 0.5rem;
+}
+input:disabled, select:disabled, textarea:disabled {
+    background: #444 !important;
+    color: #aaa !important;
+    cursor: not-allowed;
+}
+input[readonly], .dbc-input[readonly] {
+    background: #444 !important;
+    color: #aaa !important;
+    cursor: not-allowed;
+}
+input::placeholder, .dbc-input::placeholder {
+    color: var(--dark-text-muted, #adb5bd) !important;
+    opacity: 1;
+    font-style: italic;
+}
+
+/* Botões globais */
+.btn, .dbc-btn {
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 0.97rem;
+    transition: background 0.2s, color 0.2s;
+    padding: 0.4rem 1.1rem;
+}
+.btn-info, .dbc-btn-info {
+    background: var(--dark-info, #0dcaf0) !important;
+    color: #222 !important;
+}
+.btn-danger, .dbc-btn-danger {
+    background: var(--dark-danger, #dc3545) !important;
+    color: #fff !important;
+}
+.btn:disabled, .dbc-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Cards globais */
+.card, .dbc-card {
+    background: var(--dark-background-card, #23272b) !important;
+    color: var(--dark-text-light, #f8f9fa) !important;
+    border-radius: 6px;
+    border: 1px solid var(--dark-border, #495057);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 1.2rem;
+}
+.card-header, .dbc-card-header {
+    background: var(--dark-background-card-header, #212529) !important;
+    color: var(--dark-text-light, #f8f9fa) !important;
+    font-weight: bold;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--dark-border, #495057);
+    padding: 0.7rem 1.2rem;
+}
+.card-body, .dbc-card-body {
+    background: transparent !important;
+    color: inherit;
+    padding: 1.2rem 1.2rem 1rem 1.2rem;
+}
+
+/* Placeholders, textos de ajuda, muted */
+.placeholder, .text-muted, .help-text, .form-text {
+    color: var(--dark-text-muted, #adb5bd) !important;
+    font-style: italic;
+    font-size: 0.92em;
+}
+
+/* Scrollbar customizado (dark e light) */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: var(--dark-background-card); }
-::-webkit-scrollbar-thumb { background: var(--dark-border-strong); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--dark-secondary); }
-
-/* Scrollbar Styling (Light Theme Override) */
-body.light-theme ::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--dark-border-strong, #343a40); border-radius: 4px; }
+::-webkit-scrollbar-track { background: var(--dark-background-card, #23272b); }
+::-webkit-scrollbar-thumb:hover { background: var(--dark-secondary, #6c757d); }
 body.light-theme ::-webkit-scrollbar-track { background: var(--light-background-card-header); }
-body.light-theme ::-webkit-scrollbar-thumb { background: var(--light-border-strong); border-radius: 4px; }
+body.light-theme ::-webkit-scrollbar-thumb { background: var(--light-border-strong); }
 body.light-theme ::-webkit-scrollbar-thumb:hover { background: var(--light-secondary); }
 
-/* Specific override for ReportLab table text color */
-/* Apply default text color based on theme */
-.reportlab-table td { color: var(--dark-text-light); /* Default dark theme text color */ }
-body.light-theme .reportlab-table td { color: var(--light-text-dark) !important; /* Override for light theme */ }
+/* Responsividade mínima para mobile */
+@media (max-width: 600px) {
+    .card, .dbc-card, .card-body, .dbc-card-body {
+        padding: 0.5rem !important;
+    }
+    th, td {
+        font-size: 0.85rem;
+        padding: 0.3rem;
+    }
+}
+
+/* Abas do Dash Bootstrap */
+.nav-tabs .nav-link.active, .dbc-tabs .nav-link.active {
+    background: var(--dark-background-card-header, #212529) !important;
+    color: var(--dark-text-light, #f8f9fa) !important;
+    border-bottom: 2px solid var(--dark-info, #0dcaf0) !important;
+}
+
+/* Alertas globais */
+.alert, .dbc-alert {
+    border-radius: 4px;
+    font-size: 1rem;
+    padding: 0.7rem 1.2rem;
+}
+
+/* Títulos de seção globais */
+.section-title, .dbc-section-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--dark-info, #0dcaf0);
+    margin: 1.2rem 0 0.7rem 0;
+    letter-spacing: 0.01em;
+}
+
+/* Botões de ajuda globais */
+.help-button, .dbc-help-button {
+    background: transparent;
+    color: var(--dark-info, #0dcaf0);
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0 0.3rem;
+}
+.help-button:hover, .dbc-help-button:hover {
+    color: #fff;
+    background: var(--dark-info, #0dcaf0);
+}
+
+/* Dropdowns escuros do Dash */
+.Select-menu-outer, .Select-menu {
+    background: var(--dark-background-card, #23272b) !important;
+    color: var(--dark-text-light, #f8f9fa) !important;
+}
+
+/* Tooltips globais */
+.tooltip-inner, .dbc-tooltip-inner {
+    background: var(--dark-background-card-header, #212529) !important;
+    color: var(--dark-text-light, #f8f9fa) !important;
+    font-size: 0.95rem;
+}
+
+/* Histórico e logs globais */
+.history-log, .dbc-history-log {
+    font-family: 'Fira Mono', 'Consolas', monospace;
+    font-size: 0.92rem;
+    background: #181a1b;
+    color: #0dcaf0;
+    border-radius: 3px;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    overflow-x: auto;
+}
+
+/* Gráficos Plotly (fundo escuro) */
+.js-plotly-plot .plotly {
+    background: var(--dark-background-card, #23272b) !important;
+}
+
+/* Inputs numéricos com setas */
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+    background: #23272b;
+    color: #0dcaf0;
+}
+
+/* Foco em inputs */
+input:focus, .dbc-input:focus {
+    outline: 2px solid var(--dark-info, #0dcaf0) !important;
+    box-shadow: 0 0 0 2px rgba(13,202,240,0.2) !important;
+}
+
+/* Spinner do Dash */
+.dash-spinner {
+    color: var(--dark-info, #0dcaf0) !important;
+}
+
+/* Responsividade de cards em telas pequenas */
+@media (max-width: 500px) {
+    .card, .dbc-card {
+        margin: 0.5rem 0 !important;
+    }
+}
+
+/* Ajustes para modais, popovers, overlays */
+.modal-content, .dbc-modal-content, .popover, .dbc-popover {
+    background: var(--dark-background-card, #23272b) !important;
+    color: var(--dark-text-light, #f8f9fa) !important;
+    border-radius: 6px;
+    border: 1px solid var(--dark-border, #495057);
+}
+
+/* Ajuste para stepper/etapas */
+.stepper, .dbc-stepper {
+    background: transparent;
+    color: var(--dark-info, #0dcaf0);
+    font-weight: bold;
+    font-size: 1.05rem;
+}
+
+/* Ajuste para badges */
+.badge, .dbc-badge {
+    background: var(--dark-info, #0dcaf0);
+    color: #222;
+    font-weight: bold;
+    border-radius: 2px;
+    padding: 0.2em 0.6em;
+    font-size: 0.92em;
+}
+
+/* Ajuste para switches/toggles */
+.form-switch .form-check-input, .dbc-switch {
+    background: #23272b;
+    border: 1px solid var(--dark-border, #495057);
+}
+
+/* Ajuste para progress bars */
+.progress, .dbc-progress {
+    background: #23272b;
+    border-radius: 4px;
+}
+.progress-bar, .dbc-progress-bar {
+    background: var(--dark-info, #0dcaf0);
+    color: #222;
+}
+
+/* Ajuste para navbars */
+.navbar, .dbc-navbar {
+    background: var(--dark-background-card-header, #212529) !important;
+    color: var(--dark-text-light, #f8f9fa) !important;
+    border-bottom: 1px solid var(--dark-border, #495057);
+}
+
+/* Ajuste para faixas de status */
+.status-bar, .dbc-status-bar {
+    background: var(--dark-info, #0dcaf0);
+    color: #222;
+    font-weight: bold;
+    padding: 0.3rem 1rem;
+    border-radius: 2px;
+    margin-bottom: 0.7rem;
+}
+
+/* Áreas utilitárias globais (usadas em layouts/callbacks) */
+.console-area, .dbc-console-area, .history-area, .dbc-history-area, .instructions-area, .dbc-instructions-area, .normas-table, .dbc-normas-table, .results-area, .dbc-results-area, .observations-area, .dbc-observations-area, .parameters-area, .dbc-parameters-area, .tabs-area, .dbc-tabs-area, .inputs-area, .dbc-inputs-area, .calculation-area, .dbc-calculation-area, .general-parameters-area, .dbc-general-parameters-area, .voltage-level-results-area, .dbc-voltage-level-results-area, .sut-analysis-area, .dbc-sut-analysis-area, .legend-observations-area, .dbc-legend-observations-area, .store-area, .dbc-store-area, .info-panel-area, .dbc-info-panel-area, .error-panel-area, .dbc-error-panel-area, .alert-panel-area, .dbc-alert-panel-area, .success-panel-area, .dbc-success-panel-area {
+    background: #23272b;
+    color: #f8f9fa;
+    border-radius: 4px;
+    font-size: 0.97rem;
+    padding: 0.7rem 1.2rem;
+    margin-bottom: 1rem;
+}
+.error-panel-area, .dbc-error-panel-area { color: #dc3545; }
+.alert-panel-area, .dbc-alert-panel-area { color: #ffc107; }
+.success-panel-area, .dbc-success-panel-area { color: #28a745; }
+.info-panel-area, .dbc-info-panel-area, .results-area, .dbc-results-area, .voltage-level-results-area, .dbc-voltage-level-results-area { color: #0dcaf0; }
+.observations-area, .dbc-observations-area, .legend-observations-area, .dbc-legend-observations-area, .store-area, .dbc-store-area { color: #adb5bd; }
+
+/* Fim do base.css global e utilitário */

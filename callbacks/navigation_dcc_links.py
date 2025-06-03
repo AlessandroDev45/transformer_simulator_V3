@@ -6,10 +6,14 @@ import dash
 import dash_bootstrap_components as dbc
 from dash import Input, Output, State, html
 
-from layouts import COLORS
 from utils.routes import ROUTE_HOME, ROUTE_LABELS, VALID_ROUTES, is_valid_route, normalize_pathname
 
 log = logging.getLogger(__name__)
+
+COLORS = {
+    "primary": "#26427A",
+    "accent": "#007BFF",
+}
 
 
 # --- Funções de Fallback e Importações Seguras ---
@@ -291,8 +295,8 @@ def update_active_link_style(pathname):
             # Se o link corresponder à rota atual, aplica o estilo de link ativo
             if route == clean_path:
                 style = {
-                    "backgroundColor": COLORS["primary"],
-                    "borderLeft": f"3px solid {COLORS['accent']}",
+                    "backgroundColor": COLORS.get("primary"),
+                    "borderLeft": f"3px solid {COLORS.get('accent')}",
                     "fontWeight": "bold",
                     "color": "white",
                     "fontSize": "0.75rem",

@@ -4,15 +4,12 @@ import dash_bootstrap_components as dbc
 from dash import dcc, html
 import logging # Adicionado para log
 import plotly.graph_objects as go # Importação para criar gráficos
-from layouts import COLORS, TYPOGRAPHY, COMPONENTS, SPACING
 
 # Importar componentes reutilizáveis e constantes
 # Certifique-se que os imports abaixo estão corretos e os módulos/constantes existem
 try:
-    from components.ui_elements import create_labeled_input # Exemplo, ajuste se necessário
     from utils.constants import GENERATOR_CONFIGURATIONS, SHUNT_OPTIONS, INDUCTORS_OPTIONS
     from components.transformer_info_template import create_transformer_info_panel
-    from components.help_button import create_help_button
     import config # Importar config para usar as constantes de configuração
     from app import app # Para acessar o cache da aplicação
 except ImportError as e:
@@ -24,6 +21,78 @@ except ImportError as e:
     INDUCTORS_OPTIONS = [{"label": "Nenhum", "value": 0}] # Exemplo de fallback
     # A importação de 'config' geralmente é crucial, pode lançar um erro se falhar
 
+# Definição local de fallback para estilos
+COLORS = {
+    # Paleta escura completa, cobrindo todas as chaves usadas no projeto
+    "primary": "#26427A",
+    "secondary": "#6c757d",
+    "accent": "#00BFFF",
+    "accent_alt": "#FFD700",
+    "background_main": "#1a1a1a",
+    "background_card": "#2c2c2c",
+    "background_card_header": "#1f1f1f",
+    "background_input": "#3a3a3a",
+    "background_header": "#1f1f1f",
+    "background_faint": "#333333",
+    "text_light": "#e0e0e0",
+    "text_dark": "#e0e0e0",
+    "text_muted": "#a0a0a0",
+    "text_header": "#FFFFFF",
+    "border": "#444444",
+    "border_light": "#555555",
+    "border_strong": "#666666",
+    "success": "#28a745",
+    "danger": "#dc3545",
+    "warning": "#ffc107",
+    "info": "#00BFFF",
+    "pass": "#28a745",
+    "fail": "#dc3545",
+    "pass_bg": "rgba(40, 167, 69, 0.2)",
+    "fail_bg": "rgba(220, 53, 69, 0.2)",
+    "warning_bg": "rgba(255, 193, 7, 0.2)",
+}
+TYPOGRAPHY = {
+    "section_title": {
+        "fontWeight": "bold",
+        "fontFamily": "Arial, sans-serif",
+        "color": "#222",
+        "fontSize": "1.1rem",
+    },
+    "card_header": {
+        "fontWeight": "bold",
+        "fontFamily": "Arial, sans-serif",
+        "color": "#f8f9fa",
+        "fontSize": "1rem",
+        "letterSpacing": "0.02em",
+        "textTransform": "uppercase",
+        "margin": 0,
+    },
+}
+COMPONENTS = {
+    "card_header": {
+        "backgroundColor": COLORS["background_card_header"],
+        "color": COLORS["text_light"],
+        "fontWeight": "bold",
+        "fontSize": "1rem",
+        "padding": "0.5rem 1rem",
+    },
+    "card_body": {
+        "padding": "0.75rem",
+        "backgroundColor": COLORS["background_card"],
+        "color": COLORS["text_light"]
+    },
+    "card": {
+        "backgroundColor": COLORS["background_card"],
+        "border": f'1px solid {COLORS["border"]}',
+        "borderRadius": "4px",
+        "boxShadow": "0 2px 5px rgba(0,0,0,0.25)",
+        "marginBottom": "0.75rem"
+    }
+}
+SPACING = {
+    "section": "1.5rem 0",
+    "card": "1rem 0.5rem",
+}
 
 # Estilos locais usando os estilos padronizados
 section_title_style = TYPOGRAPHY['section_title']
@@ -45,7 +114,24 @@ tab_label_style = {
 # Estilo para os headers dos cards
 card_header_style = COMPONENTS['card_header']
 
-def create_impulse_layout():
+def create_labeled_input(label, input_id, input_type="number", value=None, min=None, max=None, step=None):
+    from dash import dcc, html
+    import dash_bootstrap_components as dbc
+    input_kwargs = {"id": input_id, "type": input_type, "persistence": True, "persistence_type": "local"}
+    if value is not None:
+        input_kwargs["value"] = value
+    if min is not None:
+        input_kwargs["min"] = min
+    if max is not None:
+        input_kwargs["max"] = max
+    if step is not None:
+        input_kwargs["step"] = step
+    return html.Div([
+        html.Label(label, style={"fontSize": "0.75rem", "color": COLORS["text_light"]}),
+        dbc.Input(style={"fontSize": "0.75rem", "height": "28px", "backgroundColor": COLORS["background_input"], "color": COLORS["text_light"]}, **input_kwargs)
+    ])
+
+def create_impulse_layout(app=None):
     """Creates the layout component for the Impulse Simulation section.
 
     Esta função cria o layout da seção de Simulação de Ensaios de Impulso e inclui
@@ -61,16 +147,11 @@ def create_impulse_layout():
     # Tenta obter os dados do transformador do cache da aplicação ou do MCP
     transformer_data = {}
     try:
-        # Primeiro tenta obter do MCP (fonte mais confiável)
-        if hasattr(app, 'mcp') and app.mcp is not None:
+        if app is not None and hasattr(app, 'mcp') and app.mcp is not None:
             transformer_data = app.mcp.get_data('transformer-inputs-store')
             log.info(f"[Impulse] Dados do transformador obtidos do MCP: {len(transformer_data) if isinstance(transformer_data, dict) else 'Não é dict'}")
-        # Se não conseguir do MCP, tenta do cache
-        elif hasattr(app, 'transformer_data_cache') and app.transformer_data_cache:
-            transformer_data = app.transformer_data_cache
-            log.info(f"[Impulse] Dados do transformador obtidos do cache: {len(transformer_data) if isinstance(transformer_data, dict) else 'Não é dict'}")
         else:
-            log.warning("[Impulse] Dados do transformador não encontrados no MCP nem no cache")
+            log.warning("[Impulse] Dados do transformador não encontrados no MCP")
     except Exception as e:
         log.error(f"[Impulse] Erro ao obter dados do transformador: {e}")
 
@@ -142,8 +223,7 @@ def create_impulse_layout():
             dbc.CardHeader(
                 html.Div([
                     html.H6("ANÁLISE DE IMPULSO", className="text-center m-0 d-inline-block", style=TYPOGRAPHY['card_header']),
-                    # Botão de ajuda
-                    create_help_button("impulse", "Ajuda sobre Simulação de Impulso")
+                    # Botão de ajuda removido: create_help_button("impulse", "Ajuda sobre Simulação de Impulso")
                 ], className="d-flex align-items-center justify-content-center"),
                 style=COMPONENTS['card_header']
             ),
@@ -668,12 +748,12 @@ def create_impulse_layout():
                                 dbc.Collapse([
                                     html.Div([
                                         dbc.Row([
-                                            dbc.Col(create_labeled_input("Tensão (kV)", "transformer-voltage", input_type="number", value=138, min=0, step=1, persistence=True, persistence_type='local'), width=6),
-                                            dbc.Col(create_labeled_input("Potência (MVA)", "transformer-power", input_type="number", value=50, min=0, step=1, persistence=True, persistence_type='local'), width=6)
+                                            dbc.Col(create_labeled_input("Tensão (kV)", "transformer-voltage", input_type="number", value=138, min=0, step=1), width=6),
+                                            dbc.Col(create_labeled_input("Potência (MVA)", "transformer-power", input_type="number", value=50, min=0, step=1), width=6)
                                         ], className="mb-1 gx-2"),
                                         dbc.Row([
-                                            dbc.Col(create_labeled_input("Z (%)", "transformer-impedance", input_type="number", value=12, min=0, step=0.1, persistence=True, persistence_type='local'), width=6),
-                                            dbc.Col(create_labeled_input("Freq. (Hz)", "transformer-frequency", input_type="number", value=60, min=50, step=10, persistence=True, persistence_type='local'), width=6)
+                                            dbc.Col(create_labeled_input("Z (%)", "transformer-impedance", input_type="number", value=12, min=0, step=0.1), width=6),
+                                            dbc.Col(create_labeled_input("Freq. (Hz)", "transformer-frequency", input_type="number", value=60, min=50, step=10), width=6)
                                         ], className="mb-1 gx-2"),
                                         dbc.Row([
                                             dbc.Col(dbc.Button("Calcular L", id="calculate-inductance", color="info", size="sm", className="w-100"), width=6),

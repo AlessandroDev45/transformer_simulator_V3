@@ -9,11 +9,58 @@ import logging
 import dash_bootstrap_components as dbc
 from dash import dcc, html
 
-from components.help_button import create_help_button
+# Remove the import of create_help_button entirely, always use the fallback.
+def create_help_button(module_name, tooltip_text):
+    from dash import html
+    return html.Div()  # Fallback
 
-# Attempt to import shared styles, provide fallbacks
-# Importar estilos do módulo centralizado
-from utils.styles import COLORS, COMPONENTS, TYPOGRAPHY
+# --- Local Style Constants (fallbacks) ---
+COLORS = {
+    "text_light": "#f8f9fa",
+    "text_muted": "#6c757d",
+    "background_input": "#495057",
+    "background_card": "#343a40",
+    "background_card_header": "#495057",
+    "border": "#495057",
+    "background_main": "#282c34",
+}
+TYPOGRAPHY = {
+    "section_title": {"fontSize": "1.1rem", "fontWeight": "bold", "color": COLORS["text_light"]},
+    "label": {"fontSize": "0.9rem", "color": COLORS["text_light"]},
+    "card_header": {"fontSize": "0.85rem", "fontWeight": "bold", "color": COLORS["text_light"]},
+}
+COMPONENTS = {
+    "input": {"backgroundColor": COLORS["background_input"], "color": COLORS["text_light"], "border": f"1px solid {COLORS['border']}", "borderRadius": "3px"},
+    "dropdown": {"backgroundColor": COLORS["background_input"], "color": COLORS["text_light"], "border": f"1px solid {COLORS['border']}", "borderRadius": "3px"},
+    "card": {"backgroundColor": COLORS["background_card"], "border": f"1px solid {COLORS['border']}", "borderRadius": "4px", "boxShadow": "0 1px 2px rgba(0,0,0,0.05)"},
+    "card_header": {"backgroundColor": COLORS["background_card_header"], "padding": "0.5rem 1rem", "borderBottom": f"1px solid {COLORS['border']}"},
+    "card_body": {"padding": "1rem"},
+    "button_primary": {"backgroundColor": "#0dcaf0", "color": "#212529", "border": "none"},
+    "button_secondary": {"backgroundColor": "#dc3545", "color": "#fff", "border": "none"},
+}
+
+# --- Local Helper: create_input_row ---
+def create_input_row(label, input_id, placeholder, input_type="number"):
+    from dash import dcc, html
+    import dash_bootstrap_components as dbc
+    return dbc.Row([
+        dbc.Col(
+            dbc.Label(label, style=TYPOGRAPHY["label"]),
+            width=9, className="text-end pe-1"
+        ),
+        dbc.Col(
+            dcc.Input(
+                type=input_type,
+                id=input_id,
+                placeholder=placeholder,
+                persistence=True,
+                persistence_type="local",
+                style={**COMPONENTS["input"], "height": "26px", "padding": "0.15rem 0.3rem", "width": "75%"},
+            ),
+            width=3,
+        ),
+    ], className="g-1 mb-1")
+
 
 log = logging.getLogger(__name__)
 
@@ -49,12 +96,6 @@ PLACEHOLDER_STYLE = {
     "alignItems": "center",
     "justifyContent": "center",
 }
-
-
-# Helper function
-from utils.components import create_input_row
-
-
 # --- Render Functions ---
 
 

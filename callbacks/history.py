@@ -6,7 +6,11 @@ from dash.exceptions import PreventUpdate
 
 from app import app # Importar instância do app
 from utils.db_manager import get_all_test_sessions # get_all_test_sessions ainda é útil para a lista
-from layouts import COLORS # Para estilos de botões na tabela, se necessário
+# Remove: from layouts import COLORS # Para estilos de botões na tabela, se necessário
+COLORS = {
+    "primary": "#26427A",
+    "accent": "#007BFF",
+}
 # Importar STORE_IDS do módulo app_core.transformer_mcp
 from app_core.transformer_mcp import STORE_IDS
 
