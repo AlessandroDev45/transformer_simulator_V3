@@ -42,18 +42,18 @@ def register_transformer_inputs_callbacks(app_instance):
             Input("peso_tanque_acessorios", "value"), Input("tensao_at", "value"),
             Input("classe_tensao_at", "value"), Input("impedancia", "value"),
             Input("nbi_at", "value"), Input("sil_at", "value"), Input("conexao_at", "value"),
-            Input("tensao_bucha_neutro_at", "value"), Input("nbi_neutro_at", "value"),
+            Input("classe_tensao_neutro_at", "value"), Input("nbi_neutro_at", "value"), # Changed tensao_bucha_neutro_at to classe_tensao_neutro_at
             Input("sil_neutro_at", "value"), Input("tensao_at_tap_maior", "value"),
             Input("impedancia_tap_maior", "value"), Input("tensao_at_tap_menor", "value"),
             Input("impedancia_tap_menor", "value"), Input("teste_tensao_aplicada_at", "value"),
             Input("teste_tensao_induzida_at", "value"), Input("tensao_bt", "value"),
             Input("classe_tensao_bt", "value"), Input("nbi_bt", "value"),
             Input("sil_bt", "value"), Input("conexao_bt", "value"),
-            Input("tensao_bucha_neutro_bt", "value"), Input("nbi_neutro_bt", "value"),
+            Input("classe_tensao_neutro_bt", "value"), Input("nbi_neutro_bt", "value"), # Changed tensao_bucha_neutro_bt to classe_tensao_neutro_bt
             Input("sil_neutro_bt", "value"), Input("teste_tensao_aplicada_bt", "value"),
             Input("tensao_terciario", "value"), Input("classe_tensao_terciario", "value"),
             Input("nbi_terciario", "value"), Input("sil_terciario", "value"),
-            Input("conexao_terciario", "value"), Input("tensao_bucha_neutro_terciario", "value"),
+            Input("conexao_terciario", "value"), Input("classe_tensao_neutro_terciario", "value"), # Changed tensao_bucha_neutro_terciario to classe_tensao_neutro_terciario
             Input("nbi_neutro_terciario", "value"), Input("sil_neutro_terciario", "value"),
             Input("teste_tensao_aplicada_terciario", "value"),
         ],
@@ -63,13 +63,13 @@ def register_transformer_inputs_callbacks(app_instance):
         potencia_mva, frequencia, grupo_ligacao, liquido_isolante, elevacao_oleo_topo,
         elevacao_enrol, tipo_transformador, tipo_isolamento, norma_iso, peso_total,
         peso_parte_ativa, peso_oleo, peso_tanque_acessorios, tensao_at, classe_tensao_at,
-        impedancia, nbi_at, sil_at, conexao_at, tensao_bucha_neutro_at, nbi_neutro_at,
+        impedancia, nbi_at, sil_at, conexao_at, classe_tensao_neutro_at, nbi_neutro_at, # Changed param name
         sil_neutro_at, tensao_at_tap_maior, impedancia_tap_maior, tensao_at_tap_menor,
         impedancia_tap_menor, teste_tensao_aplicada_at, teste_tensao_induzida_at,
-        tensao_bt, classe_tensao_bt, nbi_bt, sil_bt, conexao_bt, tensao_bucha_neutro_bt,
+        tensao_bt, classe_tensao_bt, nbi_bt, sil_bt, conexao_bt, classe_tensao_neutro_bt, # Changed param name
         nbi_neutro_bt, sil_neutro_bt, teste_tensao_aplicada_bt, tensao_terciario,
         classe_tensao_terciario, nbi_terciario, sil_terciario, conexao_terciario,
-        tensao_bucha_neutro_terciario, nbi_neutro_terciario, sil_neutro_terciario,
+        classe_tensao_neutro_terciario, nbi_neutro_terciario, sil_neutro_terciario, # Changed param name
         teste_tensao_aplicada_terciario
     ):
         from dash import ctx
@@ -105,13 +105,13 @@ def register_transformer_inputs_callbacks(app_instance):
                     "peso_total": peso_total, "peso_parte_ativa": peso_parte_ativa, "peso_oleo": peso_oleo,
                     "peso_tanque_acessorios": peso_tanque_acessorios, "tensao_at": tensao_at,
                     "classe_tensao_at": classe_tensao_at, "impedancia": impedancia, "conexao_at": conexao_at,
-                    "tensao_bucha_neutro_at": tensao_bucha_neutro_at, "tensao_at_tap_maior": tensao_at_tap_maior,
+                    "classe_tensao_neutro_at": classe_tensao_neutro_at, "tensao_at_tap_maior": tensao_at_tap_maior, # Changed key
                     "impedancia_tap_maior": impedancia_tap_maior, "tensao_at_tap_menor": tensao_at_tap_menor,
                     "impedancia_tap_menor": impedancia_tap_menor, "tensao_bt": tensao_bt,
                     "classe_tensao_bt": classe_tensao_bt, "conexao_bt": conexao_bt,
-                    "tensao_bucha_neutro_bt": tensao_bucha_neutro_bt, "tensao_terciario": tensao_terciario,
+                    "classe_tensao_neutro_bt": classe_tensao_neutro_bt, "tensao_terciario": tensao_terciario, # Changed key
                     "classe_tensao_terciario": classe_tensao_terciario, "conexao_terciario": conexao_terciario,
-                    "tensao_bucha_neutro_terciario": tensao_bucha_neutro_terciario,
+                    "classe_tensao_neutro_terciario": classe_tensao_neutro_terciario, # Changed key
                 }
                 dynamic_fields_from_form_map = {
                     "nbi_at": nbi_at, "sil_at": sil_at, "nbi_neutro_at": nbi_neutro_at,
@@ -239,7 +239,7 @@ def register_transformer_inputs_callbacks(app_instance):
             Output("nbi_at", "value"),
             Output("sil_at", "value"),
             Output("conexao_at", "value"),
-            Output("tensao_bucha_neutro_at", "value"),
+            Output("classe_tensao_neutro_at", "value"), # Changed ID
             Output("nbi_neutro_at", "value"),
             Output("sil_neutro_at", "value"),
             Output("tensao_at_tap_maior", "value"),
@@ -253,7 +253,7 @@ def register_transformer_inputs_callbacks(app_instance):
             Output("nbi_bt", "value"),
             Output("sil_bt", "value"),
             Output("conexao_bt", "value"),
-            Output("tensao_bucha_neutro_bt", "value"),
+            Output("classe_tensao_neutro_bt", "value"), # Changed ID
             Output("nbi_neutro_bt", "value"),
             Output("sil_neutro_bt", "value"),
             Output("teste_tensao_aplicada_bt", "value"),
@@ -262,7 +262,7 @@ def register_transformer_inputs_callbacks(app_instance):
             Output("nbi_terciario", "value"),
             Output("sil_terciario", "value"),
             Output("conexao_terciario", "value"),
-            Output("tensao_bucha_neutro_terciario", "value"),
+            Output("classe_tensao_neutro_terciario", "value"), # Changed ID
             Output("nbi_neutro_terciario", "value"),
             Output("sil_neutro_terciario", "value"),
             Output("teste_tensao_aplicada_terciario", "value"),
@@ -323,7 +323,7 @@ def register_transformer_inputs_callbacks(app_instance):
         nbi_at = transformer_dict.get("nbi_at")
         sil_at = transformer_dict.get("sil_at")
         conexao_at = transformer_dict.get("conexao_at")
-        tensao_bucha_neutro_at = transformer_dict.get("tensao_bucha_neutro_at")
+        classe_tensao_neutro_at = transformer_dict.get("classe_tensao_neutro_at") # Changed key
         nbi_neutro_at = transformer_dict.get("nbi_neutro_at")
         sil_neutro_at = transformer_dict.get("sil_neutro_at")
         tensao_at_tap_maior = transformer_dict.get("tensao_at_tap_maior")
@@ -337,7 +337,7 @@ def register_transformer_inputs_callbacks(app_instance):
         nbi_bt = transformer_dict.get("nbi_bt")
         sil_bt = transformer_dict.get("sil_bt")
         conexao_bt = transformer_dict.get("conexao_bt")
-        tensao_bucha_neutro_bt = transformer_dict.get("tensao_bucha_neutro_bt")
+        classe_tensao_neutro_bt = transformer_dict.get("classe_tensao_neutro_bt") # Changed key
         nbi_neutro_bt = transformer_dict.get("nbi_neutro_bt")
         sil_neutro_bt = transformer_dict.get("sil_neutro_bt")
         teste_tensao_aplicada_bt = transformer_dict.get("teste_tensao_aplicada_bt")
@@ -346,7 +346,7 @@ def register_transformer_inputs_callbacks(app_instance):
         nbi_terciario = transformer_dict.get("nbi_terciario")
         sil_terciario = transformer_dict.get("sil_terciario")
         conexao_terciario = transformer_dict.get("conexao_terciario")
-        tensao_bucha_neutro_terciario = transformer_dict.get("tensao_bucha_neutro_terciario")
+        classe_tensao_neutro_terciario = transformer_dict.get("classe_tensao_neutro_terciario") # Changed key
         nbi_neutro_terciario = transformer_dict.get("nbi_neutro_terciario")
         sil_neutro_terciario = transformer_dict.get("sil_neutro_terciario")
         teste_tensao_aplicada_terciario = transformer_dict.get("teste_tensao_aplicada_terciario")
@@ -374,12 +374,12 @@ def register_transformer_inputs_callbacks(app_instance):
             potencia_mva, frequencia, grupo_ligacao, liquido_isolante, elevacao_oleo_topo,
             elevacao_enrol, tipo_transformador, tipo_isolamento, norma_iso, peso_total,
             peso_parte_ativa, peso_oleo, peso_tanque_acessorios, tensao_at, classe_tensao_at,
-            impedancia, nbi_at, sil_at, conexao_at, tensao_bucha_neutro_at, nbi_neutro_at,
+            impedancia, nbi_at, sil_at, conexao_at, classe_tensao_neutro_at, nbi_neutro_at, # Changed variable
             sil_neutro_at, tensao_at_tap_maior, impedancia_tap_maior, tensao_at_tap_menor,
             impedancia_tap_menor, teste_tensao_aplicada_at, teste_tensao_induzida_at,
-            tensao_bt, classe_tensao_bt, nbi_bt, sil_bt, conexao_bt, tensao_bucha_neutro_bt,
+            tensao_bt, classe_tensao_bt, nbi_bt, sil_bt, conexao_bt, classe_tensao_neutro_bt, # Changed variable
             nbi_neutro_bt, sil_neutro_bt, teste_tensao_aplicada_bt, tensao_terciario,
             classe_tensao_terciario, nbi_terciario, sil_terciario, conexao_terciario,
-            tensao_bucha_neutro_terciario, nbi_neutro_terciario, sil_neutro_terciario,
+            classe_tensao_neutro_terciario, nbi_neutro_terciario, sil_neutro_terciario, # Changed variable
             teste_tensao_aplicada_terciario,
         )

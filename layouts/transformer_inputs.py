@@ -508,23 +508,22 @@ def create_transformer_inputs_layout():
                                                         width=6,
                                                         id="conexao_at_col",
                                                     ),
-                                                    # Classe Neutro (agora visível por padrão)
+                                                    # Classe Neutro (agora visível por padrão, e agora um Dropdown)
                                                     dbc.Col(
-                                                        id="tensao_bucha_neutro_at_col",
+                                                        id="classe_tensao_neutro_at_col", # ID da Coluna pode permanecer ou mudar
                                                         children=[
                                                             dbc.Label(
                                                                 "Classe Neutro (kV):",
                                                                 style=LABEL_STYLE,
-                                                                html_for="tensao_bucha_neutro_at",
+                                                                html_for="classe_tensao_neutro_at", # Novo ID para o Dropdown
                                                             ),
-                                                            dbc.Input(
-                                                                type="number",
-                                                                id="tensao_bucha_neutro_at",
-                                                                style=INPUT_STYLE,
+                                                            dcc.Dropdown(
+                                                                id="classe_tensao_neutro_at", # Novo ID
+                                                                options=voltage_class_options,
+                                                                style=DROPDOWN_STYLE,
                                                                 persistence=True,
                                                                 persistence_type="local",
-                                                                step=0.1,
-                                                                max=999.9,
+                                                                className="dash-dropdown-dark",
                                                             ),
                                                         ],
                                                         width=6,
@@ -954,23 +953,22 @@ def create_transformer_inputs_layout():
                                                         width=6,
                                                         id="conexao_bt_col",
                                                     ),
-                                                    # Classe Neutro (agora visível por padrão)
+                                                    # Classe Neutro (agora visível por padrão, e agora um Dropdown)
                                                     dbc.Col(
-                                                        id="tensao_bucha_neutro_bt_col",
+                                                        id="classe_tensao_neutro_bt_col", # ID da Coluna pode permanecer ou mudar
                                                         children=[
                                                             dbc.Label(
                                                                 "Classe Neutro (kV):",
                                                                 style=LABEL_STYLE,
-                                                                html_for="tensao_bucha_neutro_bt",
+                                                                html_for="classe_tensao_neutro_bt", # Novo ID para o Dropdown
                                                             ),
-                                                            dbc.Input(
-                                                                type="number",
-                                                                id="tensao_bucha_neutro_bt",
-                                                                style=INPUT_STYLE,
+                                                            dcc.Dropdown(
+                                                                id="classe_tensao_neutro_bt", # Novo ID
+                                                                options=voltage_class_options,
+                                                                style=DROPDOWN_STYLE,
                                                                 persistence=True,
                                                                 persistence_type="local",
-                                                                step=0.1,
-                                                                max=999.9,
+                                                                className="dash-dropdown-dark",
                                                             ),
                                                         ],
                                                         width=6,
@@ -1239,23 +1237,22 @@ def create_transformer_inputs_layout():
                                                         width=6,
                                                         id="conexao_terciario_col",
                                                     ),
-                                                    # Classe Neutro (agora visível por padrão)
+                                                    # Classe Neutro (agora visível por padrão, e agora um Dropdown)
                                                     dbc.Col(
-                                                        id="tensao_bucha_neutro_terciario_col",
+                                                        id="classe_tensao_neutro_terciario_col", # ID da Coluna pode permanecer ou mudar
                                                         children=[
                                                             dbc.Label(
                                                                 "Classe Neutro (kV):",
                                                                 style=LABEL_STYLE,
-                                                                html_for="tensao_bucha_neutro_terciario",
+                                                                html_for="classe_tensao_neutro_terciario", # Novo ID para o Dropdown
                                                             ),
-                                                            dbc.Input(
-                                                                type="number",
-                                                                id="tensao_bucha_neutro_terciario",
-                                                                style=INPUT_STYLE,
+                                                            dcc.Dropdown(
+                                                                id="classe_tensao_neutro_terciario", # Novo ID
+                                                                options=voltage_class_options,
+                                                                style=DROPDOWN_STYLE,
                                                                 persistence=True,
                                                                 persistence_type="local",
-                                                                step=0.1,
-                                                                max=999.9,
+                                                                className="dash-dropdown-dark",
                                                             ),
                                                         ],
                                                         width=6,

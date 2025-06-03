@@ -135,6 +135,23 @@ server = app.server
 log.info(f"Tema Bootstrap: {config.DEFAULT_THEME_NAME}")
 log.info(f"Pasta assets: {config.ASSETS_DIR}")
 
+# --- Clientside Callback for Theme Toggling ---
+try:
+    from dash import ClientsideFunction, Output, Input # Ensure Output and Input are imported for clientside_callback
+    app.clientside_callback(
+        ClientsideFunction(
+            namespace='clientside',      # Matches namespace in theme_toggle.js
+            function_name='toggleTheme'  # Matches function name in theme_toggle.js
+        ),
+        [Output("theme-toggle-icon", "className"), Output("theme-toggle-text", "children")],
+        [Input("theme-toggle", "n_clicks")],
+        # prevent_initial_call=False # Allow to run on load to check localStorage
+    )
+    log.info("Clientside callback para toggle de tema registrado.")
+except Exception as e:
+    log.error(f"Erro ao registrar clientside callback para tema: {e}", exc_info=True)
+
+
 # --- 5. Initialize Master Control Program (MCP) ---
 try:
     from app_core.transformer_mcp import TransformerMCP

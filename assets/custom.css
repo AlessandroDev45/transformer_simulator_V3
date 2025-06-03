@@ -1,13 +1,71 @@
 /* custom.css - Estilos customizados para o Simulador de Transformadores (completo para toda a codebase) */
 
+/* --- Theme Variables --- */
+:root {
+    /* Dark Theme (Default) */
+    --app-primary: var(--dark-primary, #26427A);
+    --app-secondary: var(--dark-secondary, #6c757d);
+    --app-accent: var(--dark-accent, #00BFFF);
+    --app-accent-alt: var(--dark-accent-alt, #FFD700);
+    --app-background-main: var(--dark-background-main, #181a1b);
+    --app-background-card: var(--dark-background-card, #23272b);
+    --app-background-card-header: var(--dark-background-card-header, #212529);
+    --app-background-input: var(--dark-background-input, #3a3a40);
+    --app-text-light: var(--dark-text-light, #f8f9fa);
+    --app-text-dark: var(--dark-text-light, #f8f9fa); /* For dark theme, dark text is light */
+    --app-text-muted: var(--dark-text-muted, #adb5bd);
+    --app-text-header: var(--dark-text-header, #FFFFFF);
+    --app-border: var(--dark-border, #495057);
+    --app-border-strong: var(--dark-border-strong, #343a40);
+    --app-info: var(--dark-info, #0dcaf0);
+    --app-danger: var(--dark-danger, #dc3545);
+
+    /* Fallbacks for original dark variables if still used directly */
+    --dark-primary: #26427A;
+    --dark-secondary: #6c757d;
+    --dark-accent: #00BFFF;
+    --dark-accent-alt: #FFD700;
+    --dark-background-main: #181a1b;
+    --dark-background-card: #23272b;
+    --dark-background-card-header: #212529;
+    --dark-background-input: #3a3a40;
+    --dark-text-light: #f8f9fa;
+    --dark-text-muted: #adb5bd;
+    --dark-text-header: #FFFFFF;
+    --dark-border: #495057;
+    --dark-border-strong: #343a40;
+    --dark-info: #0dcaf0;
+    --dark-danger: #dc3545;
+}
+
+body.theme-light {
+    --app-primary: #26427A; /* Azul principal (WEG-like) */
+    --app-secondary: #6c757d; /* Cinza padrão */
+    --app-accent: #007BFF; /* Azul de destaque */
+    --app-accent-alt: #FFD700; /* Dourado/Amarelo */
+    --app-background-main: #f0f2f5;
+    --app-background-card: #ffffff;
+    --app-background-card-header: #e9ecef;
+    --app-background-input: #ffffff;
+    --app-text-light: #212529; /* Light theme uses dark text on light bg */
+    --app-text-dark: #212529;
+    --app-text-muted: #6c757d;
+    --app-text-header: #212529; /* Dark text for light headers */
+    --app-border: #dee2e6;
+    --app-border-strong: #adb5bd;
+    --app-info: #007BFF;
+    --app-danger: #dc3545;
+}
+
+
 /* --- Reset e base minimalista --- */
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
     font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-    background-color: var(--dark-background-main, #181a1b);
-    color: var(--dark-text-light, #f8f9fa);
+    background-color: var(--app-background-main);
+    color: var(--app-text-light);
     font-size: 16px;
 }
 
@@ -20,21 +78,21 @@ html, body {
 
 /* Cards e painéis */
 .card, .dbc-card {
-    background-color: var(--dark-background-card, #23272b) !important;
-    color: var(--dark-text-light, #f8f9fa) !important;
+    background-color: var(--app-background-card) !important;
+    color: var(--app-text-light) !important;
     border-radius: 6px;
-    border: 1px solid var(--dark-border, #495057);
+    border: 1px solid var(--app-border);
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     margin-bottom: 1.2rem;
 }
 .card-header, .dbc-card-header {
-    background-color: var(--dark-background-card-header, #212529) !important;
-    color: var(--dark-text-light, #f8f9fa) !important;
+    background-color: var(--app-background-card-header) !important;
+    color: var(--app-text-header) !important; /* Use app-text-header */
     font-weight: bold;
     font-size: 1rem;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    border-bottom: 1px solid var(--dark-border, #495057);
+    border-bottom: 1px solid var(--app-border);
     padding: 0.7rem 1.2rem;
 }
 .card-body, .dbc-card-body {
@@ -45,25 +103,25 @@ html, body {
 
 /* Inputs, selects, dropdowns */
 input, select, .Select-control, .dbc-input, .dbc-dropdown {
-    background-color: var(--dark-background-input, #343a40) !important;
-    color: var(--dark-text-light, #f8f9fa) !important;
-    border: 1px solid var(--dark-border, #495057) !important;
+    background-color: var(--app-background-input) !important;
+    color: var(--app-text-light) !important; /* Text color for input fields */
+    border: 1px solid var(--app-border) !important;
     border-radius: 3px !important;
     font-size: 0.97rem;
     padding: 0.25rem 0.5rem;
 }
 input:disabled, select:disabled {
-    background-color: #444 !important;
-    color: #aaa !important;
+    background-color: #444 !important; /* Needs theme variable */
+    color: #aaa !important; /* Needs theme variable */
     cursor: not-allowed;
 }
 input[readonly], .dbc-input[readonly] {
-    background-color: #444 !important;
-    color: #aaa !important;
+    background-color: #444 !important; /* Needs theme variable */
+    color: #aaa !important; /* Needs theme variable */
     cursor: not-allowed;
 }
 input::placeholder, .dbc-input::placeholder {
-    color: var(--dark-text-muted, #adb5bd) !important;
+    color: var(--app-text-muted) !important;
     opacity: 1;
     font-style: italic;
 }
@@ -77,13 +135,17 @@ input::placeholder, .dbc-input::placeholder {
     padding: 0.4rem 1.1rem;
 }
 .btn-info, .dbc-btn-info {
-    background-color: var(--dark-info, #0dcaf0) !important;
-    color: #222 !important;
+    background-color: var(--app-info) !important;
+    color: var(--app-background-card) !important; /* Contrasting text for info button */
 }
 .btn-danger, .dbc-btn-danger {
-    background-color: var(--dark-danger, #dc3545) !important;
-    color: #fff !important;
+    background-color: var(--app-danger) !important;
+    color: var(--app-text-header) !important; /* Ensure text is light on dark danger button */
 }
+body.theme-light .btn-danger, body.theme-light .dbc-btn-danger {
+    color: #FFFFFF !important; /* White text on red button for light theme too */
+}
+
 .btn:disabled, .dbc-btn:disabled {
     opacity: 0.7;
     cursor: not-allowed;
@@ -91,26 +153,26 @@ input::placeholder, .dbc-input::placeholder {
 
 /* Tabelas */
 table, .dbc-table {
-    background-color: var(--dark-background-card, #23272b);
-    color: var(--dark-text-light, #f8f9fa);
+    background-color: var(--app-background-card);
+    color: var(--app-text-light);
     border-radius: 4px;
     font-size: 0.97rem;
     width: 100%;
     margin-bottom: 1rem;
 }
 th, td {
-    border: 1px solid var(--dark-border, #495057);
+    border: 1px solid var(--app-border);
     padding: 0.5rem;
 }
 th {
-    background-color: var(--dark-background-card-header, #212529);
-    color: var(--dark-text-light, #f8f9fa);
+    background-color: var(--app-background-card-header);
+    color: var(--app-text-header); /* Use app-text-header */
     font-weight: bold;
 }
 
 /* Placeholders, textos de ajuda, muted */
 .placeholder, .text-muted, .help-text, .form-text {
-    color: var(--dark-text-muted, #adb5bd) !important;
+    color: var(--app-text-muted) !important;
     font-style: italic;
     font-size: 0.92em;
 }
@@ -121,11 +183,11 @@ th {
     height: 8px;
 }
 ::-webkit-scrollbar-thumb {
-    background: var(--dark-border-strong, #343a40);
+    background: var(--app-border-strong);
     border-radius: 4px;
 }
 ::-webkit-scrollbar-track {
-    background: var(--dark-background-card, #23272b);
+    background: var(--app-background-card);
 }
 
 /* Responsividade mínima para mobile */
@@ -141,9 +203,9 @@ th {
 
 /* Abas do Dash Bootstrap */
 .nav-tabs .nav-link.active, .dbc-tabs .nav-link.active {
-    background-color: var(--dark-background-card-header, #212529) !important;
-    color: var(--dark-text-light, #f8f9fa) !important;
-    border-bottom: 2px solid var(--dark-info, #0dcaf0) !important;
+    background-color: var(--app-background-card-header) !important;
+    color: var(--app-text-header) !important; /* Use app-text-header */
+    border-bottom: 2px solid var(--app-info) !important;
 }
 
 /* Alertas */
@@ -157,7 +219,7 @@ th {
 .section-title, .dbc-section-title {
     font-size: 1.1rem;
     font-weight: bold;
-    color: var(--dark-info, #0dcaf0);
+    color: var(--app-info);
     margin: 1.2rem 0 0.7rem 0;
     letter-spacing: 0.01em;
 }
@@ -165,27 +227,27 @@ th {
 /* Botões de ajuda */
 .help-button, .dbc-help-button {
     background: transparent;
-    color: var(--dark-info, #0dcaf0);
+    color: var(--app-info);
     border: none;
     font-size: 1.1rem;
     cursor: pointer;
     padding: 0 0.3rem;
 }
 .help-button:hover, .dbc-help-button:hover {
-    color: #fff;
-    background: var(--dark-info, #0dcaf0);
+    color: var(--app-background-main); /* Contrasting color on hover */
+    background: var(--app-info);
 }
 
 /* Dropdowns escuros do Dash */
 .Select-menu-outer, .Select-menu {
-    background-color: var(--dark-background-card, #23272b) !important;
-    color: var(--dark-text-light, #f8f9fa) !important;
+    background-color: var(--app-background-card) !important;
+    color: var(--app-text-light) !important;
 }
 
 /* Tooltips */
 .tooltip-inner, .dbc-tooltip-inner {
-    background-color: var(--dark-background-card-header, #212529) !important;
-    color: var(--dark-text-light, #f8f9fa) !important;
+    background-color: var(--app-background-card-header) !important;
+    color: var(--app-text-header) !important; /* Use app-text-header */
     font-size: 0.95rem;
 }
 
@@ -193,8 +255,8 @@ th {
 .history-log, .dbc-history-log {
     font-family: 'Fira Mono', 'Consolas', monospace;
     font-size: 0.92rem;
-    background: #181a1b;
-    color: #0dcaf0;
+    background: var(--app-background-main); /* Use theme variable */
+    color: var(--app-accent); /* Use theme variable */
     border-radius: 3px;
     padding: 0.5rem;
     margin-bottom: 0.5rem;
@@ -203,31 +265,60 @@ th {
 
 /* Gráficos Plotly (fundo escuro) */
 .js-plotly-plot .plotly {
-    background-color: var(--dark-background-card, #23272b) !important;
+    background-color: var(--app-background-card) !important;
 }
 
 /* Inputs numéricos com setas */
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
-    background: #23272b;
-    color: #0dcaf0;
+    background: var(--app-background-card); /* Use theme variable */
+    color: var(--app-accent); /* Use theme variable */
 }
 
 /* Foco em inputs */
 input:focus, .dbc-input:focus {
-    outline: 2px solid var(--dark-info, #0dcaf0) !important;
-    box-shadow: 0 0 0 2px rgba(13,202,240,0.2) !important;
+    outline: 2px solid var(--app-info) !important;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--app-info) 20%, transparent) !important; /* Adjusted for alpha */
 }
 
-/* Selects do Dash */
+/* Selects do Dash (dcc.Dropdown) */
 .Select-control {
-    background-color: var(--dark-background-input, #343a40) !important;
-    color: var(--dark-text-light, #f8f9fa) !important;
-    border: 1px solid var(--dark-border, #495057) !important;
+    background-color: var(--app-background-input) !important;
+    border: 1px solid var(--app-border) !important;
 }
+
+/* Text color for selected value and placeholder in dcc.Dropdown */
+.Select-control .Select-value-label, 
+.Select-control .Select-placeholder {
+    color: var(--app-text-light) !important; /* General text color for inputs */
+}
+body.theme-light .Select-control .Select-value-label, 
+body.theme-light .Select-control .Select-placeholder {
+    color: var(--app-text-dark) !important; /* Darker text for light theme dropdown */
+}
+
+
+/* Text color for options in dcc.Dropdown menu */
+.Select-menu-outer .Select-option {
+    color: var(--app-text-light) !important; 
+    background-color: var(--app-background-input) !important; 
+}
+.Select-menu-outer .Select-option.is-focused {
+    background-color: var(--app-primary) !important; 
+    color: var(--app-text-header) !important; /* Ensure header text color on focus */
+}
+body.theme-light .Select-menu-outer .Select-option {
+    color: var(--app-text-dark) !important; 
+    background-color: var(--app-background-input) !important;
+}
+body.theme-light .Select-menu-outer .Select-option.is-focused {
+    background-color: var(--app-primary) !important; 
+    color: var(--app-text-header) !important; /* Usually white/light text on primary bg */
+}
+
 
 /* Spinner do Dash */
 .dash-spinner {
-    color: var(--dark-info, #0dcaf0) !important;
+    color: var(--app-info) !important;
 }
 
 /* Responsividade de cards em telas pequenas */
@@ -239,36 +330,36 @@ input:focus, .dbc-input:focus {
 
 /* Ajustes para modais, popovers, overlays */
 .modal-content, .dbc-modal-content, .popover, .dbc-popover {
-    background-color: var(--dark-background-card, #23272b) !important;
-    color: var(--dark-text-light, #f8f9fa) !important;
+    background-color: var(--app-background-card) !important;
+    color: var(--app-text-light) !important;
     border-radius: 6px;
-    border: 1px solid var(--dark-border, #495057);
+    border: 1px solid var(--app-border);
 }
 
 /* Ajuste para links */
 a, .dbc-link {
-    color: var(--dark-info, #0dcaf0);
+    color: var(--app-info);
     text-decoration: underline dotted;
     transition: color 0.2s;
 }
 a:hover, .dbc-link:hover {
-    color: #fff;
-    background: var(--dark-info, #0dcaf0);
+    color: var(--app-background-main); /* Contrasting color on hover */
+    background: var(--app-info);
     text-decoration: underline;
 }
 
 /* Ajuste para stepper/etapas */
 .stepper, .dbc-stepper {
     background: transparent;
-    color: var(--dark-info, #0dcaf0);
+    color: var(--app-info);
     font-weight: bold;
     font-size: 1.05rem;
 }
 
 /* Ajuste para badges */
 .badge, .dbc-badge {
-    background: var(--dark-info, #0dcaf0);
-    color: #222;
+    background: var(--app-info);
+    color: var(--app-background-main); /* Contrasting text for badge */
     font-weight: bold;
     border-radius: 2px;
     padding: 0.2em 0.6em;
@@ -277,31 +368,31 @@ a:hover, .dbc-link:hover {
 
 /* Ajuste para switches/toggles */
 .form-switch .form-check-input, .dbc-switch {
-    background-color: #23272b;
-    border: 1px solid var(--dark-border, #495057);
+    background-color: var(--app-background-card); /* Use theme variable */
+    border: 1px solid var(--app-border);
 }
 
 /* Ajuste para progress bars */
 .progress, .dbc-progress {
-    background-color: #23272b;
+    background-color: var(--app-background-card); /* Use theme variable */
     border-radius: 4px;
 }
 .progress-bar, .dbc-progress-bar {
-    background-color: var(--dark-info, #0dcaf0);
-    color: #222;
+    background-color: var(--app-info);
+    color: var(--app-background-main); /* Contrasting text */
 }
 
 /* Ajuste para navbars */
 .navbar, .dbc-navbar {
-    background-color: var(--dark-background-card-header, #212529) !important;
-    color: var(--dark-text-light, #f8f9fa) !important;
-    border-bottom: 1px solid var(--dark-border, #495057);
+    background-color: var(--app-background-card-header) !important;
+    color: var(--app-text-header) !important; /* Use app-text-header */
+    border-bottom: 1px solid var(--app-border);
 }
 
 /* Ajuste para faixas de status */
 .status-bar, .dbc-status-bar {
-    background: var(--dark-info, #0dcaf0);
-    color: #222;
+    background: var(--app-info);
+    color: var(--app-background-main); /* Contrasting text */
     font-weight: bold;
     padding: 0.3rem 1rem;
     border-radius: 2px;
@@ -310,8 +401,8 @@ a:hover, .dbc-link:hover {
 
 /* Ajuste para área de logs/console */
 .console-area, .dbc-console-area {
-    background: #181a1b;
-    color: #0dcaf0;
+    background: var(--app-background-main);
+    color: var(--app-accent);
     font-family: 'Fira Mono', 'Consolas', monospace;
     font-size: 0.92rem;
     border-radius: 3px;
@@ -322,8 +413,8 @@ a:hover, .dbc-link:hover {
 
 /* Ajuste para área de histórico */
 .history-area, .dbc-history-area {
-    background: #181a1b;
-    color: #0dcaf0;
+    background: var(--app-background-main);
+    color: var(--app-accent);
     font-family: 'Fira Mono', 'Consolas', monospace;
     font-size: 0.92rem;
     border-radius: 3px;
@@ -334,8 +425,8 @@ a:hover, .dbc-link:hover {
 
 /* Ajuste para área de instruções */
 .instructions-area, .dbc-instructions-area {
-    background: #23272b;
-    color: #0dcaf0;
+    background: var(--app-background-card);
+    color: var(--app-accent);
     font-family: 'Fira Mono', 'Consolas', monospace;
     font-size: 0.98rem;
     border-radius: 3px;
@@ -345,8 +436,8 @@ a:hover, .dbc-link:hover {
 
 /* Ajuste para área de tabelas de normas */
 .normas-table, .dbc-normas-table {
-    background: #23272b;
-    color: #f8f9fa;
+    background: var(--app-background-card);
+    color: var(--app-text-light);
     border-radius: 4px;
     font-size: 0.97rem;
     width: 100%;
@@ -355,8 +446,8 @@ a:hover, .dbc-link:hover {
 
 /* Ajuste para área de resultados */
 .results-area, .dbc-results-area {
-    background: #23272b;
-    color: #0dcaf0;
+    background: var(--app-background-card);
+    color: var(--app-accent);
     border-radius: 4px;
     font-size: 1.01rem;
     padding: 0.7rem 1.2rem;
@@ -365,8 +456,8 @@ a:hover, .dbc-link:hover {
 
 /* Ajuste para área de observações */
 .observations-area, .dbc-observations-area {
-    background: #23272b;
-    color: #adb5bd;
+    background: var(--app-background-card);
+    color: var(--app-text-muted);
     border-radius: 4px;
     font-size: 0.97rem;
     padding: 0.7rem 1.2rem;
@@ -375,8 +466,8 @@ a:hover, .dbc-link:hover {
 
 /* Ajuste para área de parâmetros */
 .parameters-area, .dbc-parameters-area {
-    background: #23272b;
-    color: #f8f9fa;
+    background: var(--app-background-card);
+    color: var(--app-text-light);
     border-radius: 4px;
     font-size: 0.97rem;
     padding: 0.7rem 1.2rem;
@@ -385,8 +476,8 @@ a:hover, .dbc-link:hover {
 
 /* Ajuste para área de tabs */
 .tabs-area, .dbc-tabs-area {
-    background: #23272b;
-    color: #f8f9fa;
+    background: var(--app-background-card);
+    color: var(--app-text-light);
     border-radius: 4px;
     font-size: 0.97rem;
     padding: 0.7rem 1.2rem;
@@ -395,8 +486,8 @@ a:hover, .dbc-link:hover {
 
 /* Ajuste para área de inputs */
 .inputs-area, .dbc-inputs-area {
-    background: #23272b;
-    color: #f8f9fa;
+    background: var(--app-background-card);
+    color: var(--app-text-light);
     border-radius: 4px;
     font-size: 0.97rem;
     padding: 0.7rem 1.2rem;
@@ -405,8 +496,8 @@ a:hover, .dbc-link:hover {
 
 /* Ajuste para área de cálculo */
 .calculation-area, .dbc-calculation-area {
-    background: #23272b;
-    color: #f8f9fa;
+    background: var(--app-background-card);
+    color: var(--app-text-light);
     border-radius: 4px;
     font-size: 0.97rem;
     padding: 0.7rem 1.2rem;
@@ -415,8 +506,8 @@ a:hover, .dbc-link:hover {
 
 /* Ajuste para área de parâmetros gerais */
 .general-parameters-area, .dbc-general-parameters-area {
-    background: #23272b;
-    color: #f8f9fa;
+    background: var(--app-background-card);
+    color: var(--app-text-light);
     border-radius: 4px;
     font-size: 0.97rem;
     padding: 0.7rem 1.2rem;
@@ -425,8 +516,8 @@ a:hover, .dbc-link:hover {
 
 /* Ajuste para área de resultados por nível de tensão */
 .voltage-level-results-area, .dbc-voltage-level-results-area {
-    background: #23272b;
-    color: #0dcaf0;
+    background: var(--app-background-card);
+    color: var(--app-accent);
     border-radius: 4px;
     font-size: 1.01rem;
     padding: 0.7rem 1.2rem;
@@ -435,8 +526,8 @@ a:hover, .dbc-link:hover {
 
 /* Ajuste para área de análise SUT/EPS */
 .sut-analysis-area, .dbc-sut-analysis-area {
-    background: #23272b;
-    color: #f8f9fa;
+    background: var(--app-background-card);
+    color: var(--app-text-light);
     border-radius: 4px;
     font-size: 0.97rem;
     padding: 0.7rem 1.2rem;
@@ -445,8 +536,8 @@ a:hover, .dbc-link:hover {
 
 /* Ajuste para área de legendas/observações */
 .legend-observations-area, .dbc-legend-observations-area {
-    background: #23272b;
-    color: #adb5bd;
+    background: var(--app-background-card);
+    color: var(--app-text-muted);
     border-radius: 4px;
     font-size: 0.97rem;
     padding: 0.7rem 1.2rem;
@@ -455,8 +546,8 @@ a:hover, .dbc-link:hover {
 
 /* Ajuste para área de store/data */
 .store-area, .dbc-store-area {
-    background: #23272b;
-    color: #adb5bd;
+    background: var(--app-background-card);
+    color: var(--app-text-muted);
     border-radius: 4px;
     font-size: 0.97rem;
     padding: 0.7rem 1.2rem;
@@ -465,8 +556,8 @@ a:hover, .dbc-link:hover {
 
 /* Ajuste para área de painel de informações */
 .info-panel-area, .dbc-info-panel-area {
-    background: #23272b;
-    color: #0dcaf0;
+    background: var(--app-background-card);
+    color: var(--app-accent);
     border-radius: 4px;
     font-size: 1.01rem;
     padding: 0.7rem 1.2rem;
@@ -475,8 +566,8 @@ a:hover, .dbc-link:hover {
 
 /* Ajuste para área de painel de erros */
 .error-panel-area, .dbc-error-panel-area {
-    background: #23272b;
-    color: #dc3545;
+    background: var(--app-background-card);
+    color: var(--app-danger);
     border-radius: 4px;
     font-size: 1.01rem;
     padding: 0.7rem 1.2rem;
@@ -485,8 +576,8 @@ a:hover, .dbc-link:hover {
 
 /* Ajuste para área de painel de alertas */
 .alert-panel-area, .dbc-alert-panel-area {
-    background: #23272b;
-    color: #ffc107;
+    background: var(--app-background-card);
+    color: var(--app-warning); /* Use theme variable */
     border-radius: 4px;
     font-size: 1.01rem;
     padding: 0.7rem 1.2rem;
@@ -495,8 +586,8 @@ a:hover, .dbc-link:hover {
 
 /* Ajuste para área de painel de sucesso */
 .success-panel-area, .dbc-success-panel-area {
-    background: #23272b;
-    color: #28a745;
+    background: var(--app-background-card);
+    color: var(--app-success); /* Use theme variable */
     border-radius: 4px;
     font-size: 1.01rem;
     padding: 0.7rem 1.2rem;

@@ -244,7 +244,7 @@ def register_insulation_level_callbacks(app_instance):
              Output(f"sil_neutro_{winding_prefix}", "options", allow_duplicate=True)],
             [Input("url", "pathname"),
              Input("norma_iso", "value"),
-             Input(f"tensao_bucha_neutro_{winding_prefix}", "value"),  # Trigger principal para neutro
+             Input(f"classe_tensao_neutro_{winding_prefix}", "value"),  # Changed ID to the new Dropdown
              Input(f"conexao_{winding_prefix}", "value"),  # Necessário para saber se é YN/ZN
              Input(f"tensao_{winding_prefix}", "value")],  # Adicionado para acionar quando a tensão é alterada
             [State("transformer-inputs-store", "data"),  # Adicionado para obter valores armazenados no MCP
@@ -350,7 +350,7 @@ def register_insulation_level_callbacks(app_instance):
 
         # Callback para visibilidade dos campos do neutro (mantido)
         @app_instance.callback(
-            [Output(f"tensao_bucha_neutro_{winding_prefix}", "disabled", allow_duplicate=True),
+            [Output(f"classe_tensao_neutro_{winding_prefix}", "disabled", allow_duplicate=True), # Changed ID
              Output(f"nbi_neutro_{winding_prefix}", "disabled", allow_duplicate=True),
              Output(f"sil_neutro_{winding_prefix}", "disabled", allow_duplicate=True),
              Output(f"{winding_prefix}_neutral_fields_row", "style", allow_duplicate=True)],

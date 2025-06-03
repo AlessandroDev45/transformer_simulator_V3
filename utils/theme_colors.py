@@ -121,7 +121,7 @@ COMPONENTS_STYLES = {
     "card_header": {"backgroundColor": APP_COLORS["background_card_header"], "color": APP_COLORS["text_header"], "padding": "0.4rem 0.75rem", "fontSize": "1rem", "fontWeight": "bold", "letterSpacing": "0.02em", "textTransform": "uppercase", "borderBottom": f'1px solid {APP_COLORS["border_strong"]}'},
     "card_body": {"padding": "0.75rem", "backgroundColor": APP_COLORS["background_card"]},
     "input": {"backgroundColor": APP_COLORS["background_input"], "color": APP_COLORS["text_light"], "border": f'1px solid {APP_COLORS["border"]}', "borderRadius": "3px", "padding": "0.3rem 0.5rem", "fontSize": "0.8rem"},
-    "dropdown": {"backgroundColor": APP_COLORS["background_input"], "color": APP_COLORS["text_light"], "border": f'1px solid {APP_COLORS["border"]}', "borderRadius": "3px"},
+    "dropdown": {"backgroundColor": APP_COLORS["background_input"], "color": APP_COLORS.get("text_header", "#FFFFFF"), "border": f'1px solid {APP_COLORS["border"]}', "borderRadius": "3px"}, # Changed color to text_header
     "read_only": {"backgroundColor": APP_COLORS["background_card_header"], "color": APP_COLORS["text_muted"], "border": f'1px solid {APP_COLORS["border"]}', "borderRadius": "3px", "padding": "0.3rem 0.5rem", "fontSize": "0.8rem"},
     "button": {"backgroundColor": APP_COLORS["primary"], "color": APP_COLORS["text_header"]}, # Generic button
     "button_primary": {"backgroundColor": APP_COLORS["primary"], "color": APP_COLORS["text_header"]},

@@ -1,11 +1,11 @@
 {
-  "timestamp": "2025-06-03T20:46:00.351314",
+  "timestamp": "2025-06-03T20:45:46.801695",
   "version": "1.0",
   "stores": {
     "transformer-inputs-store": {
       "tipo_transformador": "Trifásico",
       "frequencia": 60,
-      "conexao_at": "triangulo",
+      "conexao_at": "estrela",
       "conexao_bt": "triangulo",
       "conexao_terciario": "triangulo",
       "liquido_isolante": "Mineral",
@@ -18,7 +18,7 @@
       "classe_tensao_at": 34.5,
       "elevacao_enrol_at": 56,
       "impedancia": null,
-      "nbi_at": null,
+      "nbi_at": "200",
       "sil_at": null,
       "tensao_at_tap_maior": null,
       "impedancia_tap_maior": null,
@@ -54,8 +54,8 @@
       "corrente_nominal_at_tap_menor": null,
       "corrente_nominal_bt": null,
       "corrente_nominal_terciario": null,
-      "norma_iso": "IEC",
-      "classe_tensao_neutro_at": null,
+      "norma_iso": "IEEE",
+      "classe_tensao_neutro_at": 8.7,
       "classe_tensao_neutro_bt": null,
       "classe_tensao_neutro_terciario": null,
       "sil_neutro_at": null,
@@ -69,112 +69,104 @@
       "transformer_data": {
         "tipo_transformador": "Trifásico",
         "frequencia": 60,
-        "conexao_at": "triangulo",
+        "conexao_at": "estrela",
         "conexao_bt": "triangulo",
         "conexao_terciario": "triangulo",
         "potencia_mva": 135,
         "tensao_at": 1389,
         "corrente_nominal_at": 56.11,
-        "classe_tensao_at": 25.8,
-        "nbi_at": "200"
+        "classe_tensao_at": 34.5
       }
     },
     "impulse-store": {
       "transformer_data": {
         "tipo_transformador": "Trifásico",
         "frequencia": 60,
-        "conexao_at": "triangulo",
+        "conexao_at": "estrela",
         "conexao_bt": "triangulo",
         "conexao_terciario": "triangulo",
         "potencia_mva": 135,
         "tensao_at": 1389,
         "corrente_nominal_at": 56.11,
-        "classe_tensao_at": 25.8,
-        "nbi_at": "200"
+        "classe_tensao_at": 34.5
       }
     },
     "dieletric-analysis-store": {
       "transformer_data": {
         "tipo_transformador": "Trifásico",
         "frequencia": 60,
-        "conexao_at": "triangulo",
+        "conexao_at": "estrela",
         "conexao_bt": "triangulo",
         "conexao_terciario": "triangulo",
         "potencia_mva": 135,
         "tensao_at": 1389,
         "corrente_nominal_at": 56.11,
-        "classe_tensao_at": 25.8,
-        "nbi_at": "200"
+        "classe_tensao_at": 34.5
       }
     },
     "applied-voltage-store": {
       "transformer_data": {
         "tipo_transformador": "Trifásico",
         "frequencia": 60,
-        "conexao_at": "triangulo",
+        "conexao_at": "estrela",
         "conexao_bt": "triangulo",
         "conexao_terciario": "triangulo",
         "potencia_mva": 135,
         "tensao_at": 1389,
         "corrente_nominal_at": 56.11,
-        "classe_tensao_at": 25.8,
-        "nbi_at": "200"
+        "classe_tensao_at": 34.5
       }
     },
     "induced-voltage-store": {
       "transformer_data": {
         "tipo_transformador": "Trifásico",
         "frequencia": 60,
-        "conexao_at": "triangulo",
+        "conexao_at": "estrela",
         "conexao_bt": "triangulo",
         "conexao_terciario": "triangulo",
         "potencia_mva": 135,
         "tensao_at": 1389,
         "corrente_nominal_at": 56.11,
-        "classe_tensao_at": 25.8,
-        "nbi_at": "200"
+        "classe_tensao_at": 34.5
       }
     },
     "short-circuit-store": {
       "transformer_data": {
         "tipo_transformador": "Trifásico",
         "frequencia": 60,
-        "conexao_at": "triangulo",
+        "conexao_at": "estrela",
         "conexao_bt": "triangulo",
         "conexao_terciario": "triangulo",
         "potencia_mva": 135,
         "tensao_at": 1389,
         "corrente_nominal_at": 56.11,
-        "classe_tensao_at": 25.8,
-        "nbi_at": "200"
+        "classe_tensao_at": 34.5
       }
     },
     "temperature-rise-store": {
       "transformer_data": {
         "tipo_transformador": "Trifásico",
         "frequencia": 60,
-        "conexao_at": "triangulo",
+        "conexao_at": "estrela",
         "conexao_bt": "triangulo",
         "conexao_terciario": "triangulo",
         "potencia_mva": 135,
         "tensao_at": 1389,
         "corrente_nominal_at": 56.11,
-        "classe_tensao_at": 25.8,
-        "nbi_at": "200"
+        "classe_tensao_at": 34.5
       }
     },
     "comprehensive-analysis-store": {
       "transformer_data": {
         "tipo_transformador": "Trifásico",
         "frequencia": 60,
-        "conexao_at": "triangulo",
+        "conexao_at": "estrela",
         "conexao_bt": "triangulo",
         "conexao_terciario": "triangulo",
         "potencia_mva": 135,
         "tensao_at": 1389,
         "corrente_nominal_at": 56.11,
-        "classe_tensao_at": 25.8,
-        "nbi_at": "200"
+        "classe_tensao_at": 34.5
       }
     },
     "front-resistor-data": {},

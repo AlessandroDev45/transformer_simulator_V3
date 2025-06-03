@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-06-03T20:46:00.351314",
+  "timestamp": "2025-06-03T20:45:57.654692",
   "version": "1.0",
   "stores": {
     "transformer-inputs-store": {
@@ -15,7 +15,7 @@
       "elevacao_oleo_topo": 56,
       "elevacao_enrol": 56,
       "tensao_at": 1389,
-      "classe_tensao_at": 34.5,
+      "classe_tensao_at": 25.8,
       "elevacao_enrol_at": 56,
       "impedancia": null,
       "nbi_at": null,
@@ -75,7 +75,7 @@
         "potencia_mva": 135,
         "tensao_at": 1389,
         "corrente_nominal_at": 56.11,
-        "classe_tensao_at": 25.8,
+        "classe_tensao_at": 34.5,
         "nbi_at": "200"
       }
     },
@@ -89,7 +89,7 @@
         "potencia_mva": 135,
         "tensao_at": 1389,
         "corrente_nominal_at": 56.11,
-        "classe_tensao_at": 25.8,
+        "classe_tensao_at": 34.5,
         "nbi_at": "200"
       }
     },
@@ -103,7 +103,7 @@
         "potencia_mva": 135,
         "tensao_at": 1389,
         "corrente_nominal_at": 56.11,
-        "classe_tensao_at": 25.8,
+        "classe_tensao_at": 34.5,
         "nbi_at": "200"
       }
     },
@@ -117,7 +117,7 @@
         "potencia_mva": 135,
         "tensao_at": 1389,
         "corrente_nominal_at": 56.11,
-        "classe_tensao_at": 25.8,
+        "classe_tensao_at": 34.5,
         "nbi_at": "200"
       }
     },
@@ -131,7 +131,7 @@
         "potencia_mva": 135,
         "tensao_at": 1389,
         "corrente_nominal_at": 56.11,
-        "classe_tensao_at": 25.8,
+        "classe_tensao_at": 34.5,
         "nbi_at": "200"
       }
     },
@@ -145,7 +145,7 @@
         "potencia_mva": 135,
         "tensao_at": 1389,
         "corrente_nominal_at": 56.11,
-        "classe_tensao_at": 25.8,
+        "classe_tensao_at": 34.5,
         "nbi_at": "200"
       }
     },
@@ -159,7 +159,7 @@
         "potencia_mva": 135,
         "tensao_at": 1389,
         "corrente_nominal_at": 56.11,
-        "classe_tensao_at": 25.8,
+        "classe_tensao_at": 34.5,
         "nbi_at": "200"
       }
     },
@@ -173,7 +173,7 @@
         "potencia_mva": 135,
         "tensao_at": 1389,
         "corrente_nominal_at": 56.11,
-        "classe_tensao_at": 25.8,
+        "classe_tensao_at": 34.5,
         "nbi_at": "200"
       }
     },
