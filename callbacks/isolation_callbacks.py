@@ -146,11 +146,11 @@ def register_isolation_callbacks(app_instance):
                 raise PreventUpdate
 
             # Mapear o valor de conexão
-            conexao_mapped = map_conexao(conexao)
+            conexao_mapped = map_conexao(conexao) or ""
 
             # Obter os níveis de isolamento e opções (ignoramos as opções padrão)
             log.info(f"[ISOLATION_CALLBACK] Chamando get_isolation_levels para AT: Um={um}, conexao={conexao_mapped}, norma={norma or 'IEC'}")
-            levels, dropdown_options = get_isolation_levels(um, conexao_mapped, norma or "IEC")
+            levels, dropdown_options = get_isolation_levels(um, conexao_mapped or "", norma or "IEC")
             log.info(f"[ISOLATION_CALLBACK] Resultado de get_isolation_levels para AT: {levels.keys()}")
             log.info(f"[ISOLATION_CALLBACK] Opções de dropdown para AT: {dropdown_options}")
 
@@ -448,7 +448,7 @@ def register_isolation_callbacks(app_instance):
 
             # Obter os níveis de isolamento e opções (ignoramos as opções padrão)
             log.info(f"[ISOLATION_CALLBACK] Chamando get_isolation_levels para BT: Um={um}, conexao={conexao_mapped}, norma={norma or 'IEC'}")
-            levels, dropdown_options = get_isolation_levels(um, conexao_mapped, norma or "IEC")
+            levels, dropdown_options = get_isolation_levels(um, conexao_mapped or "", norma or "IEC")
             log.info(f"[ISOLATION_CALLBACK] Resultado de get_isolation_levels para BT: {levels.keys()}")
             log.info(f"[ISOLATION_CALLBACK] Opções de dropdown para BT: {dropdown_options}")
 
@@ -710,7 +710,7 @@ def register_isolation_callbacks(app_instance):
                 raise PreventUpdate
 
             # Mapear o valor de conexão
-            conexao_mapped = map_conexao(conexao)
+            conexao_mapped = map_conexao(conexao) or ""
 
             # Obter os níveis de isolamento e opções (ignoramos as opções padrão)
             log.info(f"[ISOLATION_CALLBACK] Chamando get_isolation_levels para Terciário: Um={um}, conexao={conexao_mapped}, norma={norma or 'IEC'}")

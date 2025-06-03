@@ -8,6 +8,7 @@ import sys
 import dash
 import dash_bootstrap_components as dbc
 from dash import Input, Output, State, html, no_update
+from dash.exceptions import PreventUpdate
 
 # Adiciona o diretório raiz ao caminho de importação quando executado diretamente
 if __name__ == "__main__":
@@ -67,7 +68,12 @@ def analyze_resonant_system_viability(capacitance_nf, voltage_kv, enrolamento=""
         dict: Contendo 'resonant_config', 'viabilidade', 'recommendation', 'cor_alerta', 'enrolamento'.
               Retorna Nones se inputs inválidos.
     """
-    if capacitance_nf is None or voltage_kv is None or capacitance_nf < 0 or voltage_kv < 0:
+    # Convert inputs safely using your existing safe_float function
+    capacitance_nf = safe_float(capacitance_nf, 0)
+    voltage_kv = safe_float(voltage_kv, 0)
+    
+    # Enhanced validation
+    if capacitance_nf is None or voltage_kv is None or capacitance_nf < 0 or voltage_kv <= 0:
         return {
             "resonant_config": "Inválido",
             "viabilidade": "Erro",
@@ -75,6 +81,12 @@ def analyze_resonant_system_viability(capacitance_nf, voltage_kv, enrolamento=""
             "cor_alerta": "danger",
             "enrolamento": enrolamento,
         }
+
+    # Safe division calculation - ensure voltage_kv is not None before comparison
+    if voltage_kv and voltage_kv > 450:
+        divisor_capacitancia = 0.33
+    else:
+        divisor_capacitancia = 0.66
 
     # Primeiro, verificar se podemos usar Módulos 1||2||3 (3 Par.)
     modulos_3par_450kv = None
@@ -385,6 +397,12 @@ def applied_voltage_calculate_and_analyze(
         cap_ter = cap_ter_pf_val or 0  # Garante que não seja None
         tensao_ter_kv = tensao_ter_kv  # Já é float ou 0.0
 
+        # Garantir que tensões e frequência não são None antes de operar
+        tensao_at_kv = tensao_at_kv if tensao_at_kv is not None else 0.0
+        tensao_bt_kv = tensao_bt_kv if tensao_bt_kv is not None else 0.0
+        tensao_ter_kv = tensao_ter_kv if tensao_ter_kv is not None else 0.0
+        freq_hz = freq_hz if freq_hz is not None else 60.0
+
         # Log dos valores padrão usados
         if num_inputs["Cap. AT (pF)"] is None or num_inputs["Cap. AT (pF)"] == 0:
             log.info("[CALC Applied] Usando valor padrão para Cap. AT (pF): 1000 pF")
@@ -392,7 +410,7 @@ def applied_voltage_calculate_and_analyze(
             log.info("[CALC Applied] Usando valor padrão para Cap. BT (pF): 1000 pF")
 
         # Registra os valores que serão usados nos cálculos
-        print("=" * 80)
+         
         print("[CALC Applied] VALORES USADOS NOS CÁLCULOS DE TENSÃO APLICADA:")
         print(f"[CALC Applied] Capacitância AT (pF): {cap_at}")
         print(f"[CALC Applied] Capacitância BT (pF): {cap_bt}")
@@ -401,18 +419,13 @@ def applied_voltage_calculate_and_analyze(
         print(f"[CALC Applied] Tensão BT (kV): {tensao_bt_kv}")
         print(f"[CALC Applied] Tensão Terciário (kV): {tensao_ter_kv}")
         print(f"[CALC Applied] Frequência (Hz): {freq_hz}")
-        print("=" * 80)
-
-        # Calcula parâmetros para cada enrolamento
-        # Assume que cap_at_pf, etc., são as capacitâncias *equivalentes* vistas pela fonte
-        # durante o ensaio de cada enrolamento específico.
 
         # Adiciona capacitância fixa dependendo da tensão
         # Para tensão > 450 kV: adicionar 330 pF (capacitância do divisor de tensão)
         # Para tensão ≤ 450 kV: adicionar 660 pF (capacitância do divisor de tensão)
-        cap_at_adicional = 330 if tensao_at_kv > 450 else 660
-        cap_bt_adicional = 330 if tensao_bt_kv > 450 else 660
-        cap_ter_adicional = 330 if tensao_ter_kv > 450 else 660
+        cap_at_adicional = 330 if tensao_at_kv is not None and tensao_at_kv > 450 else 660
+        cap_bt_adicional = 330 if tensao_bt_kv is not None and tensao_bt_kv > 450 else 660
+        cap_ter_adicional = 330 if tensao_ter_kv is not None and tensao_ter_kv > 450 else 660
 
         cap_at_ajustado = cap_at + cap_at_adicional
         cap_bt_ajustado = cap_bt + cap_bt_adicional
@@ -786,7 +799,7 @@ def load_applied_voltage_inputs(pathname, applied_voltage_store_data):
     clean_path = normalize_pathname(pathname) if pathname else ""
     if clean_path != ROUTE_APPLIED_VOLTAGE and triggered_id == 'url':
         log.debug(f"[LOAD AppliedInputs] Não na página de Tensão Aplicada ({clean_path}). Abortando trigger de URL.")
-        raise dash.no_update
+        raise PreventUpdate
 
     # Se o trigger foi a mudança de URL e estamos na página correta, ou se foi a mudança do store, atualiza.
     if (triggered_id == 'url' and clean_path == ROUTE_APPLIED_VOLTAGE) or triggered_id == 'applied-voltage-store':
@@ -823,7 +836,7 @@ def load_applied_voltage_inputs(pathname, applied_voltage_store_data):
         log.info(f"[LOAD AppliedInputs] Valores carregados: cap_at={cap_at}, cap_bt={cap_bt}, cap_ter={cap_ter}")
         return cap_at, cap_bt, cap_ter
 
-    raise dash.no_update
+    raise PreventUpdate
 
 
 # Função para registrar todos os callbacks

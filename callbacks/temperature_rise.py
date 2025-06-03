@@ -436,10 +436,10 @@ def register_temperature_rise_callbacks(app_instance):
             )
 
             # Calcular elevação de temperatura do óleo
-            if perdas_totais_kw is not None and input_values_local['input_delta_theta_oil_max'] is not None:
+            if input_values_local['input_t_oil'] is not None and input_values_local['input_ta'] is not None:
                 top_oil_rise = calculate_top_oil_rise(
-                    t_oil=perdas_totais_kw,  # Substituir por valor correto se necessário
-                    ta=input_values_local['input_delta_theta_oil_max']
+                    t_oil=input_values_local['input_t_oil'],
+                    ta=input_values_local['input_ta']
                 )
             else:
                 top_oil_rise = None

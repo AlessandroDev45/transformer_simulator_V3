@@ -241,7 +241,7 @@ class TransformerMCPEnhanced:
 
         return changes
 
-    def get_change_history(self, limit: int = None) -> List[Dict[str, Any]]:
+    def get_change_history(self, limit: Optional[int] = None) -> List[Dict[str, Any]]:
         """
         Obtém o histórico de alterações.
 

@@ -9,6 +9,7 @@ from dash import Input, Output, State, html, no_update, dcc # Adicionado State e
 # Não importar app diretamente para evitar importações circulares
 from dash.exceptions import PreventUpdate
 from utils.store_diagnostics import convert_numpy_types
+from utils.routes import ROUTE_HOME, normalize_pathname # Import route constant and normalizer
 
 log = logging.getLogger(__name__)
 log.info("============ MÓDULO TRANSFORMER_INPUTS CARREGADO ============")
@@ -274,8 +275,7 @@ def register_transformer_inputs_callbacks(app_instance):
     )
     def load_transformer_inputs_from_mcp(pathname, transformer_data):
         from dash import ctx
-        from utils.routes import normalize_pathname
-        ROUTE_TRANSFORMER_INPUTS = "/transformer-inputs"  # Define the missing constant
+        # ROUTE_HOME is now imported, normalize_pathname also imported
 
         triggered_id = ctx.triggered_id
         log.debug(f"[LOAD TransformerInputs] Acionado por: {triggered_id}")
@@ -283,12 +283,12 @@ def register_transformer_inputs_callbacks(app_instance):
         # Normaliza o pathname para remover barras extras
         clean_path = normalize_pathname(pathname) if pathname else ""
 
-        # Se o trigger foi a URL, mas não estamos na página de transformer inputs, não faz nada
-        if triggered_id == "url" and clean_path != ROUTE_TRANSFORMER_INPUTS:
-            log.debug(f"[LOAD TransformerInputs] Não estamos na página de transformer inputs (pathname={pathname}, clean_path={clean_path}), prevenindo atualização")
+        # Only proceed if we are on the transformer inputs page
+        if clean_path != ROUTE_HOME:
+            log.debug(f"[LOAD TransformerInputs] Não na página '{ROUTE_HOME}' (atual: '{clean_path}'). Prevenindo atualização.")
             raise PreventUpdate
 
-        # Se não temos dados do transformador, não faz nada
+        # Se não temos dados do transformador, não faz nada (ou return no_update for all outputs)
         if not transformer_data:
             log.debug("[LOAD TransformerInputs] Sem dados do transformador, prevenindo atualização")
             raise PreventUpdate

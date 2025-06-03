@@ -8,67 +8,33 @@ import logging
 import dash_bootstrap_components as dbc
 from dash import dcc, html
 
+# Import centralized styles
+from utils.theme_colors import APP_COLORS, COMPONENTS_STYLES, TYPOGRAPHY_STYLES, SPACING_STYLES
+
 # Remove broken imports for helpers and define local fallbacks
-
 def create_help_button(module_name, tooltip_text):
-    return None
+    # This is a placeholder, actual implementation might be in a shared UI components module
+    return html.Div() # Fallback to avoid errors if not fully implemented
 
-def create_labeled_input(label, input_id, input_type="number", value=None, min=None, max=None, step=None, label_width=6, input_width=6, placeholder=None, style=None, persistence=True, persistence_type="local"):
+def create_labeled_input(label, input_id, input_type="number", value=None, min_val=None, max_val=None, step=None, label_width=6, input_width=6, placeholder=None, style=None, input_style_key="input"):
+    # Renamed min/max to min_val/max_val to avoid conflict with built-in functions if used directly
+    # Added input_style_key to allow different input styles if needed (e.g., "read_only")
     import dash_bootstrap_components as dbc
     from dash import html
+
+    # Use a copy of the base style and update if custom style is provided
+    final_input_style = COMPONENTS_STYLES.get(input_style_key, {}).copy()
+    if style:
+        final_input_style.update(style)
+    
+    # Ensure label style is applied from TYPOGRAPHY_STYLES
+    label_style = TYPOGRAPHY_STYLES.get("label", {"fontSize": "0.75rem", "color": APP_COLORS.get("text_light", "#e0e0e0")})
+
+
     return dbc.Row([
-        dbc.Col(dbc.Label(label, style={"fontSize": "0.75rem", "color": "#e0e0e0"}), width=label_width),
-        dbc.Col(dbc.Input(id=input_id, type=input_type, value=value, min=min, max=max, step=step, placeholder=placeholder, style=style, persistence=persistence, persistence_type=persistence_type), width=input_width)
+        dbc.Col(dbc.Label(label, style=label_style), width=label_width),
+        dbc.Col(dbc.Input(id=input_id, type=input_type, value=value, min=min_val, max=max_val, step=step, placeholder=placeholder, style=final_input_style), width=input_width)
     ], className="mb-1")
-
-
-# --- Paleta de Cores Escura Completa (garante todas as chaves usadas) ---
-COLORS = {
-    "primary": "#26427A",
-    "secondary": "#6c757d",
-    "accent": "#00BFFF",
-    "accent_alt": "#FFD700",
-    "background_main": "#1a1a1a",
-    "background_card": "#2c2c2c",
-    "background_card_header": "#1f1f1f",
-    "background_input": "#3a3a3a",
-    "background_header": "#1f1f1f",
-    "background_faint": "#333333",
-    "text_light": "#e0e0e0",
-    "text_dark": "#e0e0e0",
-    "text_muted": "#a0a0a0",
-    "text_header": "#FFFFFF",
-    "border": "#444444",
-    "border_light": "#555555",
-    "border_strong": "#666666",
-    "success": "#28a745",
-    "danger": "#dc3545",
-    "warning": "#ffc107",
-    "info": "#00BFFF",
-    "pass": "#28a745",
-    "fail": "#dc3545",
-    "pass_bg": "rgba(40, 167, 69, 0.2)",
-    "fail_bg": "rgba(220, 53, 69, 0.2)",
-    "warning_bg": "rgba(255, 193, 7, 0.2)",
-}
-COMPONENTS = {
-    "card": {"backgroundColor": COLORS["background_card"], "border": f'1px solid {COLORS["border"]}', "borderRadius": "4px", "boxShadow": "0 2px 5px rgba(0,0,0,0.25)", "marginBottom": "0.75rem"},
-    "card_header": {"backgroundColor": COLORS["background_card_header"], "color": COLORS["text_header"], "padding": "0.4rem 0.75rem", "fontSize": "1rem", "fontWeight": "bold", "letterSpacing": "0.02em", "textTransform": "uppercase", "borderBottom": f'1px solid {COLORS["border_strong"]}'},
-    "card_body": {"padding": "0.75rem", "backgroundColor": COLORS["background_card"]},
-    "button": {"backgroundColor": COLORS["primary"], "color": COLORS["text_header"]},
-    "dropdown": {"backgroundColor": COLORS["background_input"], "color": COLORS["text_light"], "border": f'1px solid {COLORS["border"]}', "borderRadius": "3px"}
-}
-TYPOGRAPHY = {
-    "label": {"fontSize": "0.75rem", "fontWeight": "500"},
-    "section_title": {"fontSize": "0.9rem", "fontWeight": "bold", "marginTop": "1rem", "marginBottom": "0.5rem"},
-    "card_header": {"fontSize": "1rem", "fontWeight": "bold"},
-    "title": {"fontSize": "1.1rem", "fontWeight": "bold", "color": COLORS["accent"]},
-    "small_text": {"fontSize": "0.7rem", "color": COLORS["text_muted"]},
-    "button": {"fontSize": "0.85rem", "fontWeight": "bold", "letterSpacing": "0.02em"},
-    "error_text": {"fontSize": "0.8rem", "color": COLORS["danger"]}
-}
-SPACING = {"row_margin": "mb-3", "row_gutter": "g-3", "col_padding": "px-2"}
-
 
 # --- Layout Definition Function ---
 def create_induced_voltage_layout():
@@ -143,7 +109,7 @@ def create_induced_voltage_layout():
                         width=12,
                     )
                 ],
-                className=SPACING["row_margin"],
+                className=SPACING_STYLES["row_margin"],
             ),
             # Título principal do módulo (como antes)
             dbc.Card(
@@ -154,7 +120,7 @@ def create_induced_voltage_layout():
                                 html.H6(
                                     "ANÁLISE DE TENSÃO INDUZIDA",
                                     className="text-center m-0 d-inline-block",
-                                    style=TYPOGRAPHY["card_header"],
+                                    style=TYPOGRAPHY_STYLES.get("card_header", {}),
                                 ),
                                 create_help_button(
                                     "induced_voltage", "Ajuda sobre Tensão Induzida"
@@ -162,7 +128,7 @@ def create_induced_voltage_layout():
                             ],
                             className="d-flex align-items-center justify-content-center",
                         ),
-                        style=COMPONENTS["card_header"],
+                        style=COMPONENTS_STYLES.get("card_header", {}),
                     ),
                     dbc.CardBody(
                         [
@@ -177,9 +143,9 @@ def create_induced_voltage_layout():
                                                         html.H6(
                                                             "Parâmetros de Entrada do Ensaio Tensão Induzida",
                                                             className="m-0",
-                                                            style=TYPOGRAPHY["card_header"],
+                                                            style=TYPOGRAPHY_STYLES.get("card_header", {}),
                                                         ),
-                                                        style=COMPONENTS["card_header"],
+                                                        style=COMPONENTS_STYLES.get("card_header", {}),
                                                     ),
                                                     dbc.CardBody(
                                                         [
@@ -189,12 +155,10 @@ def create_induced_voltage_layout():
                                                                         [
                                                                             dbc.Alert(
                                                                                 "Cálculos baseados na NBR 5356-3 / IEC 60076-3 e estimativas com tabelas de aço M4.",
-                                                                                color="info",
+                                                                                color="info", # Keep direct color for Alert for now
                                                                                 className="small py-2 px-3 mb-0 h-75",
                                                                                 style={
-                                                                                    **TYPOGRAPHY[
-                                                                                        "small_text"
-                                                                                    ],
+                                                                                    **TYPOGRAPHY_STYLES.get("small_text", {}),
                                                                                     "display": "flex",
                                                                                     "alignItems": "center",
                                                                                 },
@@ -208,9 +172,7 @@ def create_induced_voltage_layout():
                                                                             dbc.Label(
                                                                                 "Tipo:",
                                                                                 style={
-                                                                                    **TYPOGRAPHY[
-                                                                                        "label"
-                                                                                    ],
+                                                                                    **TYPOGRAPHY_STYLES.get("label", {}),
                                                                                     "textAlign": "left",
                                                                                     "marginBottom": "0",
                                                                                     "whiteSpace": "nowrap",
@@ -232,9 +194,7 @@ def create_induced_voltage_layout():
                                                                                 value="Trifásico",
                                                                                 clearable=False,
                                                                                 style={
-                                                                                    **COMPONENTS[
-                                                                                        "dropdown"
-                                                                                    ],
+                                                                                    **COMPONENTS_STYLES.get("dropdown", {}),
                                                                                     "height": "26px",
                                                                                     "minHeight": "26px",
                                                                                     "width": "120px",
@@ -253,10 +213,7 @@ def create_induced_voltage_layout():
                                                                                 placeholder="Ex: 120",
                                                                                 value=120,
                                                                                 label_width=5,
-                                                                                input_width=7,
-                                                                                style=COMPONENTS[
-                                                                                    "input"
-                                                                                ],
+                                                                                input_width=7
                                                                             )
                                                                         ],
                                                                         md=2,
@@ -268,13 +225,10 @@ def create_induced_voltage_layout():
                                                                                 "Cap. AT-GND (pF):",
                                                                                 "capacitancia",
                                                                                 placeholder="Cp AT-GND",
-                                                                                min=0,
+                                                                                min_val=0, # Renamed from min
                                                                                 step="1",
                                                                                 label_width=6,
-                                                                                input_width=6,
-                                                                                style=COMPONENTS[
-                                                                                    "input"
-                                                                                ],
+                                                                                input_width=6
                                                                             )
                                                                         ],
                                                                         md=3,
@@ -285,12 +239,10 @@ def create_induced_voltage_layout():
                                                                             dbc.Button(
                                                                                 "Calcular",
                                                                                 id="calc-induced-voltage-btn",
-                                                                                color="primary",
+                                                                                color="primary", # Keep direct color for now
                                                                                 size="sm",
                                                                                 className="w-100 h-75",
-                                                                                style=TYPOGRAPHY[
-                                                                                    "button"
-                                                                                ],
+                                                                                style=TYPOGRAPHY_STYLES.get("button", {}),
                                                                             )
                                                                         ],
                                                                         md=3,
@@ -302,23 +254,23 @@ def create_induced_voltage_layout():
                                                             html.Div(
                                                                 id="induced-voltage-error-message",
                                                                 className="mt-2",
-                                                                style=TYPOGRAPHY["error_text"],
+                                                                style=TYPOGRAPHY_STYLES.get("error_text", {}),
                                                             ),
                                                         ],
                                                         style={
-                                                            **COMPONENTS["card_body"],
+                                                            **COMPONENTS_STYLES.get("card_body", {}),
                                                             "padding": "0.5rem",
                                                         },
                                                     ),
                                                 ],
-                                                style=COMPONENTS["card"],
+                                                style=COMPONENTS_STYLES.get("card", {}),
                                             )
                                         ],
                                         width=12,
-                                        className=SPACING["col_padding"],
+                                        className=SPACING_STYLES["col_padding"],
                                     )
                                 ],
-                                className=SPACING["row_gutter"],
+                                className=SPACING_STYLES["row_gutter"],
                             ),
                             # Resultados (como antes)
                             dbc.Row(
@@ -331,9 +283,9 @@ def create_induced_voltage_layout():
                                                         html.H6(
                                                             "Resultados Calculados",
                                                             className="m-0",
-                                                            style=TYPOGRAPHY["card_header"],
+                                                            style=TYPOGRAPHY_STYLES.get("card_header", {}),
                                                         ),
-                                                        style=COMPONENTS["card_header"],
+                                                        style=COMPONENTS_STYLES.get("card_header", {}),
                                                     ),
                                                     dbc.CardBody(
                                                         dcc.Loading(
@@ -341,22 +293,22 @@ def create_induced_voltage_layout():
                                                                 id="resultado-tensao-induzida"
                                                             ),
                                                             type="circle",
-                                                            color=COLORS["primary"],
+                                                            color=APP_COLORS.get("primary", "#26427A"),
                                                         ),
                                                         style={
-                                                            **COMPONENTS["card_body"],
+                                                            **COMPONENTS_STYLES.get("card_body", {}),
                                                             "padding": "0.5rem",
                                                         },
                                                     ),
                                                 ],
-                                                style=COMPONENTS["card"],
+                                                style=COMPONENTS_STYLES.get("card", {}),
                                             )
                                         ],
                                         width=12,
-                                        className=SPACING["col_padding"],
+                                        className=SPACING_STYLES["col_padding"],
                                     )
                                 ],
-                                className=SPACING["row_gutter"],
+                                className=SPACING_STYLES["row_gutter"],
                             ),
                             # Botões para tabela de frequências (como antes)
                             dbc.Row(
@@ -368,22 +320,22 @@ def create_induced_voltage_layout():
                                                     dbc.Button(
                                                         "Gerar Tabela de Frequências (100-240Hz)",
                                                         id="generate-frequency-table-button",
-                                                        color="info",
+                                                        color="info", # Keep direct color
                                                         size="sm",
                                                         className="mt-3 mb-2",
                                                         style={
-                                                            **TYPOGRAPHY["button"],
+                                                            **TYPOGRAPHY_STYLES.get("button", {}),
                                                             "width": "auto",
                                                         },
                                                     ),
                                                     dbc.Button(
                                                         "Limpar Tabela",
                                                         id="clear-frequency-table-button",
-                                                        color="secondary",
+                                                        color="secondary", # Keep direct color
                                                         size="sm",
                                                         className="mt-3 mb-2",
                                                         style={
-                                                            **TYPOGRAPHY["button"],
+                                                            **TYPOGRAPHY_STYLES.get("button", {}),
                                                             "width": "auto",
                                                         },
                                                     ),
@@ -394,7 +346,7 @@ def create_induced_voltage_layout():
                                         className="d-flex justify-content-center",
                                     )
                                 ],
-                                className=SPACING["row_gutter"],
+                                className=SPACING_STYLES["row_gutter"],
                             ),
                             # Contêiner para a tabela de frequências (como antes)
                             dbc.Row(
@@ -402,10 +354,10 @@ def create_induced_voltage_layout():
                                     dbc.Col(
                                         [html.Div(id="frequency-table-container")],
                                         width=12,
-                                        className=SPACING["col_padding"],
+                                        className=SPACING_STYLES["col_padding"],
                                     )
                                 ],
-                                className=SPACING["row_gutter"],
+                                className=SPACING_STYLES["row_gutter"],
                             ),
                         ]
                     ),
@@ -414,5 +366,5 @@ def create_induced_voltage_layout():
         ],
         fluid=True,
         className="p-0",
-        style={"backgroundColor": COLORS["background_main"]},
+        style={"backgroundColor": APP_COLORS.get("background_main", "#1a1a1a")},
     )

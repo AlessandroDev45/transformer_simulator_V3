@@ -10,67 +10,16 @@ from dash import dcc, html
 
 from app import app  # Importa a instância app para acessar o cache de dados do transformador
 
-# Remover imports quebrados de componentes/estilos
-# from components.help_button import create_help_button
-# from components.ui_elements import create_labeled_input
-# from layouts import COMPONENTS, SPACING, TYPOGRAPHY
-
-# --- Paleta de Cores Escura Completa (garante todas as chaves usadas) ---
-COLORS = {
-    "primary": "#26427A",
-    "secondary": "#6c757d",
-    "accent": "#00BFFF",
-    "accent_alt": "#FFD700",
-    "background_main": "#1a1a1a",
-    "background_card": "#2c2c2c",
-    "background_card_header": "#1f1f1f",
-    "background_input": "#3a3a3a",
-    "background_header": "#1f1f1f",
-    "background_faint": "#333333",
-    "text_light": "#e0e0e0",
-    "text_dark": "#e0e0e0",
-    "text_muted": "#a0a0a0",
-    "text_header": "#FFFFFF",
-    "border": "#444444",
-    "border_light": "#555555",
-    "border_strong": "#666666",
-    "success": "#28a745",
-    "danger": "#dc3545",
-    "warning": "#ffc107",
-    "info": "#00BFFF",
-    "pass": "#28a745",
-    "fail": "#dc3545",
-    "pass_bg": "rgba(40, 167, 69, 0.2)",
-    "fail_bg": "rgba(220, 53, 69, 0.2)",
-    "warning_bg": "rgba(255, 193, 7, 0.2)",
-}
+# Import centralized styles
+from utils.theme_colors import APP_COLORS, COMPONENTS_STYLES, TYPOGRAPHY_STYLES, SPACING_STYLES
 
 # Definir helpers e estilos locais robustos
-
 def create_help_button(module_name, tooltip_text):
     from dash import html
     return html.Div()  # Fallback
 
-COMPONENTS = {
-    "card": {"backgroundColor": COLORS["background_card"], "border": f'1px solid {COLORS["border"]}', "borderRadius": "4px", "boxShadow": "0 2px 5px rgba(0,0,0,0.25)", "marginBottom": "0.75rem"},
-    "card_header": {"backgroundColor": COLORS["background_card_header"], "color": COLORS["text_header"], "padding": "0.4rem 0.75rem", "fontSize": "1rem", "fontWeight": "bold", "letterSpacing": "0.02em", "textTransform": "uppercase", "borderBottom": f'1px solid {COLORS["border_strong"]}'},
-    "card_body": {"padding": "0.75rem", "backgroundColor": COLORS["background_card"]},
-    "input": {"backgroundColor": COLORS["background_input"], "color": COLORS["text_light"], "border": f'1px solid {COLORS["border"]}', "borderRadius": "3px"},
-    "dropdown": {"backgroundColor": COLORS["background_input"], "color": COLORS["text_light"], "border": f'1px solid {COLORS["border"]}', "borderRadius": "3px"},
-    "read_only": {"backgroundColor": COLORS["background_card_header"], "color": COLORS["text_muted"], "border": f'1px solid {COLORS["border"]}', "borderRadius": "3px"},
-    "button_primary": {"backgroundColor": COLORS["primary"], "color": COLORS["text_header"]},
-    "button_secondary": {"backgroundColor": COLORS["secondary"], "color": COLORS["text_header"]},
-    "container": {"padding": "0.5rem 0.5rem 2rem 0.5rem", "maxWidth": "1400px", "margin": "0 auto"},
-}
-TYPOGRAPHY = {
-    "label": {"fontSize": "0.75rem", "fontWeight": "500"},
-    "section_title": {"fontSize": "0.9rem", "fontWeight": "bold", "marginTop": "1rem", "marginBottom": "0.5rem"},
-    "card_header": {"fontSize": "1rem", "fontWeight": "bold"},
-    "button": {"fontSize": "0.85rem", "fontWeight": "bold", "letterSpacing": "0.02em"}
-}
-SPACING = {"row_margin": "mb-3", "row_gutter": "g-3", "col_padding": "px-2"}
-
 # Fallback para MATERIAL_OPTIONS se constants não estiver disponível
+# Idealmente, isso também viria de um local centralizado se usado em múltiplos lugares.
 MATERIAL_OPTIONS = [
     {"label": "Cobre", "value": "cobre"},
     {"label": "Alumínio", "value": "aluminio"},
@@ -100,63 +49,28 @@ def create_temperature_rise_layout():
 
     return dbc.Container(
         [
-            # Removemos a redefinição dos stores para evitar conflitos com os stores globais
-            # Os stores já estão definidos em components/global_stores.py e incluídos no layout principal
-            # Primeira seção - Informações do Transformador (sempre visível no topo)
             dbc.Row(
                 [
                     dbc.Col(
                         [
-                            # Componente de informações do transformador
                             html.Div(
                                 [
-                                    # Div onde o painel será renderizado - usando ID único para evitar conflitos
                                     html.Div(
                                         id="transformer-info-temperature-rise-page",
                                         className="mb-1",
                                     ),
-                                    # Div oculta para compatibilidade com o callback global_updates
                                     html.Div(
                                         html.Div(),
                                         id="transformer-info-temperature-rise",
                                         style={"display": "none"},
                                     ),
-                                    # Divs ocultas para compatibilidade com o callback global_updates
-                                    html.Div(
-                                        html.Div(),
-                                        id="transformer-info-losses",
-                                        style={"display": "none"},
-                                    ),
-                                    html.Div(
-                                        html.Div(),
-                                        id="transformer-info-impulse",
-                                        style={"display": "none"},
-                                    ),
-                                    html.Div(
-                                        html.Div(),
-                                        id="transformer-info-dieletric",
-                                        style={"display": "none"},
-                                    ),
-                                    html.Div(
-                                        html.Div(),
-                                        id="transformer-info-applied",
-                                        style={"display": "none"},
-                                    ),
-                                    html.Div(
-                                        html.Div(),
-                                        id="transformer-info-induced",
-                                        style={"display": "none"},
-                                    ),
-                                    html.Div(
-                                        html.Div(),
-                                        id="transformer-info-short-circuit",
-                                        style={"display": "none"},
-                                    ),
-                                    html.Div(
-                                        html.Div(),
-                                        id="transformer-info-comprehensive",
-                                        style={"display": "none"},
-                                    ),
+                                    html.Div(html.Div(),id="transformer-info-losses", style={"display": "none"}),
+                                    html.Div(html.Div(),id="transformer-info-impulse", style={"display": "none"}),
+                                    html.Div(html.Div(),id="transformer-info-dieletric", style={"display": "none"}),
+                                    html.Div(html.Div(),id="transformer-info-applied", style={"display": "none"}),
+                                    html.Div(html.Div(),id="transformer-info-induced", style={"display": "none"}),
+                                    html.Div(html.Div(),id="transformer-info-short-circuit", style={"display": "none"}),
+                                    html.Div(html.Div(),id="transformer-info-comprehensive", style={"display": "none"}),
                                 ],
                                 className="mb-2",
                             )
@@ -164,9 +78,8 @@ def create_temperature_rise_layout():
                         width=12,
                     )
                 ],
-                className=SPACING["row_margin"],
+                className=SPACING_STYLES.get("row_margin", "mb-3"),
             ),
-            # Título principal do módulo
             dbc.Card(
                 [
                     dbc.CardHeader(
@@ -175,85 +88,73 @@ def create_temperature_rise_layout():
                                 html.H6(
                                     "ANÁLISE DE ELEVAÇÃO DE TEMPERATURA",
                                     className="text-center m-0 d-inline-block",
-                                    style=TYPOGRAPHY["card_header"],
+                                    style=TYPOGRAPHY_STYLES.get("card_header", {}),
                                 ),
-                                # Botão de ajuda
                                 create_help_button(
                                     "temperature_rise", "Ajuda sobre Elevação de Temperatura"
                                 ),
                             ],
                             className="d-flex align-items-center justify-content-center",
                         ),
-                        style=COMPONENTS["card_header"],
+                        style=COMPONENTS_STYLES.get("card_header", {}),
                     ),
                     dbc.CardBody(
                         [
-                            # Layout principal com duas colunas
                             dbc.Row(
                                 [
-                                    # --- Coluna Esquerda: Entradas e Diagrama ---
                                     dbc.Col(
                                         [
-                                            # Card para Dados de Entrada
                                             dbc.Card(
                                                 [
                                                     dbc.CardHeader(
                                                         html.H6(
                                                             "Dados de Entrada do Ensaio",
                                                             className="m-0",
-                                                            style=TYPOGRAPHY["card_header"],
+                                                            style=TYPOGRAPHY_STYLES.get("card_header", {}),
                                                         ),
-                                                        style=COMPONENTS["card_header"],
+                                                        style=COMPONENTS_STYLES.get("card_header", {}),
                                                     ),
                                                     dbc.CardBody(
                                                         [
-                                                            # Alerta informativo
                                                             dbc.Alert(
                                                                 [
                                                                     html.P(
                                                                         "Cálculos baseados na NBR 5356-2 / IEC 60076-2.",
                                                                         className="mb-0",
-                                                                        style={
-                                                                            "fontSize": "0.7rem"
-                                                                        },
+                                                                        style={"fontSize": "0.7rem"},
                                                                     )
                                                                 ],
                                                                 color="info",
                                                                 className="p-2 mb-3",
                                                             ),
-                                                            # Seção 1: Condições Ambientais e Material
                                                             html.Div(
                                                                 "Condições Ambientais e Material",
                                                                 style={
                                                                     "fontSize": "0.8rem",
                                                                     "fontWeight": "bold",
                                                                     "marginBottom": "0.5rem",
-                                                                    "color": COLORS["text_light"],
+                                                                    "color": APP_COLORS.get("text_light", "#e0e0e0"),
                                                                 },
                                                             ),
                                                             dbc.Row(
                                                                 [
-                                                                    # Temperatura Ambiente
                                                                     dbc.Col(
                                                                         [
                                                                             dbc.Label(
                                                                                 "Temp. Ambiente (Θa) (°C):",
-                                                                                style=TYPOGRAPHY["label"],
+                                                                                style=TYPOGRAPHY_STYLES.get("label", {}),
                                                                                 html_for="temp-amb",
                                                                             ),
                                                                             dbc.Input(
                                                                                 id="temp-amb",
                                                                                 type="number",
                                                                                 placeholder="Ex: 25.0",
-                                                                                style=COMPONENTS["input"],
-                                                                                persistence=True,
-                                                                                persistence_type="local",
+                                                                                style=COMPONENTS_STYLES.get("input", {}),
                                                                                 step=0.1,
                                                                             ),
                                                                         ],
                                                                         width=6,
                                                                     ),
-                                                                    # Material do Enrolamento
                                                                     dbc.Col(
                                                                         [
                                                                             dbc.Row(
@@ -262,9 +163,7 @@ def create_temperature_rise_layout():
                                                                                         [
                                                                                             dbc.Label(
                                                                                                 "Material Enrolamento:",
-                                                                                                style=TYPOGRAPHY[
-                                                                                                    "label"
-                                                                                                ],
+                                                                                                style=TYPOGRAPHY_STYLES.get("label", {}),
                                                                                                 html_for="winding-material",
                                                                                             ),
                                                                                         ],
@@ -277,12 +176,8 @@ def create_temperature_rise_layout():
                                                                                                 options=MATERIAL_OPTIONS,
                                                                                                 value="cobre",
                                                                                                 clearable=False,
-                                                                                                style=COMPONENTS[
-                                                                                                    "dropdown"
-                                                                                                ],
+                                                                                                style=COMPONENTS_STYLES.get("dropdown", {}),
                                                                                                 className="dash-dropdown-dark",
-                                                                                                persistence=True,
-                                                                                                persistence_type="local",
                                                                                             ),
                                                                                         ],
                                                                                         width=5,
@@ -295,53 +190,46 @@ def create_temperature_rise_layout():
                                                                 ],
                                                                 className="mb-3",
                                                             ),
-                                                            # Seção 2: Medições a Frio
                                                             html.Div(
                                                                 "Medições a Frio",
                                                                 style={
                                                                     "fontSize": "0.8rem",
                                                                     "fontWeight": "bold",
                                                                     "marginBottom": "0.5rem",
-                                                                    "color": COLORS["text_light"],
+                                                                    "color": APP_COLORS.get("text_light", "#e0e0e0"),
                                                                 },
                                                             ),
                                                             dbc.Row(
                                                                 [
-                                                                    # Resistência Fria
                                                                     dbc.Col(
                                                                         [
                                                                             dbc.Label(
                                                                                 "Res. Fria (Rc) (Ohm):",
-                                                                                style=TYPOGRAPHY["label"],
+                                                                                style=TYPOGRAPHY_STYLES.get("label", {}),
                                                                                 html_for="res-cold",
                                                                             ),
                                                                             dbc.Input(
                                                                                 id="res-cold",
                                                                                 type="number",
                                                                                 placeholder="Ohm @ Θc",
-                                                                                style=COMPONENTS["input"],
-                                                                                persistence=True,
-                                                                                persistence_type="local",
+                                                                                style=COMPONENTS_STYLES.get("input", {}),
                                                                                 step="any",
                                                                             ),
                                                                         ],
                                                                         width=6,
                                                                     ),
-                                                                    # Temperatura de Referência Fria
                                                                     dbc.Col(
                                                                         [
                                                                             dbc.Label(
                                                                                 "Temp. Ref. Fria (Θc) (°C):",
-                                                                                style=TYPOGRAPHY["label"],
+                                                                                style=TYPOGRAPHY_STYLES.get("label", {}),
                                                                                 html_for="temp-cold",
                                                                             ),
                                                                             dbc.Input(
                                                                                 id="temp-cold",
                                                                                 type="number",
                                                                                 placeholder="Temp. Rc",
-                                                                                style=COMPONENTS["input"],
-                                                                                persistence=True,
-                                                                                persistence_type="local",
+                                                                                style=COMPONENTS_STYLES.get("input", {}),
                                                                             ),
                                                                         ],
                                                                         width=6,
@@ -349,33 +237,29 @@ def create_temperature_rise_layout():
                                                                 ],
                                                                 className="mb-3",
                                                             ),
-                                                            # Seção 3: Medições a Quente
                                                             html.Div(
                                                                 "Medições a Quente",
                                                                 style={
                                                                     "fontSize": "0.8rem",
                                                                     "fontWeight": "bold",
                                                                     "marginBottom": "0.5rem",
-                                                                    "color": COLORS["text_light"],
+                                                                    "color": APP_COLORS.get("text_light", "#e0e0e0"),
                                                                 },
                                                             ),
                                                             dbc.Row(
                                                                 [
-                                                                    # Resistência Quente
                                                                     dbc.Col(
                                                                         [
                                                                             dbc.Label(
                                                                                 "Res. Quente (Rw) (Ohm):",
-                                                                                style=TYPOGRAPHY["label"],
+                                                                                style=TYPOGRAPHY_STYLES.get("label", {}),
                                                                                 html_for="res-hot",
                                                                             ),
                                                                             dbc.Input(
                                                                                 id="res-hot",
                                                                                 type="number",
                                                                                 placeholder="Ohm @ t=0",
-                                                                                style=COMPONENTS["input"],
-                                                                                persistence=True,
-                                                                                persistence_type="local",
+                                                                                style=COMPONENTS_STYLES.get("input", {}),
                                                                                 step="any",
                                                                             ),
                                                                             dbc.Tooltip(
@@ -386,21 +270,18 @@ def create_temperature_rise_layout():
                                                                         ],
                                                                         width=6,
                                                                     ),
-                                                                    # Temperatura do Topo do Óleo
                                                                     dbc.Col(
                                                                         [
                                                                             dbc.Label(
                                                                                 "Temp. Topo Óleo (Θoil) (°C):",
-                                                                                style=TYPOGRAPHY["label"],
+                                                                                style=TYPOGRAPHY_STYLES.get("label", {}),
                                                                                 html_for="temp-top-oil",
                                                                             ),
                                                                             dbc.Input(
                                                                                 id="temp-top-oil",
                                                                                 type="number",
                                                                                 placeholder="Final",
-                                                                                style=COMPONENTS["input"],
-                                                                                persistence=True,
-                                                                                persistence_type="local",
+                                                                                style=COMPONENTS_STYLES.get("input", {}),
                                                                             ),
                                                                         ],
                                                                         width=6,
@@ -408,14 +289,13 @@ def create_temperature_rise_layout():
                                                                 ],
                                                                 className="mb-3",
                                                             ),
-                                                            # Seção 4: Parâmetro para Constante de Tempo
                                                             html.Div(
                                                                 "Parâmetro para Constante de Tempo Térmica",
                                                                 style={
                                                                     "fontSize": "0.8rem",
                                                                     "fontWeight": "bold",
                                                                     "marginBottom": "0.5rem",
-                                                                    "color": COLORS["text_light"],
+                                                                    "color": APP_COLORS.get("text_light", "#e0e0e0"),
                                                                 },
                                                             ),
                                                             dbc.Row(
@@ -428,9 +308,7 @@ def create_temperature_rise_layout():
                                                                                         [
                                                                                             dbc.Label(
                                                                                                 "Elevação Máx Óleo (ΔΘoil_max) (K):",
-                                                                                                style=TYPOGRAPHY[
-                                                                                                    "label"
-                                                                                                ],
+                                                                                                style=TYPOGRAPHY_STYLES.get("label", {}),
                                                                                                 html_for="delta-theta-oil-max",
                                                                                             ),
                                                                                         ],
@@ -441,11 +319,7 @@ def create_temperature_rise_layout():
                                                                                             dbc.Input(
                                                                                                 type="number",
                                                                                                 id="delta-theta-oil-max",
-                                                                                                style=COMPONENTS[
-                                                                                                    "input"
-                                                                                                ],
-                                                                                                persistence=True,
-                                                                                                persistence_type="local",
+                                                                                                style=COMPONENTS_STYLES.get("input", {}),
                                                                                                 placeholder="Opcional p/ τ₀",
                                                                                                 step=0.1,
                                                                                             ),
@@ -465,19 +339,16 @@ def create_temperature_rise_layout():
                                                                 ],
                                                                 className="mb-3",
                                                             ),
-                                                            # Botão de cálculo
                                                             dbc.Row(
                                                                 [
                                                                     dbc.Col(
                                                                         dbc.Button(
                                                                             "Calcular Elevação",
-                                                                            id="limpar-temp-rise",
+                                                                            id="limpar-temp-rise", # ID seems incorrect, should be 'calc-temp-rise-btn' or similar
                                                                             color="primary",
                                                                             size="md",
                                                                             className="w-100",
-                                                                            style=TYPOGRAPHY[
-                                                                                "button"
-                                                                            ],
+                                                                            style=TYPOGRAPHY_STYLES.get("button", {}),
                                                                             n_clicks=0,
                                                                         ),
                                                                         width=12,
@@ -485,33 +356,30 @@ def create_temperature_rise_layout():
                                                                 ],
                                                                 className="mb-2",
                                                             ),
-                                                            # Mensagem de erro
                                                             html.Div(
                                                                 id="temp-rise-error-message",
                                                                 className="mt-2",
-                                                                style=TYPOGRAPHY["error_text"],
+                                                                style=TYPOGRAPHY_STYLES.get("error_text", {}),
                                                             ),
                                                         ],
-                                                        style=COMPONENTS["card_body"],
+                                                        style=COMPONENTS_STYLES.get("card_body", {}),
                                                     ),
                                                 ],
-                                                style=COMPONENTS["card"],
+                                                style=COMPONENTS_STYLES.get("card", {}),
                                                 className="mb-3",
                                             ),
-                                            # Card para Diagrama Explicativo
                                             dbc.Card(
                                                 [
                                                     dbc.CardHeader(
                                                         html.H6(
                                                             "Diagrama de Elevação de Temperatura",
                                                             className="m-0",
-                                                            style=TYPOGRAPHY["card_header"],
+                                                            style=TYPOGRAPHY_STYLES.get("card_header", {}),
                                                         ),
-                                                        style=COMPONENTS["card_header"],
+                                                        style=COMPONENTS_STYLES.get("card_header", {}),
                                                     ),
                                                     dbc.CardBody(
                                                         [
-                                                            # Diagrama explicativo
                                                             html.Div(
                                                                 [
                                                                     html.Div(
@@ -530,54 +398,48 @@ def create_temperature_rise_layout():
                                                                             "maxWidth": "500px",
                                                                             "margin": "0 auto",
                                                                             "display": "block",
-                                                                            "color": "#aaa",
+                                                                            "color": "#aaa", 
                                                                         },
                                                                     )
                                                                 ],
                                                                 className="text-center",
                                                             )
                                                         ],
-                                                        style=COMPONENTS["card_body"],
+                                                        style=COMPONENTS_STYLES.get("card_body", {}),
                                                     ),
                                                 ],
-                                                style=COMPONENTS["card"],
+                                                style=COMPONENTS_STYLES.get("card", {}),
                                             ),
                                         ],
                                         md=6,
-                                        className=SPACING["col_padding"],
+                                        className=SPACING_STYLES.get("col_padding", "px-2"),
                                     ),
-                                    # --- Coluna Direita: Resultados e Fórmulas ---
                                     dbc.Col(
                                         [
-                                            # Card para Resultados
                                             dbc.Card(
                                                 [
                                                     dbc.CardHeader(
                                                         html.H6(
                                                             "Resultados Calculados",
                                                             className="m-0",
-                                                            style=TYPOGRAPHY["card_header"],
+                                                            style=TYPOGRAPHY_STYLES.get("card_header", {}),
                                                         ),
-                                                        style=COMPONENTS["card_header"],
+                                                        style=COMPONENTS_STYLES.get("card_header", {}),
                                                     ),
                                                     dbc.CardBody(
                                                         dcc.Loading(
                                                             [
-                                                                # Seção 1: Temperaturas e Elevações
                                                                 html.Div(
                                                                     "Temperaturas e Elevações",
                                                                     style={
                                                                         "fontSize": "0.8rem",
                                                                         "fontWeight": "bold",
                                                                         "marginBottom": "0.5rem",
-                                                                        "color": COLORS[
-                                                                            "text_light"
-                                                                        ],
+                                                                        "color": APP_COLORS.get("text_light", "#e0e0e0"),
                                                                     },
                                                                 ),
                                                                 dbc.Row(
                                                                     [
-                                                                        # Temperatura Média do Enrolamento
                                                                         dbc.Col(
                                                                             [
                                                                                 dbc.Row(
@@ -585,9 +447,7 @@ def create_temperature_rise_layout():
                                                                                         dbc.Col(
                                                                                             html.Label(
                                                                                                 "Temp. Média Enrol. Final (Θw):",
-                                                                                                style=TYPOGRAPHY[
-                                                                                                    "label"
-                                                                                                ],
+                                                                                                style=TYPOGRAPHY_STYLES.get("label", {}),
                                                                                             ),
                                                                                             width=7,
                                                                                         ),
@@ -596,11 +456,7 @@ def create_temperature_rise_layout():
                                                                                                 id="avg-winding-temp",
                                                                                                 type="number",
                                                                                                 readonly=True,
-                                                                                                style=COMPONENTS[
-                                                                                                    "read_only"
-                                                                                                ],
-                                                                                                persistence=True,
-                                                                                                persistence_type="local",
+                                                                                                style=COMPONENTS_STYLES.get("read_only", {}),
                                                                                             ),
                                                                                             width=5,
                                                                                         ),
@@ -610,7 +466,6 @@ def create_temperature_rise_layout():
                                                                             ],
                                                                             width=12,
                                                                         ),
-                                                                        # Elevação Média do Enrolamento
                                                                         dbc.Col(
                                                                             [
                                                                                 dbc.Row(
@@ -618,9 +473,7 @@ def create_temperature_rise_layout():
                                                                                         dbc.Col(
                                                                                             html.Label(
                                                                                                 "Elevação Média Enrol. (ΔΘw):",
-                                                                                                style=TYPOGRAPHY[
-                                                                                                    "label"
-                                                                                                ],
+                                                                                                style=TYPOGRAPHY_STYLES.get("label", {}),
                                                                                             ),
                                                                                             width=7,
                                                                                         ),
@@ -629,11 +482,7 @@ def create_temperature_rise_layout():
                                                                                                 id="avg-winding-rise",
                                                                                                 type="number",
                                                                                                 readonly=True,
-                                                                                                style=COMPONENTS[
-                                                                                                    "read_only"
-                                                                                                ],
-                                                                                                persistence=True,
-                                                                                                persistence_type="local",
+                                                                                                style=COMPONENTS_STYLES.get("read_only", {}),
                                                                                             ),
                                                                                             width=5,
                                                                                         ),
@@ -643,7 +492,6 @@ def create_temperature_rise_layout():
                                                                             ],
                                                                             width=12,
                                                                         ),
-                                                                        # Elevação do Topo do Óleo
                                                                         dbc.Col(
                                                                             [
                                                                                 dbc.Row(
@@ -651,9 +499,7 @@ def create_temperature_rise_layout():
                                                                                         dbc.Col(
                                                                                             html.Label(
                                                                                                 "Elevação Topo Óleo (ΔΘoil):",
-                                                                                                style=TYPOGRAPHY[
-                                                                                                    "label"
-                                                                                                ],
+                                                                                                style=TYPOGRAPHY_STYLES.get("label", {}),
                                                                                             ),
                                                                                             width=7,
                                                                                         ),
@@ -662,11 +508,7 @@ def create_temperature_rise_layout():
                                                                                                 id="top-oil-rise",
                                                                                                 type="number",
                                                                                                 readonly=True,
-                                                                                                style=COMPONENTS[
-                                                                                                    "read_only"
-                                                                                                ],
-                                                                                                persistence=True,
-                                                                                                persistence_type="local",
+                                                                                                style=COMPONENTS_STYLES.get("read_only", {}),
                                                                                             ),
                                                                                             width=5,
                                                                                         ),
@@ -678,7 +520,6 @@ def create_temperature_rise_layout():
                                                                         ),
                                                                     ]
                                                                 ),
-                                                                # Seção 2: Parâmetros Térmicos
                                                                 html.Div(
                                                                     "Parâmetros Térmicos",
                                                                     style={
@@ -686,14 +527,11 @@ def create_temperature_rise_layout():
                                                                         "fontWeight": "bold",
                                                                         "marginTop": "1rem",
                                                                         "marginBottom": "0.5rem",
-                                                                        "color": COLORS[
-                                                                            "text_light"
-                                                                        ],
+                                                                        "color": APP_COLORS.get("text_light", "#e0e0e0"),
                                                                     },
                                                                 ),
                                                                 dbc.Row(
                                                                     [
-                                                                        # Perdas Totais Usadas
                                                                         dbc.Col(
                                                                             [
                                                                                 dbc.Row(
@@ -701,9 +539,7 @@ def create_temperature_rise_layout():
                                                                                         dbc.Col(
                                                                                             html.Label(
                                                                                                 "Perdas Totais Usadas (Ptot):",
-                                                                                                style=TYPOGRAPHY[
-                                                                                                    "label"
-                                                                                                ],
+                                                                                                style=TYPOGRAPHY_STYLES.get("label", {}),
                                                                                             ),
                                                                                             width=7,
                                                                                         ),
@@ -713,11 +549,7 @@ def create_temperature_rise_layout():
                                                                                                 type="number",
                                                                                                 readonly=True,
                                                                                                 placeholder="kW",
-                                                                                                style=COMPONENTS[
-                                                                                                    "read_only"
-                                                                                                ],
-                                                                                                persistence=True,
-                                                                                                persistence_type="local",
+                                                                                                style=COMPONENTS_STYLES.get("read_only", {}),
                                                                                             ),
                                                                                             width=5,
                                                                                         ),
@@ -727,7 +559,6 @@ def create_temperature_rise_layout():
                                                                             ],
                                                                             width=12,
                                                                         ),
-                                                                        # Constante de Tempo Térmica
                                                                         dbc.Col(
                                                                             [
                                                                                 dbc.Row(
@@ -735,9 +566,7 @@ def create_temperature_rise_layout():
                                                                                         dbc.Col(
                                                                                             html.Label(
                                                                                                 "Const. Tempo Térmica (τ₀):",
-                                                                                                style=TYPOGRAPHY[
-                                                                                                    "label"
-                                                                                                ],
+                                                                                                style=TYPOGRAPHY_STYLES.get("label", {}),
                                                                                             ),
                                                                                             width=7,
                                                                                         ),
@@ -747,11 +576,7 @@ def create_temperature_rise_layout():
                                                                                                 type="number",
                                                                                                 readonly=True,
                                                                                                 placeholder="horas",
-                                                                                                style=COMPONENTS[
-                                                                                                    "read_only"
-                                                                                                ],
-                                                                                                persistence=True,
-                                                                                                persistence_type="local",
+                                                                                                style=COMPONENTS_STYLES.get("read_only", {}),
                                                                                             ),
                                                                                             width=5,
                                                                                         ),
@@ -763,7 +588,6 @@ def create_temperature_rise_layout():
                                                                         ),
                                                                     ]
                                                                 ),
-                                                                # Seção 3: Fórmulas Utilizadas
                                                                 html.Div(
                                                                     "Fórmulas Utilizadas",
                                                                     style={
@@ -771,9 +595,7 @@ def create_temperature_rise_layout():
                                                                         "fontWeight": "bold",
                                                                         "marginTop": "1rem",
                                                                         "marginBottom": "0.5rem",
-                                                                        "color": COLORS[
-                                                                            "text_light"
-                                                                        ],
+                                                                        "color": APP_COLORS.get("text_light", "#e0e0e0"),
                                                                     },
                                                                 ),
                                                                 dbc.Card(
@@ -784,135 +606,102 @@ def create_temperature_rise_layout():
                                                                                     [
                                                                                         html.Span(
                                                                                             "Temperatura Média do Enrolamento:",
-                                                                                            style={
-                                                                                                "fontWeight": "bold"
-                                                                                            },
+                                                                                            style={"fontWeight": "bold"},
                                                                                         ),
                                                                                         html.Br(),
                                                                                         "Θw = Θa + [(Rw/Rc) × (C + Θc) - C]",
                                                                                     ],
-                                                                                    style={
-                                                                                        "fontSize": "0.7rem",
-                                                                                        "marginBottom": "0.5rem",
-                                                                                    },
+                                                                                    style={"fontSize": "0.7rem", "marginBottom": "0.5rem"},
                                                                                 ),
                                                                                 html.P(
                                                                                     [
                                                                                         html.Span(
                                                                                             "Elevação Média do Enrolamento:",
-                                                                                            style={
-                                                                                                "fontWeight": "bold"
-                                                                                            },
+                                                                                            style={"fontWeight": "bold"},
                                                                                         ),
                                                                                         html.Br(),
                                                                                         "ΔΘw = Θw - Θa",
                                                                                     ],
-                                                                                    style={
-                                                                                        "fontSize": "0.7rem",
-                                                                                        "marginBottom": "0.5rem",
-                                                                                    },
+                                                                                    style={"fontSize": "0.7rem", "marginBottom": "0.5rem"},
                                                                                 ),
                                                                                 html.P(
                                                                                     [
                                                                                         html.Span(
                                                                                             "Elevação do Topo do Óleo:",
-                                                                                            style={
-                                                                                                "fontWeight": "bold"
-                                                                                            },
+                                                                                            style={"fontWeight": "bold"},
                                                                                         ),
                                                                                         html.Br(),
                                                                                         "ΔΘoil = Θoil - Θa",
                                                                                     ],
-                                                                                    style={
-                                                                                        "fontSize": "0.7rem",
-                                                                                        "marginBottom": "0.5rem",
-                                                                                    },
+                                                                                    style={"fontSize": "0.7rem", "marginBottom": "0.5rem"},
                                                                                 ),
                                                                                 html.P(
                                                                                     [
                                                                                         html.Span(
                                                                                             "Constante de Tempo Térmica:",
-                                                                                            style={
-                                                                                                "fontWeight": "bold"
-                                                                                            },
+                                                                                            style={"fontWeight": "bold"},
                                                                                         ),
                                                                                         html.Br(),
                                                                                         "τ₀ = 0.132 × (mT - 0.5 × mO) × ΔΘoil_max / Ptot",
                                                                                     ],
-                                                                                    style={
-                                                                                        "fontSize": "0.7rem",
-                                                                                        "marginBottom": "0",
-                                                                                    },
+                                                                                    style={"fontSize": "0.7rem", "marginBottom": "0"},
                                                                                 ),
                                                                             ],
-                                                                            style={
-                                                                                "padding": "0.5rem"
-                                                                            },
+                                                                            style={"padding": "0.5rem"}
                                                                         )
                                                                     ],
                                                                     style={
-                                                                        "backgroundColor": COLORS[
-                                                                            "background_card"
-                                                                        ],
-                                                                        "border": f"1px solid {COLORS['border']}",
+                                                                        "backgroundColor": APP_COLORS.get("background_card", "#2c2c2c"),
+                                                                        "border": f"1px solid {APP_COLORS.get('border', '#444444')}",
                                                                     },
                                                                 ),
-                                                                # Notas Explicativas
                                                                 html.Hr(className="my-3"),
                                                                 dbc.Alert(
                                                                     [
                                                                         html.P(
                                                                             [
-                                                                                html.Strong(
-                                                                                    "Nota 1:"
-                                                                                ),
+                                                                                html.Strong("Nota 1:"),
                                                                                 " Cálculos conforme NBR 5356-2. Rw deve ser o valor extrapolado para t=0.",
                                                                                 html.Br(),
-                                                                                html.Strong(
-                                                                                    "Nota 2:"
-                                                                                ),
+                                                                                html.Strong("Nota 2:"),
                                                                                 " O cálculo de τ₀ requer ΔΘoil_max, Pesos (Dados Básicos) e Perdas Totais (Perdas).",
                                                                                 html.Br(),
-                                                                                html.Strong(
-                                                                                    "Nota 3:"
-                                                                                ),
+                                                                                html.Strong("Nota 3:"),
                                                                                 " C = 234,5 para cobre e 225 para alumínio.",
                                                                             ],
-                                                                            style=TYPOGRAPHY[
-                                                                                "small_text"
-                                                                            ],
+                                                                            style=TYPOGRAPHY_STYLES.get("small_text", {}),
                                                                             className="mb-0",
                                                                         )
                                                                     ],
                                                                     color="light",
                                                                     className="py-1 px-2 mt-1",
                                                                     style={
-                                                                        "borderColor": "#e9ecef",
+                                                                        "borderColor": "#e9ecef", 
                                                                         "borderRadius": "4px",
                                                                         "marginBottom": "0",
                                                                     },
                                                                 ),
                                                             ]
                                                         ),
-                                                        style=COMPONENTS["card_body"],
+                                                        style=COMPONENTS_STYLES.get("card_body", {}),
                                                     ),
                                                 ],
-                                                style=COMPONENTS["card"],
+                                                style=COMPONENTS_STYLES.get("card", {}),
                                                 className="h-100",
                                             )
                                         ],
                                         md=6,
-                                        className=SPACING["col_padding"],
+                                        className=SPACING_STYLES.get("col_padding", "px-2"),
                                     ),
                                 ],
-                                className=SPACING["row_gutter"],
+                                className=SPACING_STYLES.get("row_gutter", "g-3"),
                             ),
                         ]
-                    ),  # Fechamento do CardBody
+                    ),
                 ]
-            ),  # Fechamento do Card
+            ),
         ],
         fluid=True,
         className="p-0",
-        style={"backgroundColor": COLORS["background_main"]},
+        style={"backgroundColor": APP_COLORS.get("background_main", "#1a1a1a")},
     )

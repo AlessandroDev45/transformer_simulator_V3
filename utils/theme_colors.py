@@ -111,3 +111,39 @@ LIGHT_COLORS = {
     "reportlab_cell_bg": "#F8F9FA",
     "reportlab_grid": "#ADB5BD",
 }
+
+# --- Default Application Colors (Dark Theme) ---
+APP_COLORS = DARK_COLORS
+
+# --- Centralized Component Styles (Based on APP_COLORS) ---
+COMPONENTS_STYLES = {
+    "card": {"backgroundColor": APP_COLORS["background_card"], "border": f'1px solid {APP_COLORS["border"]}', "borderRadius": "4px", "boxShadow": "0 2px 5px rgba(0,0,0,0.25)", "marginBottom": "0.75rem"},
+    "card_header": {"backgroundColor": APP_COLORS["background_card_header"], "color": APP_COLORS["text_header"], "padding": "0.4rem 0.75rem", "fontSize": "1rem", "fontWeight": "bold", "letterSpacing": "0.02em", "textTransform": "uppercase", "borderBottom": f'1px solid {APP_COLORS["border_strong"]}'},
+    "card_body": {"padding": "0.75rem", "backgroundColor": APP_COLORS["background_card"]},
+    "input": {"backgroundColor": APP_COLORS["background_input"], "color": APP_COLORS["text_light"], "border": f'1px solid {APP_COLORS["border"]}', "borderRadius": "3px", "padding": "0.3rem 0.5rem", "fontSize": "0.8rem"},
+    "dropdown": {"backgroundColor": APP_COLORS["background_input"], "color": APP_COLORS["text_light"], "border": f'1px solid {APP_COLORS["border"]}', "borderRadius": "3px"},
+    "read_only": {"backgroundColor": APP_COLORS["background_card_header"], "color": APP_COLORS["text_muted"], "border": f'1px solid {APP_COLORS["border"]}', "borderRadius": "3px", "padding": "0.3rem 0.5rem", "fontSize": "0.8rem"},
+    "button": {"backgroundColor": APP_COLORS["primary"], "color": APP_COLORS["text_header"]}, # Generic button
+    "button_primary": {"backgroundColor": APP_COLORS["primary"], "color": APP_COLORS["text_header"]},
+    "button_secondary": {"backgroundColor": APP_COLORS["secondary"], "color": APP_COLORS["text_header"]},
+    "container": {"padding": "0.5rem 0.5rem 2rem 0.5rem", "maxWidth": "1400px", "margin": "0 auto"},
+}
+
+# --- Centralized Typography Styles (Based on APP_COLORS) ---
+TYPOGRAPHY_STYLES = {
+    "label": {"fontSize": "0.75rem", "fontWeight": "500", "color": APP_COLORS["text_light"]},
+    "section_title": {"fontSize": "0.9rem", "fontWeight": "bold", "marginTop": "1rem", "marginBottom": "0.5rem", "color": APP_COLORS["text_light"]},
+    "card_header": {"fontSize": "1rem", "fontWeight": "bold", "color": APP_COLORS["text_header"]}, # Already in COMPONENTS_STYLES, but can be here for text-specific aspects
+    "title": {"fontSize": "1.1rem", "fontWeight": "bold", "color": APP_COLORS["accent"]},
+    "small_text": {"fontSize": "0.7rem", "color": APP_COLORS["text_muted"]},
+    "button": {"fontSize": "0.85rem", "fontWeight": "bold", "letterSpacing": "0.02em"}, # Text style for buttons
+    "error_text": {"fontSize": "0.8rem", "color": APP_COLORS["danger"], "textAlign": "center"},
+}
+
+# --- Centralized Spacing Styles ---
+SPACING_STYLES = {
+    "row_margin": "mb-3",
+    "row_gutter": "g-3",
+    "col_padding": "px-2",
+    "form_group_margin": "mb-2", # Example, can be expanded
+}

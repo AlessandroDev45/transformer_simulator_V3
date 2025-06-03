@@ -73,6 +73,40 @@ def create_empty_sc_figure():
     return fig
 
 
+def safe_float_with_validation(value, default=0.0, min_value=None, max_value=None):
+    """
+    Safely converts value to float with optional range validation.
+    
+    Args:
+        value: Value to convert
+        default: Default value if conversion fails
+        min_value: Minimum allowed value (optional)
+        max_value: Maximum allowed value (optional)
+    
+    Returns:
+        float: Converted and validated value
+    """
+    if value is None or value == "":
+        return default
+    
+    try:
+        result = float(value)
+        
+        # Range validation
+        if min_value is not None and result < min_value:
+            log.warning(f"Value {result} below minimum {min_value}, using default {default}")
+            return default
+            
+        if max_value is not None and result > max_value:
+            log.warning(f"Value {result} above maximum {max_value}, using default {default}")
+            return default
+            
+        return result
+    except (ValueError, TypeError) as e:
+        log.warning(f"Error converting '{value}' to float: {e}")
+        return default
+
+
 # --- Função de Registro de Callbacks ---
 def register_short_circuit_callbacks(app_instance):
     """
@@ -80,6 +114,10 @@ def register_short_circuit_callbacks(app_instance):
     Esta função é chamada por app.py durante a inicialização.
 
     Registra os callbacks que foram convertidos para o padrão de registro centralizado.
+    
+    Note: The defined callback functions (update_short_circuit_page_info_panel,
+    short_circuit_load_data, short_circuit_calculate_and_verify) are registered
+    as closures within this function and used by the Dash framework.
     """
     log.info(f"Registrando callbacks do módulo short_circuit para app {app_instance.title}...")
 
@@ -394,25 +432,23 @@ def register_short_circuit_callbacks(app_instance):
                     "impedancia",
                 ]
             else:
-                req_keys = []  # Already caught by validation rules
+                req_keys = []
 
-            missing_trafo = [
-                k
-                for k in req_keys
-                if transformer_data.get(k) is None or str(transformer_data.get(k)).strip() == ""
-            ]
+            missing_trafo = []
+            for k in req_keys:
+                value = transformer_data.get(k)
+                if value is None or str(value).strip() == "":
+                    missing_trafo.append(k)
+                # Special validation for impedancia
+                elif k == "impedancia":
+                    impedancia_value = safe_float(value, default=None)
+                    if impedancia_value is None or impedancia_value <= 0:
+                        missing_trafo.append(f"{k} (valor inválido: {value})")
+            
             if missing_trafo:
                 errors.append(
-                    f"Dados básicos necessários para cálculo Isc ({side}) ausentes: {', '.join(missing_trafo)}."
+                    f"Dados básicos necessários para cálculo Isc ({side}) ausentes/inválidos: {', '.join(missing_trafo)}."
                 )
-            # Also check if nominal impedance exists and is valid
-            if "impedancia" not in req_keys:  # Should not happen if side is valid
-                pass
-            elif (
-                transformer_data.get("impedancia") is None
-                or safe_float(transformer_data.get("impedancia"), default=-1) <= 0
-            ):
-                errors.append("Impedância nominal (%) em 'Dados Básicos' é inválida ou ausente.")
 
         if errors:
             log.warning(f"Erros de validação Curto-Circuito: {errors}")
@@ -428,30 +464,43 @@ def register_short_circuit_callbacks(app_instance):
             z_after = input_values["z_after"]
             k_peak_factor = input_values["k_peak_factor"]  # This is k*sqrt(2)
 
-            # Verificar se os dados estão aninhados em transformer_data
+            # Verificar se os dados estão aninhados
             if "transformer_data" in transformer_data and isinstance(transformer_data["transformer_data"], dict):
-                # Usar os dados aninhados
                 data_dict = transformer_data["transformer_data"]
-                log.debug(f"[Short Circuit] Usando dados aninhados em transformer_data")
+                log.debug("[Short Circuit] Usando dados aninhados em transformer_data")
             else:
-                # Usar os dados diretamente
                 data_dict = transformer_data
-                log.debug(f"[Short Circuit] Usando dados diretamente do dicionário principal")
+                log.debug("[Short Circuit] Usando dados diretamente do dicionário principal")
 
-            # Pega dados do transformador (garantidos que existem e são válidos)
-            try:
-                potencia_mva = float(data_dict["potencia_mva"])
-                impedancia_nominal_percent = float(data_dict["impedancia"])
-                impedancia_pu = impedancia_nominal_percent / 100.0
-                tipo = data_dict.get("tipo_transformador", "Trifásico")
-                sqrt_3 = math.sqrt(3) if tipo == "Trifásico" else 1.0
-            except (KeyError, TypeError, ValueError) as e:
-                log.error(f"[Short Circuit] Erro ao obter dados do transformador: {e}")
-                errors.append(f"Erro ao obter dados do transformador: {e}")
-                error_msg = html.Ul(
-                    [html.Li(e) for e in errors], style={"color": "red", "fontSize": "0.7rem"}
-                )
-                return None, None, None, "-", empty_fig, error_msg, no_update
+            # Safe extraction with validation
+            potencia_mva_raw = data_dict.get("potencia_mva")
+            impedancia_nominal_raw = data_dict.get("impedancia")
+            
+            if potencia_mva_raw is None or impedancia_nominal_raw is None:
+                raise ValueError("Potência ou impedância nominal não encontrada")
+            
+            potencia_mva = safe_float_with_validation(potencia_mva_raw, min_value=0.1)
+            impedancia_nominal_percent = safe_float_with_validation(impedancia_nominal_raw, min_value=0.1)
+            
+            if potencia_mva <= 0 or impedancia_nominal_percent <= 0:
+                raise ValueError(f"Valores inválidos: potencia_mva={potencia_mva}, impedancia={impedancia_nominal_percent}")
+            
+            impedancia_pu = impedancia_nominal_percent / 100.0
+            tipo = data_dict.get("tipo_transformador", "Trifásico")
+            sqrt_3 = math.sqrt(3) if tipo == "Trifásico" else 1.0
+            
+            log.info(f"[Short Circuit] Calculando com: P={potencia_mva}MVA, Z={impedancia_nominal_percent}%, tipo={tipo}")
+            
+        except (KeyError, TypeError, ValueError) as e:
+            log.error(f"[Short Circuit] Erro ao obter dados do transformador: {e}")
+            error_msg = html.Div(
+                [
+                    html.P("Erro ao processar dados do transformador:"),
+                    html.P(str(e), style={"fontFamily": "monospace"}),
+                ],
+                style={"color": "red", "fontSize": "0.7rem"}
+            )
+            return None, None, None, "-", empty_fig, error_msg, no_update
 
             # Pega corrente nominal do lado selecionado
             corrente_nominal_a = None
@@ -649,10 +698,8 @@ def register_short_circuit_callbacks(app_instance):
                     html.P("Erro no cálculo de curto-circuito:"),
                     html.Pre(str(e)),
                 ],
-                style={"color": "red", "fontSize": "0.7rem"},
+                style={"color": "red", "fontSize": "0.7rem"}
             )
             return None, None, None, "-", empty_fig, error_msg, no_update
 
-# Adicionar proteção de execução
-if __name__ == "__main__":
-    app.run_server(debug=True)
+# Não execute nada ao importar este módulo; callbacks são registrados via register_short_circuit_callbacks()

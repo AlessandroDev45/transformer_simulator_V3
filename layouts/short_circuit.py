@@ -6,62 +6,29 @@ import dash_bootstrap_components as dbc
 from dash import dcc, html
 import plotly.express as px # For the initial empty graph
 
+# Import centralized styles
+from utils.theme_colors import APP_COLORS, COMPONENTS_STYLES, TYPOGRAPHY_STYLES, SPACING_STYLES
+
 # Remove broken imports for helpers and define local fallbacks
-
 def create_help_button(module_name, tooltip_text):
-    return None
+    # This is a placeholder, actual implementation might be in a shared UI components module
+    return html.Div() # Fallback to avoid errors if not fully implemented
 
-def create_labeled_input(label, input_id, input_type="number", value=None, min=None, max=None, step=None, label_width=6, input_width=6, placeholder=None, style=None, persistence=True, persistence_type="local"):
+def create_labeled_input(label, input_id, input_type="number", value=None, min_val=None, max_val=None, step=None, label_width=6, input_width=6, placeholder=None, style=None, input_style_key="input"):
+    # Renamed min/max to min_val/max_val to avoid conflict with built-in functions
     import dash_bootstrap_components as dbc
     from dash import html
-    return dbc.Row([
-        dbc.Col(dbc.Label(label, style={"fontSize": "0.75rem", "color": "#e0e0e0"}), width=label_width),
-        dbc.Col(dbc.Input(id=input_id, type=input_type, value=value, min=min, max=max, step=step, placeholder=placeholder, style=style, persistence=persistence, persistence_type=persistence_type), width=input_width)
-    ], className="mb-1")
 
-# --- Paleta de Cores Escura Completa (garante todas as chaves usadas) ---
-COLORS = {
-    "primary": "#26427A",
-    "secondary": "#6c757d",
-    "accent": "#00BFFF",
-    "accent_alt": "#FFD700",
-    "background_main": "#1a1a1a",
-    "background_card": "#2c2c2c",
-    "background_card_header": "#1f1f1f",
-    "background_input": "#3a3a3a",
-    "background_header": "#1f1f1f",
-    "background_faint": "#333333",
-    "text_light": "#e0e0e0",
-    "text_dark": "#e0e0e0",
-    "text_muted": "#a0a0a0",
-    "text_header": "#FFFFFF",
-    "border": "#444444",
-    "border_light": "#555555",
-    "border_strong": "#666666",
-    "success": "#28a745",
-    "danger": "#dc3545",
-    "warning": "#ffc107",
-    "info": "#00BFFF",
-    "pass": "#28a745",
-    "fail": "#dc3545",
-    "pass_bg": "rgba(40, 167, 69, 0.2)",
-    "fail_bg": "rgba(220, 53, 69, 0.2)",
-    "warning_bg": "rgba(255, 193, 7, 0.2)",
-}
-COMPONENTS = {
-    "card": {"backgroundColor": COLORS["background_card"], "border": f'1px solid {COLORS["border"]}', "borderRadius": "4px", "boxShadow": "0 2px 5px rgba(0,0,0,0.25)", "marginBottom": "0.75rem"},
-    "card_header": {"backgroundColor": COLORS["background_card_header"], "color": COLORS["text_header"], "padding": "0.4rem 0.75rem", "fontSize": "1rem", "fontWeight": "bold", "letterSpacing": "0.02em", "textTransform": "uppercase", "borderBottom": f'1px solid {COLORS["border_strong"]}'},
-    "card_body": {"padding": "0.75rem", "backgroundColor": COLORS["background_card"]},
-    "button": {"backgroundColor": COLORS["primary"], "color": COLORS["text_header"]},
-    "dropdown": {"backgroundColor": COLORS["background_input"], "color": COLORS["text_light"], "border": f'1px solid {COLORS["border"]}', "borderRadius": "3px"}
-}
-TYPOGRAPHY = {
-    "label": {"fontSize": "0.75rem", "fontWeight": "500"},
-    "section_title": {"fontSize": "0.9rem", "fontWeight": "bold", "marginTop": "1rem", "marginBottom": "0.5rem"},
-    "card_header": {"fontSize": "1rem", "fontWeight": "bold"},
-    "title": {"fontSize": "1.1rem", "fontWeight": "bold", "color": COLORS["accent"]}
-}
-SPACING = {"row_margin": "mb-3", "row_gutter": "g-3", "col_padding": "px-2"}
+    final_input_style = COMPONENTS_STYLES.get(input_style_key, {}).copy()
+    if style:
+        final_input_style.update(style)
+        
+    label_style = TYPOGRAPHY_STYLES.get("label", {"fontSize": "0.75rem", "color": APP_COLORS.get("text_light", "#e0e0e0")})
+
+    return dbc.Row([
+        dbc.Col(dbc.Label(label, style=label_style), width=label_width),
+        dbc.Col(dbc.Input(id=input_id, type=input_type, value=value, min=min_val, max=max_val, step=step, placeholder=placeholder, style=final_input_style), width=input_width)
+    ], className="mb-1")
 
 # Initial Empty Graph (created within the function now)
 def create_empty_sc_figure():
@@ -72,10 +39,10 @@ def create_empty_sc_figure():
         yaxis_title="ΔZ (%)",
         xaxis_title="",
         paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor=f"rgba({int(COLORS['background_card'][1:3], 16)},{int(COLORS['background_card'][3:5], 16)},{int(COLORS['background_card'][5:7], 16)},0.5)",
-        font={"size": 10, "color": COLORS['text_light']},
-        xaxis={"gridcolor": COLORS['border']},
-        yaxis={"gridcolor": COLORS['border']},
+        plot_bgcolor=f"rgba({int(APP_COLORS['background_card'][1:3], 16)},{int(APP_COLORS['background_card'][3:5], 16)},{int(APP_COLORS['background_card'][5:7], 16)},0.5)",
+        font={"size": 10, "color": APP_COLORS['text_light']},
+        xaxis={"gridcolor": APP_COLORS['border']},
+        yaxis={"gridcolor": APP_COLORS['border']},
         margin=dict(t=30, b=10, l=10, r=10),
         title_font_size=12,
         font_size=10
@@ -151,17 +118,17 @@ def create_short_circuit_layout():
                 ),
                 width=12,
             )
-        ], className=SPACING['row_margin']),
+        ], className=SPACING_STYLES['row_margin']),
 
         # Título principal do módulo
         dbc.Card([
             dbc.CardHeader(
                 html.Div([
-                    html.H6("ANÁLISE DE CURTO-CIRCUITO", className="text-center m-0 d-inline-block", style=TYPOGRAPHY['card_header']),
+                    html.H6("ANÁLISE DE CURTO-CIRCUITO", className="text-center m-0 d-inline-block", style=TYPOGRAPHY_STYLES.get('card_header', {})),
                     # Botão de ajuda
                     create_help_button("short_circuit", "Ajuda sobre Curto-Circuito")
                 ], className="d-flex align-items-center justify-content-center"),
-                style=COMPONENTS['card_header']
+                style=COMPONENTS_STYLES.get('card_header', {})
             ),
             dbc.CardBody([
 
@@ -172,43 +139,43 @@ def create_short_circuit_layout():
                 # Card para Dados de Entrada
                 dbc.Card([
                     dbc.CardHeader(
-                        html.H6("Dados de Entrada do Ensaio", className="m-0", style=TYPOGRAPHY['card_header']),
-                        style=COMPONENTS['card_header']
+                        html.H6("Dados de Entrada do Ensaio", className="m-0", style=TYPOGRAPHY_STYLES.get('card_header', {})),
+                        style=COMPONENTS_STYLES.get('card_header', {})
                     ),
                     dbc.CardBody([
                         # Alerta informativo
                         dbc.Alert([
                             html.P("Cálculos e verificações baseados na NBR 5356-5 / IEC 60076-5.",
                                   className="mb-0", style={"fontSize": "0.7rem"})
-                        ], color="info", className="p-2 mb-3"),
+                        ], color="info", className="p-2 mb-3"), # Keep direct color for Alert
 
                         # Seção de Impedâncias
                         html.Div("Impedâncias Medidas (%)",
-                                style={"fontSize": "0.8rem", "fontWeight": "bold", "marginBottom": "0.5rem", "color": COLORS['text_light']}),
+                                style={"fontSize": "0.8rem", "fontWeight": "bold", "marginBottom": "0.5rem", "color": APP_COLORS.get('text_light', '#e0e0e0')}),
                         dbc.Row([
                             dbc.Col([
                                 create_labeled_input(
                                     "Pré-Ensaio (Z_antes):", "impedance-before", placeholder="Z% antes",
-                                    label_width=6, input_width=6, persistence=True, persistence_type='local', step=0.01
+                                    label_width=6, input_width=6, step=0.01
                                 ),
                             ], width=6),
                             dbc.Col([
                                 create_labeled_input(
                                     "Pós-Ensaio (Z_depois):", "impedance-after", placeholder="Z% depois",
-                                    label_width=6, input_width=6, persistence=True, persistence_type='local', step=0.01
+                                    label_width=6, input_width=6, step=0.01
                                 ),
                             ], width=6),
                         ], className="mb-3"),
 
                         # Seção de Parâmetros Adicionais
                         html.Div("Parâmetros Adicionais",
-                                style={"fontSize": "0.8rem", "fontWeight": "bold", "marginBottom": "0.5rem", "color": COLORS['text_light']}),
+                                style={"fontSize": "0.8rem", "fontWeight": "bold", "marginBottom": "0.5rem", "color": APP_COLORS.get('text_light', '#e0e0e0')}),
                         dbc.Row([
                             # Fator de Pico
                             dbc.Col([
                                 create_labeled_input(
                                     "Fator Pico (k√2):", "peak-factor", placeholder="Ex: 2.55", value=2.55,
-                                    label_width=6, input_width=6, persistence=True, persistence_type='local', step=0.01
+                                    label_width=6, input_width=6, step=0.01
                                 ),
                             ], width=6),
 
@@ -216,7 +183,7 @@ def create_short_circuit_layout():
                             dbc.Col([
                                 dbc.Row([
                                     dbc.Col([
-                                        dbc.Label("Lado Cálculo Isc:", style=TYPOGRAPHY['label'], html_for='isc-side'),
+                                        dbc.Label("Lado Cálculo Isc:", style=TYPOGRAPHY_STYLES.get('label', {}), html_for='isc-side'),
                                     ], width=6),
                                     dbc.Col([
                                         dcc.Dropdown(
@@ -228,9 +195,8 @@ def create_short_circuit_layout():
                                             ],
                                             value='AT', # Default
                                             clearable=False,
-                                            style=COMPONENTS['dropdown'],
-                                            className="dash-dropdown-dark",
-                                            persistence=True, persistence_type='local'
+                                            style=COMPONENTS_STYLES.get('dropdown', {}),
+                                            className="dash-dropdown-dark"
                                         ),
                                     ], width=6),
                                 ]),
@@ -242,7 +208,7 @@ def create_short_circuit_layout():
                             dbc.Col([
                                 dbc.Row([
                                     dbc.Col([
-                                        dbc.Label("Categoria (Potência):", style=TYPOGRAPHY['label'], html_for='power-category'),
+                                        dbc.Label("Categoria (Potência):", style=TYPOGRAPHY_STYLES.get('label', {}), html_for='power-category'),
                                     ], width=6),
                                     dbc.Col([
                                         dcc.Dropdown(
@@ -254,9 +220,8 @@ def create_short_circuit_layout():
                                                 {'label': 'Categoria IV', 'value': 'IV'},
                                             ],
                                             placeholder="Selecione...",
-                                            style=COMPONENTS['dropdown'],
-                                            className="dash-dropdown-dark",
-                                            persistence=True, persistence_type='local'
+                                            style=COMPONENTS_STYLES.get('dropdown', {}),
+                                            className="dash-dropdown-dark"
                                         ),
                                     ], width=6),
                                 ]),
@@ -264,44 +229,44 @@ def create_short_circuit_layout():
 
                             # Botão de Cálculo
                             dbc.Col([
-                                dbc.Button("Calcular / Verificar", id="calc-short-circuit-btn", color="primary",
-                                          size="md", className="w-100 mt-1", style=TYPOGRAPHY['button']),
+                                dbc.Button("Calcular / Verificar", id="calc-short-circuit-btn", color="primary", # Keep direct color
+                                          size="md", className="w-100 mt-1", style=COMPONENTS_STYLES.get('button', {})),
                             ], width=6, className="d-flex align-items-center"),
                         ], className="mb-2"),
 
                         # Mensagem de erro
-                        html.Div(id='short-circuit-error-message', className="mt-2", style=TYPOGRAPHY['error_text'])
-                    ], style=COMPONENTS['card_body'])
-                ], style=COMPONENTS['card'], className="mb-3"),
+                        html.Div(id='short-circuit-error-message', className="mt-2", style=TYPOGRAPHY_STYLES.get('error_text', {}))
+                    ], style=COMPONENTS_STYLES.get('card_body', {}))
+                ], style=COMPONENTS_STYLES.get('card', {}), className="mb-3"),
 
                 # Card para Resultados
                 dbc.Card([
                     dbc.CardHeader(
-                        html.H6("Resultados do Cálculo", className="m-0", style=TYPOGRAPHY['card_header']),
-                        style=COMPONENTS['card_header']
+                        html.H6("Resultados do Cálculo", className="m-0", style=TYPOGRAPHY_STYLES.get('card_header', {})),
+                        style=COMPONENTS_STYLES.get('card_header', {})
                     ),
                     dbc.CardBody([
                         dbc.Row([
                             # Coluna de resultados numéricos
                             dbc.Col([
                                 dbc.Row([
-                                    dbc.Col(html.Label("Isc Simétrica (kA):", style=TYPOGRAPHY['label']), width=6),
-                                    dbc.Col(dbc.Input(id="isc-sym-result", type="number", readonly=True, style=COMPONENTS['read_only'], persistence=True, persistence_type='local'), width=6)
+                                    dbc.Col(html.Label("Isc Simétrica (kA):", style=TYPOGRAPHY_STYLES.get('label', {})), width=6),
+                                    dbc.Col(dbc.Input(id="isc-sym-result", type="number", readonly=True, style=COMPONENTS_STYLES.get('read_only', {})), width=6)
                                 ], className="mb-2 align-items-center"),
                                 dbc.Row([
-                                    dbc.Col(html.Label("Ip Pico (kA):", style=TYPOGRAPHY['label']), width=6),
-                                    dbc.Col(dbc.Input(id="isc-peak-result", type="number", readonly=True, style=COMPONENTS['read_only'], persistence=True, persistence_type='local'), width=6)
+                                    dbc.Col(html.Label("Ip Pico (kA):", style=TYPOGRAPHY_STYLES.get('label', {})), width=6),
+                                    dbc.Col(dbc.Input(id="isc-peak-result", type="number", readonly=True, style=COMPONENTS_STYLES.get('read_only', {})), width=6)
                                 ], className="mb-2 align-items-center"),
                                 dbc.Row([
-                                    dbc.Col(html.Label("Variação ΔZ (%):", style=TYPOGRAPHY['label']), width=6),
-                                    dbc.Col(dbc.Input(id="delta-impedance-result", type="text", readonly=True, style=COMPONENTS['read_only'], persistence=True, persistence_type='local'), width=6)
+                                    dbc.Col(html.Label("Variação ΔZ (%):", style=TYPOGRAPHY_STYLES.get('label', {})), width=6),
+                                    dbc.Col(dbc.Input(id="delta-impedance-result", type="text", readonly=True, style=COMPONENTS_STYLES.get('read_only', {})), width=6)
                                 ], className="mb-2 align-items-center"),
                             ], width=12),
 
                             # Status de verificação (destacado)
                             dbc.Col([
                                 dbc.Row([
-                                    dbc.Col(html.Label("Status Verificação:", style=TYPOGRAPHY['label']), width=6),
+                                    dbc.Col(html.Label("Status Verificação:", style=TYPOGRAPHY_STYLES.get('label', {})), width=6),
                                     dbc.Col(html.Div(id="impedance-check-status", children="-",
                                                     style={"paddingTop": "2px", "fontSize": "0.75rem"}), width=6)
                                 ], className="mb-2 align-items-center"),
@@ -313,30 +278,30 @@ def create_short_circuit_layout():
                                     html.P([
                                         html.Strong("Nota 1:"), " Cálculos de Isc e ip são simplificados.", html.Br(),
                                         html.Strong("Nota 2:"), " Limites de ΔZ% conforme NBR 5356-5 Tabela 2."
-                                    ], style=TYPOGRAPHY['small_text'], className="mb-0")
+                                    ], style=TYPOGRAPHY_STYLES.get('small_text', {}), className="mb-0")
                                 ], color="light", className="py-1 px-2 mt-1", style={"borderColor": "#e9ecef", "borderRadius":"4px", "marginBottom": "0"})
                             ], width=12),
                         ]),
 
                         # Hidden notes div for compatibility
                         html.Div(id='short-circuit-notes', style={"display": "none"})
-                    ], style=COMPONENTS['card_body'])
-                ], style=COMPONENTS['card'])
-            ], md=5, className=SPACING['col_padding']),
+                    ], style=COMPONENTS_STYLES.get('card_body', {}))
+                ], style=COMPONENTS_STYLES.get('card', {}))
+            ], md=5, className=SPACING_STYLES['col_padding']),
 
             # --- Coluna Direita: Gráfico de Variação de Impedância (mais espaço) ---
             dbc.Col([
                 dbc.Card([
                     dbc.CardHeader(
-                        html.H6("Variação da Impedância", className="m-0", style=TYPOGRAPHY['card_header']),
-                        style=COMPONENTS['card_header']
+                        html.H6("Variação da Impedância", className="m-0", style=TYPOGRAPHY_STYLES.get('card_header', {})),
+                        style=COMPONENTS_STYLES.get('card_header', {})
                     ),
                     dbc.CardBody([
                         # Descrição do gráfico
                         html.P([
                             "O gráfico abaixo mostra a variação percentual da impedância (ΔZ) medida antes e após o ensaio, ",
                             "comparada com os limites estabelecidos pela norma NBR 5356-5 / IEC 60076-5 para a categoria selecionada."
-                        ], style={"fontSize": "0.75rem", "color": COLORS['text_light'], "marginBottom": "0.5rem"}),
+                        ], style={"fontSize": "0.75rem", "color": APP_COLORS.get('text_light', '#e0e0e0'), "marginBottom": "0.5rem"}),
 
                         # Gráfico com altura aumentada
                         dcc.Loading(
@@ -349,17 +314,17 @@ def create_short_circuit_layout():
 
                         # Legenda explicativa
                         html.Div([
-                            html.Span("■ ", style={"color": COLORS.get('primary', 'royalblue'), "fontSize": "1rem"}),
-                            html.Span("Variação Medida (ΔZ)", style={"fontSize": "0.75rem", "color": COLORS['text_light']}),
-                            html.Span(" | ", style={"margin": "0 0.5rem", "color": COLORS['text_light']}),
-                            html.Span("■ ", style={"color": COLORS.get('fail', 'firebrick'), "fontSize": "1rem"}),
-                            html.Span("Limites Normativos", style={"fontSize": "0.75rem", "color": COLORS['text_light']}),
+                            html.Span("■ ", style={"color": APP_COLORS.get('primary', 'royalblue'), "fontSize": "1rem"}),
+                            html.Span("Variação Medida (ΔZ)", style={"fontSize": "0.75rem", "color": APP_COLORS.get('text_light', '#e0e0e0')}),
+                            html.Span(" | ", style={"margin": "0 0.5rem", "color": APP_COLORS.get('text_light', '#e0e0e0')}),
+                            html.Span("■ ", style={"color": APP_COLORS.get('fail', 'firebrick'), "fontSize": "1rem"}),
+                            html.Span("Limites Normativos", style={"fontSize": "0.75rem", "color": APP_COLORS.get('text_light', '#e0e0e0')}),
                         ], className="mt-2 text-center")
-                    ], style=COMPONENTS['card_body'])
-                ], style=COMPONENTS['card'], className="h-100")
-            ], md=7, className=SPACING['col_padding']),
-        ], className=SPACING['row_gutter'])
+                    ], style=COMPONENTS_STYLES.get('card_body', {}))
+                ], style=COMPONENTS_STYLES.get('card', {}), className="h-100")
+            ], md=7, className=SPACING_STYLES['col_padding']),
+        ], className=SPACING_STYLES['row_gutter'])
             ]), # Fechamento do CardBody
         ]), # Fechamento do Card
 
-    ], fluid=True, className="p-0", style={"backgroundColor": COLORS['background_main']})
+    ], fluid=True, className="p-0", style={"backgroundColor": APP_COLORS.get('background_main', '#1a1a1a')})

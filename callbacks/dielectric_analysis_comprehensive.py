@@ -1274,6 +1274,11 @@ def create_enrolamento_comparison(verificador, enrolamento_data, tipo_transforma
         if conexao == "YN" and neutro_um:
             components.append(html.H6("Dados do Neutro", className="mt-3 mb-2"))
 
+            # Initialize ieee_neutro_data properly
+            ieee_neutro_data = None
+            if ieee_data and hasattr(verificador, "ieee"):
+                ieee_neutro_data = verificador.ieee.get_test_levels(neutro_um)
+
             # Obter valor de tensão aplicada para o neutro
             nbr_neutro_acsd = "N/A"
             if hasattr(verificador, "nbr") and hasattr(verificador.nbr, "get_tensao_curta_values"):
@@ -1297,7 +1302,7 @@ def create_enrolamento_comparison(verificador, enrolamento_data, tipo_transforma
                         if ieee_data and "neutro_bil" in ieee_data
                         else "N/A",
                         "Tensão Aplicada (kV)": ieee_neutro_data.get("applied", "N/A")
-                        if "ieee_neutro_data" in locals() and ieee_neutro_data
+                        if ieee_neutro_data  # Fixed: use the properly initialized variable
                         else "N/A",
                     },
                 )
