@@ -11,7 +11,7 @@ import datetime
 from dash.exceptions import PreventUpdate
 
 # Importações da aplicação
-from app import app
+# Removido import direto de app
 from config import colors # Para estilos
 from utils import constants # Para constantes de material
 from utils.routes import normalize_pathname, ROUTE_TEMPERATURE_RISE # Para normalização de pathname
@@ -438,7 +438,6 @@ def register_temperature_rise_callbacks(app_instance):
         # --- 6. Realizar cálculos ---
         try:
             log.info(f"[CALC TempRise] Iniciando cálculos com dados: P={potencia_mva}MVA, P0={perdas_vazio_kw}kW, Ptot={perdas_totais_kw}kW")
-
             # Calcular temperatura média do enrolamento
             avg_winding_temp, avg_winding_rise = calculate_winding_temps(
                 input_values_local['input_rc'],
@@ -447,24 +446,35 @@ def register_temperature_rise_callbacks(app_instance):
                 input_values_local['input_ta'],
                 input_values_local['input_material']
             )
-
+            
             # Calcular elevação de temperatura do óleo
-            top_oil_rise = calculate_top_oil_rise(
-                perdas_totais_kw,
-                input_values_local['input_delta_theta_oil_max']
-            )
-
+            if input_values_local['input_t_oil'] is not None and input_values_local['input_ta'] is not None:
+                # Se tivermos temperatura do óleo e ambiente, usamos o cálculo padrão
+                top_oil_rise = calculate_top_oil_rise(
+                    input_values_local['input_t_oil'],
+                    input_values_local['input_ta']
+                )
+            else:
+                # Se não tivermos temperatura, usar o valor de delta_theta_oil_max diretamente
+                top_oil_rise = input_values_local['input_delta_theta_oil_max']
+                
+                # Se tivermos perdas e potência, podemos ajustar usando a relação aproximada
+                if perdas_totais_kw is not None and potencia_mva is not None and potencia_mva > 0:
+                    top_oil_rise = top_oil_rise * (perdas_totais_kw / potencia_mva)
+            
             # Calcular constante de tempo térmica
             # Somar pesos disponíveis
             peso_total_kg = sum(p for p in [peso_nucleo_kg, peso_oleo_kg, peso_tanque_kg,
                                            peso_enrol_at_kg, peso_enrol_bt_kg, peso_enrol_ter_kg]
                                if p is not None)
-
+                               
             tau0_h = calculate_thermal_time_constant(
+                perdas_totais_kw,
+                input_values_local['input_delta_theta_oil_max'],
                 peso_total_kg,
-                perdas_totais_kw
+                peso_oleo_kg
             )
-
+            
             # --- 7. Preparar resultados ---
             results = {
                 'avg_winding_temp': avg_winding_temp,

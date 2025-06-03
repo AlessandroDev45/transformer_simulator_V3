@@ -1,374 +1,1759 @@
-/* assets/custom.css */
+/* public/assets/custom.css - Versão Completa e Detalhada */
 
-/* Estilos personalizados para o simulador */
+/* Cores Base - Traduzindo de seus COLORS dict e adicionando variáveis para fácil modificação */
+:root {
+    /* Cores Principais */
+    --primary-color: #26427A; /* Azul Escuro do Dash */
+    --secondary-color: #6c757d; /* Cinza Escuro */
+    --success-color: #28a745; /* Verde */
+    --info-color: #17a2b8; /* Azul Claro/Ciano */
+    --warning-color: #ffc107; /* Amarelo */
+    --danger-color: #dc3545; /* Vermelho */
+    --light-color: #f8f9fa; /* Branco Sujo */
+    --dark-color: #343a40; /* Preto Quase */
+    --accent-color: var(--primary-color); /* Usado como primary para destaque */
+    --fail-color: var(--danger-color); /* Cor para indicar falha */
 
-/* Estilos para campos desabilitados */
-.disabled-field input {
-    background-color: #f9f9f9;
-    cursor: not-allowed;
+    /* Cores de Fundo e Bordas */
+    --background-main: #1a1a1a; /* Fundo principal da aplicação */
+    --background-card: #2c2c2c; /* Fundo dos cards e painéis */
+    --background-card-header: #2a2a2a; /* Fundo do cabeçalho dos cards e sidebar */
+    --background-input: #3d3d3d; /* Fundo dos campos de input e dropdowns */
+    --background-card-light: #4F4F4F; /* Fundo mais claro para certas seções/tabelas (ex: Applied Voltage) */
+    --background-table-row-even: #3D3D3D; /* Para linhas pares de tabelas */
+
+    --border-color: #666666; /* Cor da borda geral */
+    --border-strong: #999999; /* Cor da borda mais forte (HR) */
+
+    /* Cores de Texto */
+    --text-light: #f0f0f0; /* Texto principal claro */
+    --text-dark: #333333; /* Texto escuro (para temas claros ou elementos específicos) */
+    --text-header: #ffffff; /* Texto em cabeçalhos (branco puro) */
+    --text-muted: #adb5bd; /* Texto secundário, atenuado */
+    --text-placeholder: #adb5bd; /* Cor para placeholders de input */
+
+    /* Tamanhos de Fonte Base - Adapte conforme a necessidade de densidade */
+    --font-size-base: 0.875rem; /* ~14px */
+    --font-size-sm: 0.75rem;    /* ~12px */
+    --font-size-xs: 0.65rem;    /* ~10.4px */
+
+    /* Alturas de Componentes */
+    --input-height: 32px;
+    --input-sm-height: 28px; /* Para inputs pequenos em Impulse */
 }
 
-/* Estilo para campos desabilitados (tema escuro) */
-.disabled-field:disabled {
-    background-color: #2c3034 !important;
-    color: #adb5bd !important;
-    border-color: #495057 !important;
-    opacity: 0.8 !important;
-    cursor: not-allowed !important;
+/* Base Body Styles */
+html, body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-main);
+    color: var(--text-light);
+    margin: 0;
+    padding: 0;
+    font-size: var(--font-size-base);
+    overflow-x: hidden; /* Previne scroll horizontal */
+    width: 100%;
+    max-width: 100vw; /* Garante que não exceda a viewport */
 }
 
-.help-tip {
-    font-size: 0.8rem;
-    color: #777;
-    margin-left: 6px;
+/* Global Layout Fixes - Previne overflow horizontal */
+* {
+    box-sizing: border-box;
 }
 
-/* Estilos para campos calculados automaticamente */
-input:disabled {
-    background-color: #f0f0f0;
-    border: 1px solid #ddd;
-    color: #666;
-    cursor: not-allowed;
+.container-fluid {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 
-/* Tema escuro: Estilos para campos desabilitados */
-body:not(.light-theme) input:disabled {
-    background-color: #3a3a3a !important;
-    border: 1px solid #444 !important;
-    color: #aaa !important;
+.row {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
 }
 
-/* Tema escuro: Estilos para texto e elementos de interface */
-body:not(.light-theme) {
-    color: #e0e0e0 !important;
-    background-color: #1a1a1a !important;
+.col, .col-*, [class*="col-"] {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    max-width: 100%;
 }
 
-body:not(.light-theme) .card {
-    background-color: #2c2c2c !important;
-    border-color: #444 !important;
+/* Navbar responsiva - ajustes para telas pequenas */
+@media (max-width: 991.98px) {
+    .navbar-brand h4 {
+        font-size: 0.95rem;
+    }
+    
+    .navbar-brand div {
+        font-size: 0.6rem;
+    }
+    
+    .navbar .container-fluid {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
 }
 
-body:not(.light-theme) .card-header {
-    background-color: #1f1f1f !important;
-    border-color: #444 !important;
-    color: #fff !important;
+@media (max-width: 767.98px) {
+    .navbar-brand h4 {
+        font-size: 0.85rem;
+    }
+    
+    .navbar-brand img {
+        height: 35px;
+        margin-right: 10px;
+    }
 }
 
-body:not(.light-theme) input, 
-body:not(.light-theme) select, 
-body:not(.light-theme) textarea {
-    background-color: #3a3a3a !important;
-    border-color: #555 !important;
-    color: #e0e0e0 !important;
+/* Container de ações da navbar */
+.navbar-actions-container {
+    max-width: 100%;
+    overflow: hidden;
+    flex-shrink: 1;
 }
 
-body:not(.light-theme) .dropdown-menu {
-    background-color: #2c2c2c !important;
-    border-color: #444 !important;
+@media (max-width: 991.98px) {
+    .navbar-actions-container {
+        width: 100%;
+        justify-content: center;
+        margin-top: 0.5rem;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        padding-top: 0.5rem;
+    }
 }
 
-body:not(.light-theme) .dropdown-item {
-    color: #e0e0e0 !important;
+/* General Link Styles */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+a:hover {
+    color: lighten(var(--primary-color), 10%);
+    text-decoration: underline;
 }
 
-body:not(.light-theme) .dropdown-item:hover {
-    background-color: #3a3a3a !important;
+/* --- Card Styles --- */
+.card {
+    background-color: var(--background-card);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25); /* Mais pronunciado */
+    border-radius: 8px; /* Mais arredondado */
+    overflow: hidden; /* Garante que o header arredondado funcione bem */
 }
 
-body:not(.light-theme) .table {
-    color: #e0e0e0 !important;
+.card-header {
+    background-color: var(--background-card-header);
+    color: var(--text-header);
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 7px 7px 0 0; /* Arredondado só no topo */
+    font-weight: bold;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
-body:not(.light-theme) .table thead th {
-    background-color: #1f1f1f !important;
-    color: #fff !important;
-    border-color: #444 !important;
+.card-body {
+    padding: 1rem;
+    color: var(--text-light);
 }
 
-body:not(.light-theme) .table td {
-    border-color: #444 !important;
+/* Specific Card Headers for modules */
+.card-header h5, .card-header h6 {
+    margin: 0;
+    color: inherit; /* Garante que use a cor do header */
+    font-size: 1rem; /* Padrão para cabeçalhos de card */
+}
+/* Específico para Transformer Inputs, Impulse (title) */
+.card-header.bg-primary-custom { /* Adicionar esta classe no card-header do HTML */
+    background-color: var(--primary-color);
+    color: var(--text-header);
+}
+.card-header.bg-info-custom {
+    background-color: var(--info-color);
+    color: var(--text-header);
+}
+.card-header.bg-secondary-custom {
+    background-color: var(--secondary-color);
+    color: var(--text-header);
 }
 
-body:not(.light-theme) .nav-link {
-    color: #e0e0e0 !important;
+/* --- Input and Select Styles --- */
+.form-control,
+.form-select,
+.input-group-text {
+    background-color: var(--background-input);
+    color: var(--text-light);
+    border: 1px solid var(--border-color);
+    font-size: var(--font-size-base);
+    height: var(--input-height);
+    padding: 0.375rem 0.75rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    border-radius: 4px;
 }
 
-body:not(.light-theme) .nav-link.active {
-    background-color: #26427A !important;
-    color: #fff !important;
+/* Wider input fields for losses module */
+.form-control.losses-input-wide,
+.form-select.losses-input-wide {
+    width: 50% !important; /* Make input fields take 50% width of their container */
+    min-width: 120px; /* Ensure minimum width for better usability */
 }
 
-/* Estilos para campos de isolamento */
-.isolation-field {
-    margin-bottom: 10px;
+/* Pequenos inputs (para Impulse) */
+.form-control.form-control-sm,
+.form-select.form-select-sm,
+.input-group-sm > .form-control,
+.input-group-sm > .form-select,
+.input-group-sm > .input-group-text {
+    height: var(--input-sm-height);
+    font-size: var(--font-size-sm);
+    padding: 0.25rem 0.5rem;
 }
 
-.isolation-field label {
+
+.form-control::placeholder,
+.form-select::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--background-input);
+    color: var(--text-light);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 0.25rem rgba(38, 66, 122, 0.25); /* Cor primária do Dash com 25% de opacidade */
+}
+
+/* Readonly / Disabled Inputs */
+.form-control:disabled,
+.form-control[readonly],
+.form-select:disabled,
+.form-select[readonly] {
+    background-color: rgba(var(--background-input-rgb), 0.5); /* Usar RGB se disponível, senão direto */
+    background-color: #333333; /* Fallback */
+    color: var(--text-muted);
+    opacity: 0.8;
+}
+
+/* Dark Dropdown Style */
+.form-select.dark-dropdown {
+    background-color: var(--background-input);
+    color: var(--text-light);
+    border-color: var(--border-color);
+}
+.form-select.dark-dropdown option {
+    background-color: var(--background-input);
+    color: var(--text-light);
+}
+
+/* Input Group Spinners */
+.input-group-text .fas {
+    cursor: pointer;
+    padding: 0 5px;
+    color: var(--text-muted);
+    transition: color 0.15s ease-in-out;
+}
+.input-group-text .fas:hover {
+    color: var(--info-color); /* Cor de destaque ao passar o mouse */
+}
+
+/* --- Labels --- */
+label {
+    font-size: var(--font-size-sm);
     font-weight: 500;
+    color: var(--text-light);
+    margin-bottom: 0.25rem;
 }
 
-/* Estilos para o botão de override */
-.override-checkbox {
-    margin-top: 4px;
-    font-size: 0.8rem;
+/* --- Button Styles (replicated from Dash) --- */
+.btn {
+    font-size: var(--font-size-sm);
+    padding: 0.4rem 0.8rem; /* Ajustado para ser mais compacto */
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    line-height: 1.5; /* Para centralizar texto em botões menores */
 }
 
-/* Estilo para checkbox de override (tema escuro) */
-.override-checkbox .form-check-label {
-    color: #adb5bd;
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--text-header);
+}
+.btn-primary:hover {
+    background-color: darken(var(--primary-color), 7%);
+    border-color: darken(var(--primary-color), 7%);
 }
 
-body:not(.light-theme) .override-checkbox .form-check-label {
-    color: #e0e0e0;
+.btn-secondary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: var(--text-header);
+}
+.btn-secondary:hover {
+    background-color: darken(var(--secondary-color), 7%);
+    border-color: darken(var(--secondary-color), 7%);
 }
 
-/* Estilo para o checkbox quando marcado */
-.override-checkbox input:checked + .form-check-label {
-    color: #00bc8c;
+.btn-info {
+    background-color: var(--info-color);
+    border-color: var(--info-color);
+    color: var(--text-header);
+}
+.btn-info:hover {
+    background-color: darken(var(--info-color), 7%);
+    border-color: darken(var(--info-color), 7%);
 }
 
-/* Tema claro: Estilos para garantir legibilidade */
-body.light-theme {
-    color: #212529 !important;
-    background-color: #f0f2f5 !important;
+.btn-success {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+    color: var(--text-header);
+}
+.btn-success:hover {
+    background-color: darken(var(--success-color), 7%);
+    border-color: darken(var(--success-color), 7%);
 }
 
-body.light-theme .card {
-    background-color: #ffffff !important;
-    border-color: #dee2e6 !important;
+.btn-danger {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+    color: var(--text-header);
+}
+.btn-danger:hover {
+    background-color: darken(var(--danger-color), 7%);
+    border-color: darken(var(--danger-color), 7%);
 }
 
-body.light-theme .card-header {
-    background-color: #e9ecef !important;
-    border-color: #dee2e6 !important;
-    color: #212529 !important;
+.btn-warning {
+    background-color: var(--warning-color);
+    border-color: var(--warning-color);
+    color: var(--dark-color); /* Texto escuro para contraste no amarelo */
+}
+.btn-warning:hover {
+    background-color: darken(var(--warning-color), 7%);
+    border-color: darken(var(--warning-color), 7%);
 }
 
-body.light-theme input, 
-body.light-theme select, 
-body.light-theme textarea {
-    background-color: #ffffff !important;
-    border-color: #ced4da !important;
-    color: #212529 !important;
+.btn-outline-info { /* Para "Sugerir Resistores" */
+    border-color: var(--info-color);
+    color: var(--info-color);
+    background-color: transparent;
+}
+.btn-outline-info:hover {
+    background-color: var(--info-color);
+    color: var(--text-header);
 }
 
-body.light-theme .table {
-    color: #212529 !important;
+.btn-sm {
+    font-size: var(--font-size-sm);
+    padding: 0.25rem 0.5rem;
 }
 
-body.light-theme .table thead th {
-    background-color: #26427A !important;
-    color: #ffffff !important;
-    border-color: #dee2e6 !important;
+/* Helper function to darken color - used for hover effects */
+/* Requires a CSS preprocessor like Sass or Less for actual darken() */
+/* For pure CSS, you'd use direct rgba() or calculate manually */
+/* As a fallback, I'll use fixed values for hover or simple filter:brightness() */
+.btn:hover {
+    filter: brightness(1.1); /* Ligeiramente mais brilhante no hover */
+}
+.btn-outline-info:hover {
+    filter: none; /* Não aplicar brightness se a cor de fundo mudar */
 }
 
-body.light-theme .table td {
-    border-color: #dee2e6 !important;
+
+/* --- Typography --- */
+.section-title {
+    font-size: var(--font-size-base); /* Ajustado para ser mais compacto */
+    font-weight: bold;
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 0.8rem; /* Reduzido */
+    padding-bottom: 0.4rem; /* Reduzido */
+    border-bottom: 1px solid rgba(var(--border-color-rgb), 0.3); /* Fallback to rgba */
+    border-bottom: 1px solid rgba(102, 102, 102, 0.3); /* Direct rgba */
 }
 
-body.light-theme .nav-link {
-    color: #495057 !important;
+.subsection-title {
+    font-size: var(--font-size-sm); /* Reduzido */
+    font-weight: bold;
+    color: var(--info-color);
+    text-align: center;
+    margin-top: 0.8rem;
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 1px dotted rgba(var(--border-color-rgb), 0.2); /* Fallback */
+    border-bottom: 1px dotted rgba(102, 102, 102, 0.2); /* Direct rgba */
 }
 
-body.light-theme .nav-link.active {
-    background-color: #26427A !important;
-    color: #ffffff !important;
+small.text-muted {
+    font-size: var(--font-size-xs);
+    color: var(--text-muted) !important;
 }
 
-/* Estilos para destacar o botão de limpar campos */
-#global-clear-button {
-    position: relative;
+/* --- Alerts and Messages --- */
+.alert {
+    font-size: var(--font-size-sm);
+    padding: 0.6rem 1rem;
+    border-radius: 5px;
+    margin-bottom: 0.75rem; /* Padrão Bootstrap */
+}
+.alert.alert-info {
+    background-color: var(--info-color);
+    color: var(--text-header);
+    border-color: var(--info-color);
+}
+.alert.alert-warning {
+    background-color: var(--warning-color);
+    color: var(--dark-color);
+    border-color: var(--warning-color);
+}
+.alert.alert-danger {
+    background-color: var(--danger-color);
+    color: var(--text-header);
+    border-color: var(--danger-color);
+}
+.alert.alert-success {
+    background-color: var(--success-color);
+    color: var(--text-header);
+    border-color: var(--success-color);
+}
+.alert.alert-light-custom { /* Para notas informativas */
+    background-color: var(--background-card-header); /* Cor do card-header para notas */
+    color: var(--text-light);
+    border-color: var(--border-color);
+}
+.alert.alert-light-custom .small {
+    font-size: var(--font-size-sm);
+}
+
+/* --- Tables --- */
+.table {
+    --bs-table-color: var(--text-light);
+    --bs-table-bg: var(--background-card);
+    --bs-table-border-color: var(--border-color);
+    --bs-table-striped-bg: rgba(var(--text-light-rgb), 0.05); /* Usar RGB */
+    --bs-table-striped-bg: rgba(240, 240, 240, 0.05); /* Direct rgba */
+    --bs-table-active-bg: rgba(var(--text-light-rgb), 0.1);
+    --bs-table-active-bg: rgba(240, 240, 240, 0.1);
+    --bs-table-hover-bg: rgba(var(--text-light-rgb), 0.075);
+    --bs-table-hover-bg: rgba(240, 240, 240, 0.075);
+    color: var(--text-light);
+}
+
+.table thead th {
+    background-color: var(--background-card-header);
+    color: var(--text-header);
+    border-color: var(--border-color);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    text-align: center;
+    vertical-align: middle;
+    padding: 0.5rem 0.75rem;
+}
+
+.table tbody td {
+    font-size: var(--font-size-sm);
+    padding: 0.4rem 0.75rem;
+    vertical-align: middle;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--background-table-row-even); /* Cor alternativa */
+}
+
+
+/* --- Spacing Utilities (replicated from Dash) --- */
+/* (g-x e mb-x já são do Bootstrap, mas os px-y, py-y, etc. são custom) */
+.g-0 { --bs-gutter-x: 0; --bs-gutter-y: 0; }
+.g-1 { --bs-gutter-x: 0.25rem; --bs-gutter-y: 0.25rem; }
+.g-2 { --bs-gutter-x: 0.5rem; --bs-gutter-y: 0.5rem; }
+.g-3 { --bs-gutter-x: 1rem; --bs-gutter-y: 1rem; }
+
+.px-1 { padding-left: 0.25rem !important; padding-right: 0.25rem !important; }
+.px-2 { padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
+.px-3 { padding-left: 1rem !important; padding-right: 1rem !important; }
+
+.py-1 { padding-top: 0.25rem !important; padding-bottom: 0.25rem !important; }
+.py-2 { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+.py-3 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+
+.pe-1 { padding-right: 0.25rem !important; } /* Padding End */
+.ps-1 { padding-left: 0.25rem !important; }  /* Padding Start */
+
+/* Margens */
+.mb-1 { margin-bottom: 0.25rem !important; }
+.mb-2 { margin-bottom: 0.5rem !important; }
+.mb-3 { margin-bottom: 1rem !important; }
+.mb-4 { margin-bottom: 1.5rem !important; }
+
+.mt-1 { margin-top: 0.25rem !important; }
+.mt-2 { margin-top: 0.5rem !important; }
+.mt-3 { margin-top: 1rem !important; }
+.mt-4 { margin-top: 1.5rem !important; }
+
+/* --- Other Utilities --- */
+.h-100 { height: 100% !important; }
+.w-100 { width: 100% !important; }
+.d-flex { display: flex !important; }
+.d-inline-block { display: inline-block !important; }
+.align-items-center { align-items: center !important; }
+.align-items-end { align-items: flex-end !important; } /* Para botões alinhados ao final da coluna */
+.justify-content-center { justify-content: center !important; }
+.justify-content-end { justify-content: flex-end !important; }
+.justify-content-between { justify-content: space-between !important; }
+.flex-column { flex-direction: column !important; }
+.flex-grow-1 { flex-grow: 1 !important; }
+.float-end { float: right !important; } /* Cuidado com floats em Flexbox/Grid */
+
+.text-center { text-align: center !important; }
+.text-end { text-align: right !important; }
+.text-muted { color: var(--text-muted) !important; }
+.text-primary { color: var(--primary-color) !important; }
+.text-info { color: var(--info-color) !important; }
+.text-success { color: var(--success-color) !important; }
+.text-danger { color: var(--danger-color) !important; }
+.text-warning { color: var(--warning-color) !important; }
+
+.fw-bold { font-weight: bold !important; }
+.fs-6 { font-size: 1rem !important; } /* Bootstrap 5 default */
+
+.border-bottom { border-bottom: 1px solid var(--border-color) !important; }
+.border-end { border-right: 1px solid var(--border-color) !important; }
+
+/* Placeholder for Plotly graphs - to be replaced by actual graph container */
+.plotly-graph-placeholder {
+    background-color: var(--background-card);
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: var(--font-size-base);
+    min-height: 200px;
+    text-align: center;
+}
+/* Estilo para o container de spinners/loading de gráficos */
+#loading-graph {
+    min-height: 550px; /* Para acomodar os dois gráficos */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Custom Tabs (for Losses, Impulse results) */
+.nav-tabs .nav-link {
+    color: var(--text-muted);
+    background-color: var(--background-card-header);
+    border: 1px solid var(--border-color);
+    border-bottom-color: var(--background-card-header); /* Para fundir com o card body */
+    border-radius: 5px 5px 0 0;
+    margin-right: 5px;
+    padding: 0.5rem 1rem;
+    font-size: var(--font-size-sm);
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--primary-color);
+    background-color: var(--background-card);
+    border-color: var(--border-color);
+    border-bottom-color: var(--background-card); /* Para "se fundir" com o conteúdo */
+    font-weight: bold;
+    filter: brightness(1.0); /* Remove qualquer brilho no ativo */
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--text-light); /* Ligeiramente mais claro no hover */
+    filter: brightness(1.1); /* Ligeiramente mais brilhante no hover */
+}
+
+.tab-content {
+    background-color: var(--background-card);
+    border: 1px solid var(--border-color);
+    border-top: none; /* Remover borda superior se fundir com a aba */
+    border-radius: 0 0 5px 5px;
+    padding: 1rem;
+    height: 100%; /* Para que o conteúdo da aba preencha o espaço */
+    max-height: 400px; /* Max height para tabelas rolarem */
+    overflow-y: auto; /* Para rolagem em tabelas */
+}
+
+/* Specific styles for Impulse's tab-content tables */
+.tab-content #waveform-analysis-table table,
+.tab-content #circuit-parameters-display table,
+.tab-content #energy-details-table table {
+    width: 100%; /* Garante que a tabela use 100% da largura */
+    border-collapse: collapse; /* Bordas colapsadas */
+}
+
+.tab-content #waveform-analysis-table table th,
+.tab-content #waveform-analysis-table table td,
+.tab-content #circuit-parameters-display table th,
+.tab-content #circuit-parameters-display table td,
+.tab-content #energy-details-table table th,
+.tab-content #energy-details-table table td {
+    border: 1px solid var(--border-color);
+    padding: 0.4rem;
+    font-size: var(--font-size-sm);
+    color: var(--text-light);
+}
+
+.tab-content #waveform-analysis-table table th,
+.tab-content #circuit-parameters-display table th,
+.tab-content #energy-details-table table th {
+    background-color: var(--background-card-header);
+    color: var(--text-header);
+    font-weight: bold;
+    text-align: center;
+}
+
+.tab-content #waveform-analysis-table table tr:nth-child(even),
+.tab-content #circuit-parameters-display table tr:nth-child(even),
+.tab-content #energy-details-table table tr:nth-child(even) {
+    background-color: var(--background-table-row-even);
+}
+
+.tab-content #waveform-analysis-table table tr:hover,
+.tab-content #circuit-parameters-display table tr:hover,
+.tab-content #energy-details-table table tr:hover {
+    background-color: var(--bs-table-hover-bg); /* Do Bootstrap */
+}
+
+
+/* Estilos para a Navbar e Sidebar */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    border-bottom: 1px solid var(--border-color);
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden; /* Previne overflow horizontal */
+}
+
+.navbar .container-fluid {
+    max-width: 100%;
+    overflow-x: hidden;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.navbar-brand h4 {
+    font-size: 1.1rem;
+    letter-spacing: 0.05rem;
+    text-shadow: 0px 1px 2px rgba(0,0,0,0.3);
+    line-height: 1.2;
+    color: var(--text-light);
+}
+.navbar-brand div span {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.85);
+    letter-spacing: 0.03rem;
+}
+.navbar-brand div span.fw-bold {
+    font-weight: bold;
+}
+.navbar-brand div span.text-accent {
+    color: var(--accent-color);
+}
+
+/* Navbar Action Buttons - Responsividade melhorada */
+.navbar .d-flex {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+
+@media (max-width: 1199.98px) {
+    #usage-counter-display {
+        font-size: 0.7rem !important;
+        padding: 0.2rem 0.5rem !important;
+    }
+    
+    #usage-counter-display span {
+        font-size: 0.65rem !important;
+    }
+    
+    .btn-sm {
+        font-size: 0.7rem !important;
+        padding: 0.25rem 0.5rem !important;
+    }
+    
+    .btn-sm i {
+        font-size: 0.6rem !important;
+    }
+}
+
+@media (max-width: 991.98px) {
+    #usage-counter-display {
+        display: none !important; /* Oculta em telas menores */
+    }
+    
+    .navbar .d-flex {
+        justify-content: flex-end;
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+    
+    .btn-sm span {
+        display: none; /* Mostra apenas ícones em telas pequenas */
+    }
+}
+
+@media (max-width: 767.98px) {
+    #generate-report-btn,
+    #global-clear-button {
+        padding: 0.3rem 0.4rem !important;
+        min-width: 35px;
+    }
+    
+    #theme-toggle span {
+        display: none; /* Mostra apenas ícone do tema */
+    }
+}
+
+/* Sidebar Specific Styles */
+.nav-link {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    text-align: left;
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.5rem;
+    margin-bottom: 3px;
+    border-left: 3px solid transparent; /* Default */
+    color: var(--text-light);
+    font-weight: normal;
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    border-radius: 0 4px 4px 0;
+}
+.nav-link:hover {
+    background-color: rgba(var(--primary-color-rgb), 0.1); /* Ligeiramente mais escuro no hover */
+    color: var(--primary-color);
+}
+.nav-link.active {
+    background-color: rgba(var(--primary-color-rgb), 0.2); /* Fundo mais forte para ativo */
+    border-left: 3px solid var(--primary-color); /* Linha de destaque */
+    color: var(--primary-color);
+    font-weight: bold;
+}
+.nav-link .fas {
+    width: 16px;
+    text-align: center;
+    margin-right: 0.5rem;
+}
+.sidebar-container {
+    height: calc(100vh - 120px); /* Altura fixa menos navbar e footer */
+    overflow-y: auto;
+    position: sticky;
+    top: 0;
+    background-color: var(--background-card-header);
+    padding: 0.5rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    margin-top: 0;
+    margin-right: 0.5rem;
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: var(--border-color) var(--background-card-header); /* Firefox */
+}
+/* Chrome/Safari scrollbar */
+.sidebar-container::-webkit-scrollbar {
+    width: 8px;
+}
+.sidebar-container::-webkit-scrollbar-track {
+    background: var(--background-card-header);
+    border-radius: 10px;
+}
+.sidebar-container::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 10px;
+    border: 2px solid var(--background-card-header);
+}
+
+/* Footer */
+footer {
+    background-color: var(--background-card-header);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -1px 3px rgba(0,0,0,0.1);
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+
+/* LIGHT THEME - Adicione esta classe ao body para mudar o tema */
+[data-bs-theme="light"] {
+    --background-main: #f0f2f5; /* Light gray background */
+    --background-card: #ffffff; /* White cards */
+    --background-card-header: #e9ecef; /* Lighter card headers */
+    --background-input: #ffffff; /* White inputs */
+    --background-card-light: #f8f9fa; /* Even lighter for specific sections */
+    --background-table-row-even: #f0f0f0; /* Lighter alternating table rows */
+
+    --text-light: #212529; /* Dark text for body */
+    --text-dark: #f8f9fa; /* Light text (for elements that remain dark) */
+    --text-header: #343a40; /* Dark text for headers */
+    --text-muted: #6c757d; /* Standard muted text */
+    --text-placeholder: #adb5bd;
+
+    --border-color: #dee2e6; /* Lighter borders */
+    --border-strong: #ced4da; /* Lighter strong borders */
+
+    /* Buttons adjust automatically, but if you want specific light theme buttons: */
+    .btn-primary { background-color: var(--primary-color); border-color: var(--primary-color); color: white; }
+    .btn-outline-light { color: var(--secondary-color); border-color: var(--secondary-color); }
+    .btn-outline-light:hover { background-color: var(--secondary-color); color: white; }
+
+    .card { box-shadow: 0 2px 4px rgba(0,0,0,0.1); } /* Lighter shadow */
+    .form-control, .form-select, .input-group-text {
+        background-color: var(--background-input);
+        color: var(--text-light);
+        border: 1px solid var(--border-color);
+    }
+    .form-control:focus, .form-select:focus {
+        box-shadow: 0 0 0 0.25rem rgba(var(--primary-color-rgb), 0.25);
+    }
+    .form-control:disabled, .form-control[readonly], .form-select:disabled, .form-select[readonly] {
+        background-color: #e9ecef; /* Very light gray */
+        color: var(--text-muted);
+    }
+
+    .form-select.dark-dropdown {
+        background-color: var(--background-input);
+        color: var(--text-light);
+        border-color: var(--border-color);
+    }
+    .form-select.dark-dropdown option {
+        background-color: var(--background-input);
+        color: var(--text-light);
+    }
+
+    .nav-tabs .nav-link {
+        background-color: var(--background-card-header);
+        border-bottom-color: var(--background-card-header);
+    }
+    .nav-tabs .nav-link.active {
+        background-color: var(--background-card);
+        border-bottom-color: var(--background-card);
+    }
+    .plotly-graph-placeholder {
+        background-color: var(--background-card);
+    }
+
+    /* Scrollbar for Light Theme */
+    .sidebar-container::-webkit-scrollbar-track {
+        background: var(--background-card-header);
+    }
+    .sidebar-container::-webkit-scrollbar-thumb {
+        background-color: var(--border-color);
+        border: 2px solid var(--background-card-header);
+    }
+}
+
+/* Helper for Sass-like darken - for pure CSS this is just a placeholder */
+/* Need to manually calculate darken colors or use JS to switch rgba values */
+/* For now, just rely on brightness filter or fixed colors *//* public/assets/custom.css - Versão Completa e Detalhada */
+
+/*
+    Este arquivo CSS define o estilo visual da aplicação, utilizando variáveis CSS
+    para facilitar a manutenção e a criação de temas (claro/escuro).
+    Ele incorpora e customiza elementos do Bootstrap para se adequar ao design.
+*/
+
+/* --- Variáveis de Cores e Tamanhos Base --- */
+:root {
+    /* Cores Principais (Hex e RGB para transparência) */
+    --primary-color: #26427A; /* Azul Escuro do Dash */
+    --primary-color-rgb: 38, 66, 122;
+    --secondary-color: #6c757d; /* Cinza Escuro */
+    --secondary-color-rgb: 108, 117, 125;
+    --success-color: #28a745; /* Verde */
+    --success-color-rgb: 40, 167, 69;
+    --info-color: #17a2b8; /* Azul Claro/Ciano */
+    --info-color-rgb: 23, 162, 184;
+    --warning-color: #ffc107; /* Amarelo */
+    --warning-color-rgb: 255, 193, 7;
+    --danger-color: #dc3545; /* Vermelho */
+    --danger-color-rgb: 220, 53, 69;
+    --light-color: #f8f9fa; /* Branco Sujo */
+    --light-color-rgb: 248, 249, 250;
+    --dark-color: #343a40; /* Preto Quase */
+    --dark-color-rgb: 52, 58, 64;
+    --accent-color: var(--primary-color); /* Usado como primary para destaque */
+    --fail-color: var(--danger-color); /* Cor para indicar falha */
+
+    /* Cores de Fundo e Bordas */
+    --background-main: #1a1a1a; /* Fundo principal da aplicação */
+    --background-main-rgb: 26, 26, 26;
+    --background-card: #2c2c2c; /* Fundo dos cards e painéis */
+    --background-card-rgb: 44, 44, 44;
+    --background-card-header: #2a2a2a; /* Fundo do cabeçalho dos cards e sidebar */
+    --background-card-header-rgb: 42, 42, 42;
+    --background-input: #3d3d3d; /* Fundo dos campos de input e dropdowns */
+    --background-input-rgb: 61, 61, 61;
+    --background-card-light: #4F4F4F; /* Fundo mais claro para certas seções/tabelas (ex: Applied Voltage) */
+    --background-card-light-rgb: 79, 79, 79;
+    --background-table-row-even: #3D3D3D; /* Para linhas pares de tabelas */
+    --background-table-row-even-rgb: 61, 61, 61;
+
+    --border-color: #666666; /* Cor da borda geral */
+    --border-color-rgb: 102, 102, 102;
+    --border-strong: #999999; /* Cor da borda mais forte (HR) */
+    --border-strong-rgb: 153, 153, 153;
+
+    /* Cores de Texto */
+    --text-light: #f0f0f0; /* Texto principal claro */
+    --text-light-rgb: 240, 240, 240;
+    --text-dark: #333333; /* Texto escuro (para temas claros ou elementos específicos) */
+    --text-dark-rgb: 51, 51, 51;
+    --text-header: #ffffff; /* Texto em cabeçalhos (branco puro) */
+    --text-header-rgb: 255, 255, 255;
+    --text-muted: #adb5bd; /* Texto secundário, atenuado */
+    --text-muted-rgb: 173, 181, 189;
+    --text-placeholder: #adb5bd; /* Cor para placeholders de input */
+
+    /* Tamanhos de Fonte Base - Adapte conforme a necessidade de densidade */
+    --font-size-base: 0.875rem; /* ~14px */
+    --font-size-sm: 0.75rem;    /* ~12px */
+    --font-size-xs: 0.65rem;    /* ~10.4px */
+
+    /* Alturas de Componentes */
+    --input-height: 32px;
+    --input-sm-height: 28px; /* Para inputs pequenos em Impulse */
+}
+
+/* --- Estilos Base Globais --- */
+html, body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-main);
+    color: var(--text-light);
+    margin: 0;
+    padding: 0;
+    font-size: var(--font-size-base);
+    overflow-x: hidden; /* Previne scroll horizontal em telas menores */
+    width: 100%;
+    max-width: 100vw; /* Garante que não exceda a viewport */
+}
+
+/* Global Layout Fixes - Previne overflow horizontal para componentes Bootstrap */
+* {
+    box-sizing: border-box;
+}
+
+.container-fluid {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+}
+
+.col, .col-*, [class*="col-"] {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    max-width: 100%;
+}
+
+/* --- Estilos da Navbar --- */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    border-bottom: 1px solid var(--border-color);
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    padding: 0.5rem 0; /* Ajuste para espaçamento vertical */
+}
+
+.navbar .container-fluid {
+    max-width: 100%;
+    overflow-x: hidden;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+}
+
+.navbar-brand img {
+    height: 40px; /* Tamanho padrão do logo */
+    margin-right: 15px;
+}
+
+.navbar-brand h4 {
+    font-size: 1.1rem;
+    letter-spacing: 0.05rem;
+    text-shadow: 0px 1px 2px rgba(0,0,0,0.3);
+    line-height: 1.2;
+    color: var(--text-light);
+    margin-bottom: 0; /* Remove margem padrão de h4 */
+}
+.navbar-brand div {
+    display: flex;
+    flex-direction: column;
+}
+.navbar-brand div span {
+    font-size: 0.7rem;
+    color: rgba(var(--text-header-rgb), 0.85); /* Usando RGB para transparência */
+    letter-spacing: 0.03rem;
+}
+.navbar-brand div span.fw-bold {
+    font-weight: bold;
+}
+.navbar-brand div span.text-accent {
+    color: var(--accent-color);
+}
+
+/* Container de ações da navbar */
+.navbar-actions-container {
+    max-width: 100%;
     overflow: hidden;
-    transition: all 0.3s ease;
+    flex-shrink: 1; /* Permite que o container encolha */
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Espaçamento entre os itens */
 }
 
-#global-clear-button:hover {
-    background-color: #e0a800 !important;
-    border-color: #d39e00 !important;
-    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5) !important;
+/* Navbar Responsividade */
+@media (max-width: 1199.98px) {
+    #usage-counter-display {
+        font-size: 0.7rem !important;
+        padding: 0.2rem 0.5rem !important;
+    }
+    
+    #usage-counter-display span {
+        font-size: 0.65rem !important;
+    }
+    
+    .btn-sm {
+        font-size: 0.7rem !important;
+        padding: 0.25rem 0.5rem !important;
+    }
+    
+    .btn-sm i {
+        font-size: 0.6rem !important;
+    }
 }
 
-/* Estilos para o botão de alternar tema */
-.theme-toggle {
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
+@media (max-width: 991.98px) {
+    .navbar-brand h4 {
+        font-size: 0.95rem;
+    }
+    
+    .navbar-brand div {
+        font-size: 0.6rem;
+    }
+    
+    .navbar .container-fluid {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    /* Ajustes para o alinhamento da navbar-actions-container */
+    .navbar-actions-container {
+        width: 100%;
+        justify-content: center; /* Centraliza os botões */
+        margin-top: 0.5rem;
+        border-top: 1px solid rgba(var(--text-header-rgb),0.1);
+        padding-top: 0.5rem;
+    }
+    #usage-counter-display {
+        display: none !important; /* Oculta em telas menores */
+    }
+    
+    .btn-sm span {
+        display: none; /* Mostra apenas ícones em telas pequenas */
+    }
 }
 
-.theme-toggle:hover {
-    background-color: rgba(255, 255, 255, 0.25) !important;
+@media (max-width: 767.98px) {
+    .navbar-brand h4 {
+        font-size: 0.85rem;
+    }
+    
+    .navbar-brand img {
+        height: 35px;
+        margin-right: 10px;
+    }
+    
+    #generate-report-btn,
+    #global-clear-button {
+        padding: 0.3rem 0.4rem !important;
+        min-width: 35px; /* Mantém um tamanho mínimo */
+    }
+    
+    #theme-toggle span {
+        display: none; /* Mostra apenas ícone do tema */
+    }
 }
 
-/* Classe de transição para suavizar a mudança de tema */
-.theme-transition {
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+
+/* --- Estilos de Links --- */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+a:hover {
+    color: var(--primary-color); /* Mantém a cor base */
+    text-decoration: underline;
+    filter: brightness(1.15); /* Torna ligeiramente mais brilhante no hover */
 }
 
-/* Estilos específicos para garantir que o tema claro seja aplicado corretamente */
-body.light-theme .navbar {
-    background-color: #26427A !important;
+/* --- Estilos de Cards --- */
+.card {
+    background-color: var(--background-card);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25); /* Mais pronunciado */
+    border-radius: 8px; /* Mais arredondado */
+    overflow: hidden; /* Garante que o header arredondado funcione bem */
 }
 
-body.light-theme .sidebar {
-    background-color: #f8f9fa !important;
-    border-right: 1px solid #dee2e6 !important;
+.card-header {
+    background-color: var(--background-card-header);
+    color: var(--text-header);
+    padding: 0.75rem 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 7px 7px 0 0; /* Arredondado só no topo */
+    font-weight: bold;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
-/* Estilos específicos para garantir que o tema escuro seja aplicado corretamente */
-body:not(.light-theme) .navbar {
-    background-color: #1f1f1f !important;
-    border-bottom: 1px solid #444 !important;
+.card-body {
+    padding: 1rem;
+    color: var(--text-light);
 }
 
-body:not(.light-theme) .sidebar {
-    background-color: #2c2c2c !important;
-    border-right: 1px solid #444 !important;
+/* Cabeçalhos de Cards Específicos para Módulos */
+.card-header h5, .card-header h6 {
+    margin: 0;
+    color: inherit; /* Garante que use a cor do header */
+    font-size: 1rem; /* Padrão para cabeçalhos de card */
+}
+/* Classes para cabeçalhos de card com cores customizadas */
+.card-header.bg-primary-custom {
+    background-color: var(--primary-color);
+    color: var(--text-header);
+}
+.card-header.bg-info-custom {
+    background-color: var(--info-color);
+    color: var(--text-header);
+}
+.card-header.bg-secondary-custom {
+    background-color: var(--secondary-color);
+    color: var(--text-header);
 }
 
-/* Estilos para destacar o botão de limpar campos quando ativo */
-#global-clear-button:active, 
-#global-clear-button:focus {
-    background-color: #d39e00 !important;
-    border-color: #c69500 !important;
-    box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5) !important;
+/* --- Estilos de Inputs e Selects --- */
+.form-control,
+.form-select,
+.input-group-text {
+    background-color: var(--background-input);
+    color: var(--text-light);
+    border: 1px solid var(--border-color);
+    font-size: var(--font-size-base);
+    height: var(--input-height);
+    padding: 0.375rem 0.75rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    border-radius: 4px;
 }
 
-/* Correções específicas para o tema escuro */
-body:not(.light-theme) .btn-primary {
-    background-color: #26427A !important;
-    border-color: #1d325d !important;
-    color: #FFFFFF !important;
+/* Campos de input mais largos (para módulo de Perdas) */
+.form-control.losses-input-wide,
+.form-select.losses-input-wide {
+    width: 50% !important; /* Faz com que os campos de input ocupem 50% da largura do contêiner */
+    min-width: 120px; /* Garante largura mínima para melhor usabilidade */
 }
 
-body:not(.light-theme) .btn-primary:hover {
-    background-color: #345694 !important;
-    border-color: #26427A !important;
+/* Inputs pequenos (para Impulse) */
+.form-control.form-control-sm,
+.form-select.form-select-sm,
+.input-group-sm > .form-control,
+.input-group-sm > .form-select,
+.input-group-sm > .input-group-text {
+    height: var(--input-sm-height);
+    font-size: var(--font-size-sm);
+    padding: 0.25rem 0.5rem;
 }
 
-body:not(.light-theme) .btn-secondary {
-    background-color: #444 !important;
-    border-color: #333 !important;
-    color: #FFFFFF !important;
+/* Placeholder para inputs */
+.form-control::placeholder,
+.form-select::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
 }
 
-body:not(.light-theme) .btn-secondary:hover {
-    background-color: #555 !important;
-    border-color: #444 !important;
+/* Estados de foco para inputs */
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--background-input);
+    color: var(--text-light);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 0.25rem rgba(var(--primary-color-rgb), 0.25); /* Cor primária do Dash com 25% de opacidade */
 }
 
-body:not(.light-theme) .btn-warning {
-    color: #212529 !important;
+/* Inputs somente leitura / desabilitados */
+.form-control:disabled,
+.form-control[readonly],
+.form-select:disabled,
+.form-select[readonly] {
+    background-color: rgba(var(--background-input-rgb), 0.5);
+    color: var(--text-muted);
+    opacity: 0.8;
 }
 
-body:not(.light-theme) .modal-content {
-    background-color: #2c2c2c !important;
-    border-color: #444 !important;
-    color: #e0e0e0 !important;
+/* Estilo de Dropdown Escuro (se necessário, mas já é o padrão com as variáveis) */
+.form-select.dark-dropdown {
+    background-color: var(--background-input);
+    color: var(--text-light);
+    border-color: var(--border-color);
+}
+.form-select.dark-dropdown option {
+    background-color: var(--background-input);
+    color: var(--text-light);
 }
 
-body:not(.light-theme) .modal-header {
-    background-color: #1f1f1f !important;
-    border-color: #444 !important;
-    color: #FFFFFF !important;
+/* Ícones em Input Group (Spinners) */
+.input-group-text .fas {
+    cursor: pointer;
+    padding: 0 5px;
+    color: var(--text-muted);
+    transition: color 0.15s ease-in-out;
+}
+.input-group-text .fas:hover {
+    color: var(--info-color); /* Cor de destaque ao passar o mouse */
 }
 
-body:not(.light-theme) .modal-footer {
-    border-color: #444 !important;
+/* --- Estilos de Labels --- */
+label {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--text-light);
+    margin-bottom: 0.25rem;
 }
 
-body:not(.light-theme) .close {
-    color: #e0e0e0 !important;
-    text-shadow: none !important;
+/* --- Estilos de Botões --- */
+.btn {
+    font-size: var(--font-size-sm);
+    padding: 0.4rem 0.8rem; /* Ajustado para ser mais compacto */
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    line-height: 1.5; /* Para centralizar texto em botões menores */
 }
 
-body:not(.light-theme) .close:hover {
-    color: #FFFFFF !important;
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--text-header);
+}
+.btn-primary:hover {
+    filter: brightness(0.9); /* Escurece ligeiramente no hover */
 }
 
-/* Correções específicas para o tema claro */
-body.light-theme .btn-primary {
-    background-color: #26427A !important;
-    border-color: #1d325d !important;
-    color: #FFFFFF !important;
+.btn-secondary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: var(--text-header);
+}
+.btn-secondary:hover {
+    filter: brightness(0.9);
 }
 
-body.light-theme .btn-primary:hover {
-    background-color: #345694 !important;
-    border-color: #26427A !important;
+.btn-info {
+    background-color: var(--info-color);
+    border-color: var(--info-color);
+    color: var(--text-header);
+}
+.btn-info:hover {
+    filter: brightness(0.9);
 }
 
-/* Correções para elementos específicos */
-body:not(.light-theme) .dcc-graph {
-    background-color: #2c2c2c !important;
+.btn-success {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+    color: var(--text-header);
+}
+.btn-success:hover {
+    filter: brightness(0.9);
 }
 
-body:not(.light-theme) .dash-table-container {
-    background-color: #2c2c2c !important;
+.btn-danger {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+    color: var(--text-header);
+}
+.btn-danger:hover {
+    filter: brightness(0.9);
 }
 
-body:not(.light-theme) .dash-spreadsheet-container {
-    background-color: #2c2c2c !important;
+.btn-warning {
+    background-color: var(--warning-color);
+    border-color: var(--warning-color);
+    color: var(--dark-color); /* Texto escuro para contraste no amarelo */
+}
+.btn-warning:hover {
+    filter: brightness(0.9);
 }
 
-body:not(.light-theme) .dash-spreadsheet-inner th {
-    background-color: #1f1f1f !important;
-    color: #FFFFFF !important;
+.btn-outline-info { /* Para "Sugerir Resistores" */
+    border-color: var(--info-color);
+    color: var(--info-color);
+    background-color: transparent;
+}
+.btn-outline-info:hover {
+    background-color: var(--info-color);
+    color: var(--text-header);
+    filter: none; /* Remove filter para hover de outline */
 }
 
-body:not(.light-theme) .dash-spreadsheet-inner td {
-    background-color: #2c2c2c !important;
-    color: #e0e0e0 !important;
+.btn-sm {
+    font-size: var(--font-size-sm);
+    padding: 0.25rem 0.5rem;
 }
 
-/* Correções para tooltips e popovers */
-body:not(.light-theme) .tooltip-inner {
-    background-color: #1f1f1f !important;
-    color: #e0e0e0 !important;
+
+/* --- Tipografia --- */
+.section-title {
+    font-size: var(--font-size-base); /* Ajustado para ser mais compacto */
+    font-weight: bold;
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 0.8rem; /* Reduzido */
+    padding-bottom: 0.4rem; /* Reduzido */
+    border-bottom: 1px solid rgba(var(--border-color-rgb), 0.3); /* Usando RGB variable */
 }
 
-body:not(.light-theme) .popover {
-    background-color: #2c2c2c !important;
-    border-color: #444 !important;
+.subsection-title {
+    font-size: var(--font-size-sm); /* Reduzido */
+    font-weight: bold;
+    color: var(--info-color);
+    text-align: center;
+    margin-top: 0.8rem;
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.2rem;
+    border-bottom: 1px dotted rgba(var(--border-color-rgb), 0.2); /* Usando RGB variable */
 }
 
-body:not(.light-theme) .popover-header {
-    background-color: #1f1f1f !important;
-    border-color: #444 !important;
-    color: #FFFFFF !important;
+small.text-muted {
+    font-size: var(--font-size-xs);
+    color: var(--text-muted) !important;
 }
 
-body:not(.light-theme) .popover-body {
-    color: #e0e0e0 !important;
+/* --- Alertas e Mensagens --- */
+.alert {
+    font-size: var(--font-size-sm);
+    padding: 0.6rem 1rem;
+    border-radius: 5px;
+    margin-bottom: 0.75rem; /* Padrão Bootstrap */
+}
+.alert.alert-info {
+    background-color: var(--info-color);
+    color: var(--text-header);
+    border-color: var(--info-color);
+}
+.alert.alert-warning {
+    background-color: var(--warning-color);
+    color: var(--dark-color);
+    border-color: var(--warning-color);
+}
+.alert.alert-danger {
+    background-color: var(--danger-color);
+    color: var(--text-header);
+    border-color: var(--danger-color);
+}
+.alert.alert-success {
+    background-color: var(--success-color);
+    color: var(--text-header);
+    border-color: var(--success-color);
+}
+.alert.alert-light-custom { /* Para notas informativas */
+    background-color: var(--background-card-header); /* Cor do card-header para notas */
+    color: var(--text-light);
+    border-color: var(--border-color);
+}
+.alert.alert-light-custom .small {
+    font-size: var(--font-size-sm);
 }
 
-/* Correções para alertas */
-body:not(.light-theme) .alert {
-    background-color: #2c2c2c !important;
-    border-color: #444 !important;
-    color: #e0e0e0 !important;
+/* --- Tabelas --- */
+.table {
+    --bs-table-color: var(--text-light);
+    --bs-table-bg: var(--background-card);
+    --bs-table-border-color: var(--border-color);
+    --bs-table-striped-bg: rgba(var(--text-light-rgb), 0.05); /* Usando RGB variable */
+    --bs-table-active-bg: rgba(var(--text-light-rgb), 0.1);
+    --bs-table-hover-bg: rgba(var(--text-light-rgb), 0.075);
+    color: var(--text-light); /* Garante que o texto da tabela use a variável */
 }
 
-body:not(.light-theme) .alert-success {
-    background-color: rgba(40, 167, 69, 0.2) !important;
-    border-color: rgba(40, 167, 69, 0.4) !important;
-    color: #28a745 !important;
+.table thead th {
+    background-color: var(--background-card-header);
+    color: var(--text-header);
+    border-color: var(--border-color);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    text-align: center;
+    vertical-align: middle;
+    padding: 0.5rem 0.75rem;
 }
 
-body:not(.light-theme) .alert-danger {
-    background-color: rgba(220, 53, 69, 0.2) !important;
-    border-color: rgba(220, 53, 69, 0.4) !important;
-    color: #dc3545 !important;
+.table tbody td {
+    font-size: var(--font-size-sm);
+    padding: 0.4rem 0.75rem;
+    vertical-align: middle;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: var(--background-table-row-even); /* Cor alternativa */
 }
 
-body:not(.light-theme) .alert-warning {
-    background-color: rgba(255, 193, 7, 0.2) !important;
-    border-color: rgba(255, 193, 7, 0.4) !important;
-    color: #ffc107 !important;
+
+/* --- Utilitários de Espaçamento (Bootstrap-like) --- */
+.g-0 { --bs-gutter-x: 0; --bs-gutter-y: 0; }
+.g-1 { --bs-gutter-x: 0.25rem; --bs-gutter-y: 0.25rem; }
+.g-2 { --bs-gutter-x: 0.5rem; --bs-gutter-y: 0.5rem; }
+.g-3 { --bs-gutter-x: 1rem; --bs-gutter-y: 1rem; }
+
+.px-1 { padding-left: 0.25rem !important; padding-right: 0.25rem !important; }
+.px-2 { padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
+.px-3 { padding-left: 1rem !important; padding-right: 1rem !important; }
+
+.py-1 { padding-top: 0.25rem !important; padding-bottom: 0.25rem !important; }
+.py-2 { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+.py-3 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+
+.pe-1 { padding-right: 0.25rem !important; } /* Padding End */
+.ps-1 { padding-left: 0.25rem !important; }  /* Padding Start */
+
+/* Margens */
+.mb-1 { margin-bottom: 0.25rem !important; }
+.mb-2 { margin-bottom: 0.5rem !important; }
+.mb-3 { margin-bottom: 1rem !important; }
+.mb-4 { margin-bottom: 1.5rem !important; }
+
+.mt-1 { margin-top: 0.25rem !important; }
+.mt-2 { margin-top: 0.5rem !important; }
+.mt-3 { margin-top: 1rem !important; }
+.mt-4 { margin-top: 1.5rem !important; }
+
+/* --- Outros Utilitários --- */
+.h-100 { height: 100% !important; }
+.w-100 { width: 100% !important; }
+.d-flex { display: flex !important; }
+.d-inline-block { display: inline-block !important; }
+.align-items-center { align-items: center !important; }
+.align-items-end { align-items: flex-end !important; } /* Para botões alinhados ao final da coluna */
+.justify-content-center { justify-content: center !important; }
+.justify-content-end { justify-content: flex-end !important; }
+.justify-content-between { justify-content: space-between !important; }
+.flex-column { flex-direction: column !important; }
+.flex-grow-1 { flex-grow: 1 !important; }
+.float-end { float: right !important; } /* Cuidado com floats em Flexbox/Grid - preferir flexbox */
+
+.text-center { text-align: center !important; }
+.text-end { text-align: right !important; }
+.text-muted { color: var(--text-muted) !important; }
+.text-primary { color: var(--primary-color) !important; }
+.text-info { color: var(--info-color) !important; }
+.text-success { color: var(--success-color) !important; }
+.text-danger { color: var(--danger-color) !important; }
+.text-warning { color: var(--warning-color) !important; }
+
+.fw-bold { font-weight: bold !important; }
+.fs-6 { font-size: 1rem !important; } /* Bootstrap 5 default */
+
+.border-bottom { border-bottom: 1px solid var(--border-color) !important; }
+.border-end { border-right: 1px solid var(--border-color) !important; }
+
+/* --- Estilos para Gráficos Plotly e Loading States --- */
+.plotly-graph-placeholder {
+    background-color: var(--background-card);
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: var(--font-size-base);
+    min-height: 200px;
+    text-align: center;
+    /* Adicionar aqui estilos para o spinner se for um placeholder de loading */
+}
+/* Estilo para o container de spinners/loading de gráficos (ex: para dois gráficos) */
+#loading-graph {
+    min-height: 550px; /* Altura para acomodar os dois gráficos com espaçamento */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center; /* Centraliza o spinner */
+    padding: 1rem;
+    background-color: var(--background-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+#loading-graph > div { /* Estilo para o spinner dentro do container */
+    margin: auto; /* Centraliza o spinner */
 }
 
-body:not(.light-theme) .alert-info {
-    background-color: rgba(0, 191, 255, 0.2) !important;
-    border-color: rgba(0, 191, 255, 0.4) !important;
-    color: #00BFFF !important;
+
+/* --- Abas Personalizadas (Tabs) --- */
+.nav-tabs {
+    border-bottom: none; /* Removendo a borda padrão para melhor fusão com o card */
+}
+
+.nav-tabs .nav-link {
+    color: var(--text-muted);
+    background-color: var(--background-card-header);
+    border: 1px solid var(--border-color);
+    border-bottom-color: var(--background-card-header); /* Para fundir com o card body */
+    border-radius: 5px 5px 0 0;
+    margin-right: 5px;
+    padding: 0.5rem 1rem;
+    font-size: var(--font-size-sm);
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--primary-color);
+    background-color: var(--background-card);
+    border-color: var(--border-color);
+    border-bottom-color: var(--background-card); /* Para "se fundir" com o conteúdo */
+    font-weight: bold;
+    filter: brightness(1.0); /* Remove qualquer brilho no ativo */
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--text-light); /* Ligeiramente mais claro no hover */
+    filter: brightness(1.1); /* Ligeiramente mais brilhante no hover */
+}
+
+.tab-content {
+    background-color: var(--background-card);
+    border: 1px solid var(--border-color);
+    border-top: none; /* Remover borda superior para fusão com a aba */
+    border-radius: 0 0 5px 5px;
+    padding: 1rem;
+    height: 100%; /* Para que o conteúdo da aba preencha o espaço */
+    max-height: 400px; /* Max height para tabelas rolarem */
+    overflow-y: auto; /* Para rolagem em tabelas */
+}
+
+/* Estilos específicos para tabelas dentro de tab-content (ex: Impulse) */
+.tab-content #waveform-analysis-table table,
+.tab-content #circuit-parameters-display table,
+.tab-content #energy-details-table table {
+    width: 100%; /* Garante que a tabela use 100% da largura */
+    border-collapse: collapse; /* Bordas colapsadas */
+}
+
+.tab-content #waveform-analysis-table table th,
+.tab-content #waveform-analysis-table table td,
+.tab-content #circuit-parameters-display table th,
+.tab-content #circuit-parameters-display table td,
+.tab-content #energy-details-table table th,
+.tab-content #energy-details-table table td {
+    border: 1px solid var(--border-color);
+    padding: 0.4rem;
+    font-size: var(--font-size-sm);
+    color: var(--text-light);
+    vertical-align: middle;
+}
+
+.tab-content #waveform-analysis-table table th,
+.tab-content #circuit-parameters-display table th,
+.tab-content #energy-details-table table th {
+    background-color: var(--background-card-header);
+    color: var(--text-header);
+    font-weight: bold;
+    text-align: center;
+}
+
+.tab-content #waveform-analysis-table table tr:nth-child(even),
+.tab-content #circuit-parameters-display table tr:nth-child(even),
+.tab-content #energy-details-table table tr:nth-child(even) {
+    background-color: var(--background-table-row-even);
+}
+
+.tab-content #waveform-analysis-table table tr:hover,
+.tab-content #circuit-parameters-display table tr:hover,
+.tab-content #energy-details-table table tr:hover {
+    background-color: var(--bs-table-hover-bg); /* Utiliza variável Bootstrap */
+}
+
+/* --- Estilos da Sidebar (Navegação Lateral) --- */
+.sidebar-container {
+    height: calc(100vh - 120px); /* Altura fixa menos navbar e footer */
+    overflow-y: auto; /* Adiciona rolagem se o conteúdo exceder */
+    position: sticky; /* Mantém a sidebar visível ao rolar a página */
+    top: 1rem; /* Distância do topo */
+    background-color: var(--background-card-header);
+    padding: 0.5rem;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    margin-top: 0;
+    margin-right: 0.5rem;
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: var(--border-color) var(--background-card-header); /* Firefox */
+}
+/* Estilo da barra de rolagem para navegadores WebKit (Chrome/Safari) */
+.sidebar-container::-webkit-scrollbar {
+    width: 8px;
+}
+.sidebar-container::-webkit-scrollbar-track {
+    background: var(--background-card-header);
+    border-radius: 10px;
+}
+.sidebar-container::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 10px;
+    border: 2px solid var(--background-card-header);
+}
+
+/* Links de navegação na sidebar */
+.nav-link {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    text-align: left;
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.5rem;
+    margin-bottom: 3px;
+    border-left: 3px solid transparent; /* Padrão sem destaque */
+    color: var(--text-light);
+    font-weight: normal;
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    border-radius: 0 4px 4px 0; /* Arredondado só na direita */
+}
+.nav-link:hover {
+    background-color: rgba(var(--primary-color-rgb), 0.1); /* Fundo sutil no hover */
+    color: var(--primary-color);
+}
+.nav-link.active {
+    background-color: rgba(var(--primary-color-rgb), 0.2); /* Fundo mais forte para ativo */
+    border-left: 3px solid var(--primary-color); /* Linha de destaque */
+    color: var(--primary-color);
+    font-weight: bold;
+}
+.nav-link .fas {
+    width: 16px; /* Largura fixa para ícones */
+    text-align: center;
+    margin-right: 0.5rem;
+}
+
+/* --- Rodapé --- */
+footer {
+    background-color: var(--background-card-header);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -1px 3px rgba(0,0,0,0.1);
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    padding: 0.75rem 1rem;
+    text-align: center;
+}
+
+/* --- Tema Claro (ativado pela classe data-bs-theme="light" no body) --- */
+[data-bs-theme="light"] {
+    /* Cores de Fundo e Bordas */
+    --background-main: #f0f2f5; /* Light gray background */
+    --background-main-rgb: 240, 242, 245;
+    --background-card: #ffffff; /* White cards */
+    --background-card-rgb: 255, 255, 255;
+    --background-card-header: #e9ecef; /* Lighter card headers */
+    --background-card-header-rgb: 233, 236, 239;
+    --background-input: #ffffff; /* White inputs */
+    --background-input-rgb: 255, 255, 255;
+    --background-card-light: #f8f9fa; /* Even lighter for specific sections */
+    --background-card-light-rgb: 248, 249, 250;
+    --background-table-row-even: #f0f0f0; /* Lighter alternating table rows */
+    --background-table-row-even-rgb: 240, 240, 240;
+
+    --border-color: #dee2e6; /* Lighter borders */
+    --border-color-rgb: 222, 226, 230;
+    --border-strong: #ced4da; /* Lighter strong borders */
+    --border-strong-rgb: 206, 212, 218;
+
+    /* Cores de Texto */
+    --text-light: #212529; /* Dark text for body */
+    --text-light-rgb: 33, 37, 41;
+    --text-dark: #f8f9fa; /* Light text (for elements that remain dark) */
+    --text-dark-rgb: 248, 249, 250;
+    --text-header: #343a40; /* Dark text for headers */
+    --text-header-rgb: 52, 58, 64;
+    --text-muted: #6c757d; /* Standard muted text */
+    --text-muted-rgb: 108, 117, 125;
+    --text-placeholder: #adb5bd; /* Placeholder text */
+
+    /* Sombras e Bordas */
+    .card { box-shadow: 0 2px 4px rgba(0,0,0,0.1); } /* Lighter shadow */
+
+    /* Inputs e Selects */
+    .form-control, .form-select, .input-group-text {
+        background-color: var(--background-input);
+        color: var(--text-light);
+        border: 1px solid var(--border-color);
+    }
+    .form-control:focus, .form-select:focus {
+        box-shadow: 0 0 0 0.25rem rgba(var(--primary-color-rgb), 0.25);
+    }
+    .form-control:disabled, .form-control[readonly], .form-select:disabled, .form-select[readonly] {
+        background-color: #e9ecef; /* Very light gray */
+        color: var(--text-muted);
+    }
+
+    /* Dropdowns em tema claro - opções seguem o background do input */
+    .form-select.dark-dropdown { /* Esta classe pode ser reavaliada se o comportamento padrão for suficiente */
+        background-color: var(--background-input);
+        color: var(--text-light);
+        border-color: var(--border-color);
+    }
+    .form-select.dark-dropdown option {
+        background-color: var(--background-input); /* Opções também brancas */
+        color: var(--text-light);
+    }
+
+    /* Abas */
+    .nav-tabs .nav-link {
+        background-color: var(--background-card-header);
+        border-bottom-color: var(--background-card-header);
+    }
+    .nav-tabs .nav-link.active {
+        background-color: var(--background-card);
+        border-bottom-color: var(--background-card);
+    }
+    
+    /* Tabelas */
+    .table {
+        --bs-table-striped-bg: rgba(var(--text-dark-rgb), 0.03); /* Ajustado para claro */
+        --bs-table-hover-bg: rgba(var(--text-dark-rgb), 0.05); /* Ajustado para claro */
+        --bs-table-active-bg: rgba(var(--text-dark-rgb), 0.07);
+    }
+
+    /* Placeholders de Gráficos */
+    .plotly-graph-placeholder {
+        background-color: var(--background-card);
+    }
+
+    /* Scrollbar para Tema Claro */
+    .sidebar-container::-webkit-scrollbar-track {
+        background: var(--background-card-header);
+    }
+    .sidebar-container::-webkit-scrollbar-thumb {
+        background-color: var(--border-color);
+        border: 2px solid var(--background-card-header);
+    }
 }

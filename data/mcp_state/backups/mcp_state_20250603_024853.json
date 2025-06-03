@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-06-03T02:48:59.508227",
+  "timestamp": "2025-06-02T23:45:53.241482",
   "version": "1.0",
   "stores": {
     "transformer-inputs-store": {
@@ -87,9 +87,7 @@
         "grupo_ligacao": "sd",
         "classe_tensao_at": 25.8,
         "classe_tensao_bt": 7.2,
-        "classe_tensao_terciario": 24,
-        "liquido_isolante": "Mineral",
-        "tipo_isolamento": "Uniforme"
+        "classe_tensao_terciario": 24
       }
     },
     "impulse-store": {
@@ -117,9 +115,7 @@
         "grupo_ligacao": "sd",
         "classe_tensao_at": 25.8,
         "classe_tensao_bt": 7.2,
-        "classe_tensao_terciario": 24,
-        "liquido_isolante": "Mineral",
-        "tipo_isolamento": "Uniforme"
+        "classe_tensao_terciario": 24
       }
     },
     "dieletric-analysis-store": {
@@ -147,9 +143,7 @@
         "grupo_ligacao": "sd",
         "classe_tensao_at": 25.8,
         "classe_tensao_bt": 7.2,
-        "classe_tensao_terciario": 24,
-        "liquido_isolante": "Mineral",
-        "tipo_isolamento": "Uniforme"
+        "classe_tensao_terciario": 24
       }
     },
     "applied-voltage-store": {
@@ -177,9 +171,7 @@
         "grupo_ligacao": "sd",
         "classe_tensao_at": 25.8,
         "classe_tensao_bt": 7.2,
-        "classe_tensao_terciario": 24,
-        "liquido_isolante": "Mineral",
-        "tipo_isolamento": "Uniforme"
+        "classe_tensao_terciario": 24
       }
     },
     "induced-voltage-store": {
@@ -207,9 +199,7 @@
         "grupo_ligacao": "sd",
         "classe_tensao_at": 25.8,
         "classe_tensao_bt": 7.2,
-        "classe_tensao_terciario": 24,
-        "liquido_isolante": "Mineral",
-        "tipo_isolamento": "Uniforme"
+        "classe_tensao_terciario": 24
       }
     },
     "short-circuit-store": {
@@ -237,9 +227,7 @@
         "grupo_ligacao": "sd",
         "classe_tensao_at": 25.8,
         "classe_tensao_bt": 7.2,
-        "classe_tensao_terciario": 24,
-        "liquido_isolante": "Mineral",
-        "tipo_isolamento": "Uniforme"
+        "classe_tensao_terciario": 24
       }
     },
     "temperature-rise-store": {
@@ -267,9 +255,7 @@
         "grupo_ligacao": "sd",
         "classe_tensao_at": 25.8,
         "classe_tensao_bt": 7.2,
-        "classe_tensao_terciario": 24,
-        "liquido_isolante": "Mineral",
-        "tipo_isolamento": "Uniforme"
+        "classe_tensao_terciario": 24
       }
     },
     "comprehensive-analysis-store": {
@@ -297,9 +283,7 @@
         "grupo_ligacao": "sd",
         "classe_tensao_at": 25.8,
         "classe_tensao_bt": 7.2,
-        "classe_tensao_terciario": 24,
-        "liquido_isolante": "Mineral",
-        "tipo_isolamento": "Uniforme"
+        "classe_tensao_terciario": 24
       }
     },
     "front-resistor-data": {},

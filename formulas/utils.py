@@ -63,7 +63,7 @@ def find_nearest_index(array: np.ndarray, value: float) -> int:
     """
     if len(array) == 0:
         return -1
-    idx = (np.abs(array - value)).argmin()
+    idx = int((np.abs(array - value)).argmin())
     return idx
 
 

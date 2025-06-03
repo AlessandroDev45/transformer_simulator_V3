@@ -206,7 +206,7 @@ def register_transformer_inputs_callbacks(app_instance):
                             "temperature-rise-store", "comprehensive-analysis-store",
                         ]
                         for target_store in target_stores:
-                            ensure_mcp_data_propagation(app_instance.mcp, "transformer-inputs-store", target_store)
+                            ensure_mcp_data_propagation(app_instance, "transformer-inputs-store", [target_store])
                         log.debug("[UpdateTransformerCalc] Dados propagados para todos os stores alvo.")
                 except Exception as e_prop:
                     log.error(f"[UpdateTransformerCalc] Erro ao propagar dados: {e_prop}", exc_info=True)
@@ -274,7 +274,8 @@ def register_transformer_inputs_callbacks(app_instance):
     )
     def load_transformer_inputs_from_mcp(pathname, transformer_data):
         from dash import ctx
-        from utils.routes import ROUTE_TRANSFORMER_INPUTS, normalize_pathname
+        from utils.routes import normalize_pathname
+        ROUTE_TRANSFORMER_INPUTS = "/transformer-inputs"  # Define the missing constant
 
         triggered_id = ctx.triggered_id
         log.debug(f"[LOAD TransformerInputs] Acionado por: {triggered_id}")

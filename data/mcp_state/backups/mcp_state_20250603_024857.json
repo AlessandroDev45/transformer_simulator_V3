@@ -1,10 +1,10 @@
 {
-  "timestamp": "2025-06-03T02:48:59.508227",
+  "timestamp": "2025-06-03T02:48:57.518393",
   "version": "1.0",
   "stores": {
     "transformer-inputs-store": {
       "tipo_transformador": "Trifásico",
-      "potencia_mva": null,
+      "potencia_mva": 2,
       "tensao_at": null,
       "tensao_bt": null,
       "tensao_terciario": null,

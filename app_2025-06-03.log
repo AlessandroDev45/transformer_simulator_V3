@@ -1,0 +1,701 @@
+2025-06-03 02:48:45 - utils.logger - INFO - Logging configurado. Nível: INFO. Arquivo: app_2025-06-03.log
+2025-06-03 02:48:45 - callbacks.short_circuit - INFO - Registrando callbacks do módulo short_circuit para app Simulador de Testes de Transformadores (IEC/IEEE/ABNT) EPS 1500...
+2025-06-03 02:48:45 - callbacks.impulse - INFO - Callbacks do módulo de impulso já registrados via decoradores @dash.callback para app Simulador de Testes de Transformadores (IEC/IEEE/ABNT) EPS 1500.
+2025-06-03 02:48:45 - callbacks.applied_voltage - INFO - Registrando callbacks de tensão aplicada...
+2025-06-03 02:48:45 - callbacks.applied_voltage - INFO - Callbacks de tensão aplicada registrados com sucesso.
+2025-06-03 02:48:45 - callbacks.history - INFO - Registrando callbacks de Histórico (VERSÃO REFEITA - Foco no MCP)
+2025-06-03 02:48:45 - callbacks.history - INFO - Callbacks de Histórico (VERSÃO REFEITA - Foco no MCP) registrados.
+2025-06-03 02:48:45 - callbacks.insulation_level_callbacks - INFO - ==================== MÓDULO INSULATION_LEVEL_CALLBACKS (Options Only Logic) CARREGADO ====================
+2025-06-03 02:48:45 - callbacks.insulation_level_callbacks - INFO - Dados de níveis de isolamento carregados: 29 registros
+2025-06-03 02:48:45 - callbacks.insulation_level_callbacks - INFO - Registrando callbacks de níveis de isolamento (APENAS OPÇÕES - V2)...
+2025-06-03 02:48:45 - callbacks.insulation_level_callbacks - INFO - Callbacks de níveis de isolamento (APENAS OPÇÕES - V2) registrados.
+2025-06-03 02:48:45 - callbacks.temperature_rise - INFO - Registrando callbacks do módulo temperature_rise para app Simulador de Testes de Transformadores (IEC/IEEE/ABNT) EPS 1500...
+2025-06-03 02:48:45 - callbacks.temperature_rise - INFO - Callbacks do módulo temperature_rise registrados com sucesso.
+2025-06-03 02:48:45 - utils.standards_db - INFO - Tabelas 'standards_metadata' e 'standards_content_fts' criadas/verificadas.
+2025-06-03 02:48:45 - app - INFO - Callbacks registrados. Total: 54
+2025-06-03 02:48:45 - utils.mcp_utils - INFO - [patch_mcp] Detectadas mudanças em transformer-inputs-store: ['potencia_mva']
+2025-06-03 02:48:45 - utils.mcp_utils - INFO - [patch_mcp] Dados convertidos para tipos serializáveis antes de salvar no MCP
+2025-06-03 02:48:45 - utils.mcp_utils - INFO - [patch_mcp] Atualizado transformer-inputs-store com dados válidos
+2025-06-03 02:48:45 - utils.mcp_diagnostics - INFO - [MCP Fix] Recuperados dados completos dos stores de teste para transformer-inputs-store
+2025-06-03 02:48:45 - utils.elec - INFO - [elec] Valores para cálculo: tipo=Trifásico, potencia=20.0, tensao_at=69.0, tensao_at_maior=None, tensao_at_menor=None, tensao_bt=69.0, tensao_terciario=69.0
+2025-06-03 02:48:45 - utils.elec - INFO - [elec] Fator de cálculo (sqrt3): 1.7320508075688772
+2025-06-03 02:48:45 - utils.elec - INFO - [elec] Corrente AT calculada: 167.35A (Fórmula: 20.0*1000/(1.7320508075688772*69.0))
+2025-06-03 02:48:45 - utils.elec - INFO - [elec] Corrente BT calculada: 167.35A (Fórmula: 20.0*1000/(1.7320508075688772*69.0))
+2025-06-03 02:48:45 - utils.elec - INFO - [elec] Corrente Terciário calculada: 167.35A (Fórmula: 20.0*1000/(1.7320508075688772*69.0))
+2025-06-03 02:48:45 - utils.elec - INFO - [elec] RESULTADOS FINAIS DE CORRENTES: {'corrente_nominal_at': 167.35, 'corrente_nominal_at_tap_maior': None, 'corrente_nominal_at_tap_menor': None, 'corrente_nominal_bt': 167.35, 'corrente_nominal_terciario': 167.35}
+2025-06-03 02:48:45 - utils.mcp_diagnostics - INFO - [MCP Fix] Correntes calculadas: AT=167.35A, BT=167.35A, Terciário=167.35A
+2025-06-03 02:48:45 - utils.mcp_diagnostics - WARNING - [MCP Fix] Falha ao atualizar correntes no MCP
+2025-06-03 02:48:45 - utils.mcp_diagnostics - INFO - [MCP Fix] Propagando dados do transformer-inputs-store para outros stores...
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para losses-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para impulse-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para dieletric-analysis-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para applied-voltage-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para induced-voltage-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para short-circuit-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para temperature-rise-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para comprehensive-analysis-store
+2025-06-03 02:48:45 - utils.mcp_diagnostics - INFO - [MCP Fix] Dados propagados para losses-store
+2025-06-03 02:48:45 - utils.mcp_diagnostics - INFO - [MCP Fix] Dados propagados para impulse-store
+2025-06-03 02:48:45 - utils.mcp_diagnostics - INFO - [MCP Fix] Dados propagados para dieletric-analysis-store
+2025-06-03 02:48:45 - utils.mcp_diagnostics - INFO - [MCP Fix] Dados propagados para applied-voltage-store
+2025-06-03 02:48:45 - utils.mcp_diagnostics - INFO - [MCP Fix] Dados propagados para induced-voltage-store
+2025-06-03 02:48:45 - utils.mcp_diagnostics - INFO - [MCP Fix] Dados propagados para short-circuit-store
+2025-06-03 02:48:45 - utils.mcp_diagnostics - INFO - [MCP Fix] Dados propagados para temperature-rise-store
+2025-06-03 02:48:45 - utils.mcp_diagnostics - INFO - [MCP Fix] Dados propagados para comprehensive-analysis-store
+2025-06-03 02:48:45 - __main__ - INFO - [MCP Recovery] MCP data recovery and healing completed successfully.
+2025-06-03 02:48:45 - app_core.startup - INFO - Dados padrão do transformador carregados de defaults\transformer.json
+2025-06-03 02:48:45 - app_core.startup - INFO - MCP inicializado com dados padrão
+2025-06-03 02:48:45 - __main__ - INFO - MCP inicializado com dados padrão do arquivo transformer.json
+2025-06-03 02:48:45 - __main__ - INFO - MCP inicializado com dados: {'tipo_transformador': 'Trifásico', 'potencia_mva': None, 'tensao_at': None, 'tensao_bt': None, 'tensao_terciario': None, 'frequencia': 60, 'impedancia': None, 'conexao_at': 'estrela', 'conexao_bt': 'triangulo', 'conexao_terciario': 'estrela', 'liquido_isolante': 'Mineral', 'tipo_isolamento': 'Uniforme', 'corrente_nominal_at': None, 'corrente_nominal_bt': None, 'corrente_nominal_terciario': None, 'corrente_nominal_at_tap_maior': None, 'corrente_nominal_at_tap_menor': None, 'impedancia_tap_maior': None, 'impedancia_tap_menor': None, 'tensao_at_tap_maior': None, 'tensao_at_tap_menor': None, 'nbi_at': None, 'nbi_bt': None, 'nbi_terciario': None, 'nbi_neutro_at': None, 'nbi_neutro_bt': None, 'nbi_neutro_terciario': None, 'sil_at': None, 'sil_bt': None, 'sil_terciario': None, 'sil_neutro_at': None, 'sil_neutro_bt': None, 'sil_neutro_terciario': None, 'teste_tensao_aplicada_at': None, 'teste_tensao_aplicada_bt': None, 'teste_tensao_aplicada_terciario': None, 'teste_tensao_induzida': None, 'grupo_ligacao': None, 'classe_tensao_at': None, 'classe_tensao_bt': None, 'classe_tensao_terciario': None, 'elevacao_oleo_topo': None, 'elevacao_enrol': None, 'elevacao_enrol_at': None, 'elevacao_enrol_bt': None, 'elevacao_enrol_terciario': None}
+2025-06-03 02:48:45 - utils.elec - INFO - [elec] Valores para cálculo: tipo=Trifásico, potencia=None, tensao_at=None, tensao_at_maior=None, tensao_at_menor=None, tensao_bt=None, tensao_terciario=None
+2025-06-03 02:48:45 - utils.elec - WARNING - [elec] Potência ausente.
+2025-06-03 02:48:45 - __main__ - INFO - Correntes calculadas na inicialização: {'corrente_nominal_at': None, 'corrente_nominal_at_tap_maior': None, 'corrente_nominal_at_tap_menor': None, 'corrente_nominal_bt': None, 'corrente_nominal_terciario': None}
+2025-06-03 02:48:45 - utils.mcp_persistence_enhanced - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:45 - utils.mcp_persistence_enhanced - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para losses-store
+2025-06-03 02:48:45 - utils.mcp_persistence_enhanced - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para impulse-store
+2025-06-03 02:48:45 - utils.mcp_persistence_enhanced - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para dieletric-analysis-store
+2025-06-03 02:48:45 - utils.mcp_persistence_enhanced - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para applied-voltage-store
+2025-06-03 02:48:45 - utils.mcp_persistence_enhanced - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para induced-voltage-store
+2025-06-03 02:48:45 - utils.mcp_persistence_enhanced - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para short-circuit-store
+2025-06-03 02:48:45 - utils.mcp_persistence_enhanced - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para temperature-rise-store
+2025-06-03 02:48:45 - utils.mcp_persistence_enhanced - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para comprehensive-analysis-store
+2025-06-03 02:48:45 - utils.mcp_persistence_enhanced - INFO - [auto_update_on_change] Dados da fonte-de-verdade propagados com sucesso
+2025-06-03 02:48:45 - app_core.transformer_mcp_enhanced - INFO - [MCP SET] Alterações em 'transformer-inputs-store' propagadas automaticamente.
+2025-06-03 02:48:45 - __main__ - INFO - MCP atualizado com correntes calculadas na inicialização
+2025-06-03 02:48:45 - __main__ - INFO - Propagando dados do transformer-inputs-store para outros stores...
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para losses-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para impulse-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para dieletric-analysis-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para applied-voltage-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para induced-voltage-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para short-circuit-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para temperature-rise-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para comprehensive-analysis-store
+2025-06-03 02:48:45 - __main__ - INFO - Dados propagados para losses-store
+2025-06-03 02:48:45 - __main__ - INFO - Dados propagados para impulse-store
+2025-06-03 02:48:45 - __main__ - INFO - Dados propagados para dieletric-analysis-store
+2025-06-03 02:48:45 - __main__ - INFO - Dados propagados para applied-voltage-store
+2025-06-03 02:48:45 - __main__ - INFO - Dados propagados para induced-voltage-store
+2025-06-03 02:48:45 - __main__ - INFO - Dados propagados para short-circuit-store
+2025-06-03 02:48:45 - __main__ - INFO - Dados propagados para temperature-rise-store
+2025-06-03 02:48:45 - __main__ - INFO - Dados propagados para comprehensive-analysis-store
+2025-06-03 02:48:45 - __main__ - INFO - Propagando dados do transformer-inputs-store para outros stores...
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para losses-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para impulse-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para dieletric-analysis-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para applied-voltage-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para induced-voltage-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para short-circuit-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para temperature-rise-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para comprehensive-analysis-store
+2025-06-03 02:48:45 - __main__ - INFO - Dados propagados para losses-store
+2025-06-03 02:48:45 - __main__ - INFO - Dados propagados para impulse-store
+2025-06-03 02:48:45 - __main__ - INFO - Dados propagados para dieletric-analysis-store
+2025-06-03 02:48:45 - __main__ - INFO - Dados propagados para applied-voltage-store
+2025-06-03 02:48:45 - __main__ - INFO - Dados propagados para induced-voltage-store
+2025-06-03 02:48:45 - __main__ - INFO - Dados propagados para short-circuit-store
+2025-06-03 02:48:45 - __main__ - INFO - Dados propagados para temperature-rise-store
+2025-06-03 02:48:45 - __main__ - INFO - Dados propagados para comprehensive-analysis-store
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [sync_isolation_values] Preservando valor existente para nbi_at: 200
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [sync_isolation_values] Preservando valor existente para teste_tensao_aplicada_at: 70
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [sync_isolation_values] Fonte-de-verdade atualizada com valores de isolamento
+2025-06-03 02:48:45 - utils.mcp_persistence - DEBUG - [sync_isolation_values] Sincronizando valor de isolamento para nbi_at: 200
+2025-06-03 02:48:45 - utils.mcp_persistence - DEBUG - [sync_isolation_values] Sincronizando valor de isolamento para teste_tensao_aplicada_at: 70
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [sync_isolation_values] Store losses-store atualizado com valores de isolamento
+2025-06-03 02:48:45 - utils.mcp_persistence - DEBUG - [sync_isolation_values] Sincronizando valor de isolamento para nbi_at: 200
+2025-06-03 02:48:45 - utils.mcp_persistence - DEBUG - [sync_isolation_values] Sincronizando valor de isolamento para teste_tensao_aplicada_at: 70
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [sync_isolation_values] Store impulse-store atualizado com valores de isolamento
+2025-06-03 02:48:45 - utils.mcp_persistence - DEBUG - [sync_isolation_values] Sincronizando valor de isolamento para nbi_at: 200
+2025-06-03 02:48:45 - utils.mcp_persistence - DEBUG - [sync_isolation_values] Sincronizando valor de isolamento para teste_tensao_aplicada_at: 70
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [sync_isolation_values] Store dieletric-analysis-store atualizado com valores de isolamento
+2025-06-03 02:48:45 - utils.mcp_persistence - DEBUG - [sync_isolation_values] Sincronizando valor de isolamento para nbi_at: 200
+2025-06-03 02:48:45 - utils.mcp_persistence - DEBUG - [sync_isolation_values] Sincronizando valor de isolamento para teste_tensao_aplicada_at: 70
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [sync_isolation_values] Store applied-voltage-store atualizado com valores de isolamento
+2025-06-03 02:48:45 - utils.mcp_persistence - DEBUG - [sync_isolation_values] Sincronizando valor de isolamento para nbi_at: 200
+2025-06-03 02:48:45 - utils.mcp_persistence - DEBUG - [sync_isolation_values] Sincronizando valor de isolamento para teste_tensao_aplicada_at: 70
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [sync_isolation_values] Store induced-voltage-store atualizado com valores de isolamento
+2025-06-03 02:48:45 - utils.mcp_persistence - DEBUG - [sync_isolation_values] Sincronizando valor de isolamento para nbi_at: 200
+2025-06-03 02:48:45 - utils.mcp_persistence - DEBUG - [sync_isolation_values] Sincronizando valor de isolamento para teste_tensao_aplicada_at: 70
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [sync_isolation_values] Store short-circuit-store atualizado com valores de isolamento
+2025-06-03 02:48:45 - utils.mcp_persistence - DEBUG - [sync_isolation_values] Sincronizando valor de isolamento para nbi_at: 200
+2025-06-03 02:48:45 - utils.mcp_persistence - DEBUG - [sync_isolation_values] Sincronizando valor de isolamento para teste_tensao_aplicada_at: 70
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [sync_isolation_values] Store temperature-rise-store atualizado com valores de isolamento
+2025-06-03 02:48:45 - utils.mcp_persistence - DEBUG - [sync_isolation_values] Sincronizando valor de isolamento para nbi_at: 200
+2025-06-03 02:48:45 - utils.mcp_persistence - DEBUG - [sync_isolation_values] Sincronizando valor de isolamento para teste_tensao_aplicada_at: 70
+2025-06-03 02:48:45 - utils.mcp_persistence - INFO - [sync_isolation_values] Store comprehensive-analysis-store atualizado com valores de isolamento
+2025-06-03 02:48:45 - __main__ - INFO - Valores de isolamento sincronizados com sucesso entre todos os stores na inicialização.
+2025-06-03 02:48:45 - utils.usage_tracker - INFO - Uso incrementado: 95/1000
+2025-06-03 02:48:45 - __main__ - INFO - Contador incrementado para: 95
+2025-06-03 02:48:45 - __main__ - INFO - Uso atual: 95, Limite: 1000, Atingido: False
+2025-06-03 02:48:45 - __main__ - INFO - Status final após verificação/incremento: Uso=95, Limite=1000, Atingido=False
+2025-06-03 02:48:45 - __main__ - INFO - Importando e criando layout principal...
+2025-06-03 02:48:45 - components.global_stores - INFO - Criando stores globais...
+2025-06-03 02:48:45 - components.global_stores - INFO - Stores globais criados: ['transformer-inputs-store (session)', 'losses-store (session)', 'impulse-store (session)', 'dieletric-analysis-store (session)', 'applied-voltage-store (session)', 'induced-voltage-store (session)', 'short-circuit-store (session)', 'temperature-rise-store (session)', 'comprehensive-analysis-store (session)', 'history-temp-store (memory)', 'delete-session-id-store (memory)', 'front-resistor-data (memory)', 'tail-resistor-data (memory)', 'calculated-inductance (memory)', 'simulation-status (memory)', 'limit-status-store (memory)', 'standards-processing-status-store (memory)', 'standards-current-search (memory)', 'standards-current-category (memory)', 'standards-current-standard (memory)']
+2025-06-03 02:48:45 - __main__ - INFO - Layout principal da aplicação definido e atribuído a app.layout.
+2025-06-03 02:48:45 - __main__ - INFO - Importando e registrando callbacks (APÓS app.layout)...
+2025-06-03 02:48:45 - callbacks.transformer_inputs - INFO - Registrando callbacks do módulo transformer_inputs para app Simulador de Testes de Transformadores (IEC/IEEE/ABNT) EPS 1500...
+2025-06-03 02:48:45 - callbacks.short_circuit - INFO - Registrando callbacks do módulo short_circuit para app Simulador de Testes de Transformadores (IEC/IEEE/ABNT) EPS 1500...
+2025-06-03 02:48:45 - callbacks.impulse - INFO - Callbacks do módulo de impulso já registrados via decoradores @dash.callback para app Simulador de Testes de Transformadores (IEC/IEEE/ABNT) EPS 1500.
+2025-06-03 02:48:45 - callbacks.applied_voltage - INFO - Registrando callbacks de tensão aplicada...
+2025-06-03 02:48:45 - callbacks.applied_voltage - INFO - Callbacks de tensão aplicada registrados com sucesso.
+2025-06-03 02:48:45 - callbacks.history - INFO - Registrando callbacks de Histórico (VERSÃO REFEITA - Foco no MCP)
+2025-06-03 02:48:45 - callbacks.history - INFO - Callbacks de Histórico (VERSÃO REFEITA - Foco no MCP) registrados.
+2025-06-03 02:48:45 - callbacks.insulation_level_callbacks - INFO - Registrando callbacks de níveis de isolamento (APENAS OPÇÕES - V2)...
+2025-06-03 02:48:45 - callbacks.insulation_level_callbacks - INFO - Callbacks de níveis de isolamento (APENAS OPÇÕES - V2) registrados.
+2025-06-03 02:48:45 - callbacks.temperature_rise - INFO - Registrando callbacks do módulo temperature_rise para app Simulador de Testes de Transformadores (IEC/IEEE/ABNT) EPS 1500...
+2025-06-03 02:48:45 - callbacks.temperature_rise - INFO - Callbacks do módulo temperature_rise registrados com sucesso.
+2025-06-03 02:48:45 - utils.standards_db - INFO - Tabelas 'standards_metadata' e 'standards_content_fts' criadas/verificadas.
+2025-06-03 02:48:45 - __main__ - INFO - Callbacks registrados. Total: 35
+2025-06-03 02:48:45 - __main__ - INFO - Iniciando servidor Dash em http://127.0.0.1:8050/ (Debug: True)
+2025-06-03 02:48:45 - dash.dash - INFO - Dash is running on http://127.0.0.1:8050/
+
+2025-06-03 02:48:53 - callbacks.global_updates - INFO - [MCP Diagnostics] Iniciando diagnóstico do MCP...
+2025-06-03 02:48:53 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] MCP inicializado e disponível
+2025-06-03 02:48:53 - utils.mcp_diagnostics - WARNING - [MCP Diagnostics] Dados essenciais ausentes em transformer-inputs-store: ['potencia_mva', 'tensao_at', 'tensao_bt', 'corrente_nominal_at', 'corrente_nominal_bt']
+2025-06-03 02:48:53 - callbacks.navigation_dcc_links - INFO - 
+=== CALLBACK render_content ACIONADO === URL: /
+
+2025-06-03 02:48:53 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store transformer-inputs-store contém 46 chaves
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Iniciando atualização global de painéis. Trigger: Initial Load / No Trigger
+2025-06-03 02:48:53 - callbacks.navigation_dcc_links - INFO - URL é / ou None, mapeado para 'dados'
+2025-06-03 02:48:53 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store losses-store contém 2 chaves
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Obtendo dados diretamente do MCP
+2025-06-03 02:48:53 - callbacks.navigation_dcc_links - INFO - Carregando layout para: dados (1. Dados Básicos)
+2025-06-03 02:48:53 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store impulse-store contém 2 chaves
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - [MCP GET] Forçando recarga dos dados do disco para store 'transformer-inputs-store'
+2025-06-03 02:48:53 - layouts.transformer_inputs - INFO - Criando layout Dados Básicos (v5 - Layout Geral e Pesos em 2 linhas)...
+2025-06-03 02:48:53 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store dieletric-analysis-store contém 2 chaves
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Carregando dados do MCP a partir do disco
+2025-06-03 02:48:53 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store applied-voltage-store contém 2 chaves
+2025-06-03 02:48:53 - layouts.transformer_inputs - INFO - Classes de tensão carregadas para dropdown: 27 opções.
+2025-06-03 02:48:53 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store induced-voltage-store contém 2 chaves
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Diretórios para persistência do MCP criados: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state, c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups
+2025-06-03 02:48:53 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store short-circuit-store contém 2 chaves
+2025-06-03 02:48:53 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store temperature-rise-store contém 2 chaves
+2025-06-03 02:48:53 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store comprehensive-analysis-store contém 2 chaves
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Estado do MCP carregado do disco: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\mcp_state.json
+2025-06-03 02:48:53 - utils.mcp_diagnostics - WARNING - [MCP Diagnostics] Store front-resistor-data está vazio
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Timestamp dos dados: 2025-06-02T23:45:53.241482
+2025-06-03 02:48:53 - utils.mcp_diagnostics - WARNING - [MCP Diagnostics] Store tail-resistor-data está vazio
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Stores carregados: ['transformer-inputs-store', 'losses-store', 'impulse-store', 'dieletric-analysis-store', 'applied-voltage-store', 'induced-voltage-store', 'short-circuit-store', 'temperature-rise-store', 'comprehensive-analysis-store', 'front-resistor-data', 'tail-resistor-data', 'calculated-inductance', 'simulation-status']
+2025-06-03 02:48:53 - utils.mcp_diagnostics - WARNING - [MCP Diagnostics] Store calculated-inductance está vazio
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: transformer-inputs-store
+2025-06-03 02:48:53 - utils.mcp_diagnostics - WARNING - [MCP Diagnostics] Store simulation-status está vazio
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: losses-store
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [MCP Diagnostics] Resultado do diagnóstico: ok
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: impulse-store
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [MCP Diagnostics] MCP em bom estado. Nenhuma correção necessária.
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: dieletric-analysis-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: applied-voltage-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: induced-voltage-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: short-circuit-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: temperature-rise-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: comprehensive-analysis-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: front-resistor-data
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: tail-resistor-data
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: calculated-inductance
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: simulation-status
+2025-06-03 02:48:53 - callbacks.global_updates - WARNING - [global_updates] Dados essenciais ausentes no MCP. Tentando recarregar do disco...
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - [MCP GET] Forçando recarga dos dados do disco para store 'transformer-inputs-store'
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Carregando dados do MCP a partir do disco
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Diretórios para persistência do MCP criados: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state, c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Estado do MCP carregado do disco: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\mcp_state.json
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Timestamp dos dados: 2025-06-02T23:45:53.241482
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Stores carregados: ['transformer-inputs-store', 'losses-store', 'impulse-store', 'dieletric-analysis-store', 'applied-voltage-store', 'induced-voltage-store', 'short-circuit-store', 'temperature-rise-store', 'comprehensive-analysis-store', 'front-resistor-data', 'tail-resistor-data', 'calculated-inductance', 'simulation-status']
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: transformer-inputs-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: losses-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: impulse-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: dieletric-analysis-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: applied-voltage-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: induced-voltage-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: short-circuit-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: temperature-rise-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: comprehensive-analysis-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: front-resistor-data
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: tail-resistor-data
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: calculated-inductance
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: simulation-status
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Dados do MCP: potencia=None, tensao_at=None, tensao_bt=None
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Dados essenciais ausentes no MCP e no store
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Usando dados do store apenas para exibição, sem atualizar o MCP
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Ignorando atualização do transformer-inputs-store a partir do store para evitar perda de dados
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Chaves disponíveis no MCP: ['tipo_transformador', 'potencia_mva', 'tensao_at', 'tensao_bt', 'tensao_terciario', 'frequencia', 'impedancia', 'conexao_at', 'conexao_bt', 'conexao_terciario', 'liquido_isolante', 'tipo_isolamento', 'corrente_nominal_at', 'corrente_nominal_bt', 'corrente_nominal_terciario', 'corrente_nominal_at_tap_maior', 'corrente_nominal_at_tap_menor', 'impedancia_tap_maior', 'impedancia_tap_menor', 'tensao_at_tap_maior', 'tensao_at_tap_menor', 'nbi_at', 'nbi_bt', 'nbi_terciario', 'nbi_neutro_at', 'nbi_neutro_bt', 'nbi_neutro_terciario', 'sil_at', 'sil_bt', 'sil_terciario', 'sil_neutro_at', 'sil_neutro_bt', 'sil_neutro_terciario', 'teste_tensao_aplicada_at', 'teste_tensao_aplicada_bt', 'teste_tensao_aplicada_terciario', 'teste_tensao_induzida', 'grupo_ligacao', 'classe_tensao_at', 'classe_tensao_bt', 'classe_tensao_terciario', 'elevacao_oleo_topo', 'elevacao_enrol', 'elevacao_enrol_at', 'elevacao_enrol_bt', 'elevacao_enrol_terciario']
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Potência: None
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Tensão AT: None
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Tensão BT: None
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Corrente AT: None
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Corrente BT: None
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Nenhum dado principal disponível no MCP.
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - [MCP GET] Forçando recarga dos dados do disco para store 'transformer-inputs-store'
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Carregando dados do MCP a partir do disco
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Diretórios para persistência do MCP criados: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state, c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Estado do MCP carregado do disco: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\mcp_state.json
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Timestamp dos dados: 2025-06-02T23:45:53.241482
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Stores carregados: ['transformer-inputs-store', 'losses-store', 'impulse-store', 'dieletric-analysis-store', 'applied-voltage-store', 'induced-voltage-store', 'short-circuit-store', 'temperature-rise-store', 'comprehensive-analysis-store', 'front-resistor-data', 'tail-resistor-data', 'calculated-inductance', 'simulation-status']
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: transformer-inputs-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: losses-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: impulse-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: dieletric-analysis-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: applied-voltage-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: induced-voltage-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: short-circuit-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: temperature-rise-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: comprehensive-analysis-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: front-resistor-data
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: tail-resistor-data
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: calculated-inductance
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: simulation-status
+2025-06-03 02:48:53 - callbacks.global_updates - WARNING - [global_updates] Dados essenciais ausentes nos dados frescos. Tentando recarregar do disco...
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - [MCP GET] Forçando recarga dos dados do disco para store 'transformer-inputs-store'
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Carregando dados do MCP a partir do disco
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Diretórios para persistência do MCP criados: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state, c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Estado do MCP carregado do disco: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\mcp_state.json
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Timestamp dos dados: 2025-06-02T23:45:53.241482
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Stores carregados: ['transformer-inputs-store', 'losses-store', 'impulse-store', 'dieletric-analysis-store', 'applied-voltage-store', 'induced-voltage-store', 'short-circuit-store', 'temperature-rise-store', 'comprehensive-analysis-store', 'front-resistor-data', 'tail-resistor-data', 'calculated-inductance', 'simulation-status']
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: transformer-inputs-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: losses-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: impulse-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: dieletric-analysis-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: applied-voltage-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: induced-voltage-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: short-circuit-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: temperature-rise-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: comprehensive-analysis-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: front-resistor-data
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: tail-resistor-data
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: calculated-inductance
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: simulation-status
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Dados frescos obtidos para o painel
+2025-06-03 02:48:53 - callbacks.global_updates - WARNING - [global_updates] Dados essenciais ainda ausentes após recarga.
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Usando dados do MCP mesmo que estejam vazios
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Painel de informações global criado em 25.01ms
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Iniciando atualização global de painéis. Trigger: Initial Load / No Trigger
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Obtendo dados diretamente do MCP
+2025-06-03 02:48:53 - callbacks.transformer_inputs - DEBUG - [LOAD TransformerInputs] Acionado por: None
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - [MCP GET] Forçando recarga dos dados do disco para store 'transformer-inputs-store'
+2025-06-03 02:48:53 - callbacks.transformer_inputs - DEBUG - [LOAD TransformerInputs] Usando dados diretamente do dicionário principal
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Carregando dados do MCP a partir do disco
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Diretórios para persistência do MCP criados: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state, c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Estado do MCP carregado do disco: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\mcp_state.json
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Timestamp dos dados: 2025-06-02T23:45:53.241482
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Stores carregados: ['transformer-inputs-store', 'losses-store', 'impulse-store', 'dieletric-analysis-store', 'applied-voltage-store', 'induced-voltage-store', 'short-circuit-store', 'temperature-rise-store', 'comprehensive-analysis-store', 'front-resistor-data', 'tail-resistor-data', 'calculated-inductance', 'simulation-status']
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: transformer-inputs-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: losses-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: impulse-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: dieletric-analysis-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: applied-voltage-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: induced-voltage-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: short-circuit-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: temperature-rise-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: comprehensive-analysis-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: front-resistor-data
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: tail-resistor-data
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: calculated-inductance
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: simulation-status
+2025-06-03 02:48:53 - callbacks.global_updates - WARNING - [global_updates] Dados essenciais ausentes no MCP. Tentando recarregar do disco...
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - [MCP GET] Forçando recarga dos dados do disco para store 'transformer-inputs-store'
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Carregando dados do MCP a partir do disco
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Diretórios para persistência do MCP criados: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state, c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Estado do MCP carregado do disco: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\mcp_state.json
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Timestamp dos dados: 2025-06-02T23:45:53.241482
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Stores carregados: ['transformer-inputs-store', 'losses-store', 'impulse-store', 'dieletric-analysis-store', 'applied-voltage-store', 'induced-voltage-store', 'short-circuit-store', 'temperature-rise-store', 'comprehensive-analysis-store', 'front-resistor-data', 'tail-resistor-data', 'calculated-inductance', 'simulation-status']
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: transformer-inputs-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: losses-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: impulse-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: dieletric-analysis-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: applied-voltage-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: induced-voltage-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: short-circuit-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: temperature-rise-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: comprehensive-analysis-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: front-resistor-data
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: tail-resistor-data
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: calculated-inductance
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: simulation-status
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Dados do MCP: potencia=None, tensao_at=None, tensao_bt=None
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Dados essenciais ausentes no MCP e no store
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Usando dados do store apenas para exibição, sem atualizar o MCP
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Ignorando atualização do transformer-inputs-store a partir do store para evitar perda de dados
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Chaves disponíveis no MCP: ['tipo_transformador', 'potencia_mva', 'tensao_at', 'tensao_bt', 'tensao_terciario', 'frequencia', 'impedancia', 'conexao_at', 'conexao_bt', 'conexao_terciario', 'liquido_isolante', 'tipo_isolamento', 'corrente_nominal_at', 'corrente_nominal_bt', 'corrente_nominal_terciario', 'corrente_nominal_at_tap_maior', 'corrente_nominal_at_tap_menor', 'impedancia_tap_maior', 'impedancia_tap_menor', 'tensao_at_tap_maior', 'tensao_at_tap_menor', 'nbi_at', 'nbi_bt', 'nbi_terciario', 'nbi_neutro_at', 'nbi_neutro_bt', 'nbi_neutro_terciario', 'sil_at', 'sil_bt', 'sil_terciario', 'sil_neutro_at', 'sil_neutro_bt', 'sil_neutro_terciario', 'teste_tensao_aplicada_at', 'teste_tensao_aplicada_bt', 'teste_tensao_aplicada_terciario', 'teste_tensao_induzida', 'grupo_ligacao', 'classe_tensao_at', 'classe_tensao_bt', 'classe_tensao_terciario', 'elevacao_oleo_topo', 'elevacao_enrol', 'elevacao_enrol_at', 'elevacao_enrol_bt', 'elevacao_enrol_terciario']
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Potência: None
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Tensão AT: None
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Tensão BT: None
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Corrente AT: None
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Corrente BT: None
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Nenhum dado principal disponível no MCP.
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - [MCP GET] Forçando recarga dos dados do disco para store 'transformer-inputs-store'
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Carregando dados do MCP a partir do disco
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Diretórios para persistência do MCP criados: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state, c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Estado do MCP carregado do disco: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\mcp_state.json
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Timestamp dos dados: 2025-06-02T23:45:53.241482
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Stores carregados: ['transformer-inputs-store', 'losses-store', 'impulse-store', 'dieletric-analysis-store', 'applied-voltage-store', 'induced-voltage-store', 'short-circuit-store', 'temperature-rise-store', 'comprehensive-analysis-store', 'front-resistor-data', 'tail-resistor-data', 'calculated-inductance', 'simulation-status']
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: transformer-inputs-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: losses-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: impulse-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: dieletric-analysis-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: applied-voltage-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: induced-voltage-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: short-circuit-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: temperature-rise-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: comprehensive-analysis-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: front-resistor-data
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: tail-resistor-data
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: calculated-inductance
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: simulation-status
+2025-06-03 02:48:53 - callbacks.global_updates - WARNING - [global_updates] Dados essenciais ausentes nos dados frescos. Tentando recarregar do disco...
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - [MCP GET] Forçando recarga dos dados do disco para store 'transformer-inputs-store'
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Carregando dados do MCP a partir do disco
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Diretórios para persistência do MCP criados: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state, c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Estado do MCP carregado do disco: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\mcp_state.json
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Timestamp dos dados: 2025-06-02T23:45:53.241482
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Stores carregados: ['transformer-inputs-store', 'losses-store', 'impulse-store', 'dieletric-analysis-store', 'applied-voltage-store', 'induced-voltage-store', 'short-circuit-store', 'temperature-rise-store', 'comprehensive-analysis-store', 'front-resistor-data', 'tail-resistor-data', 'calculated-inductance', 'simulation-status']
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: transformer-inputs-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: losses-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: impulse-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: dieletric-analysis-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: applied-voltage-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: induced-voltage-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: short-circuit-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: temperature-rise-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: comprehensive-analysis-store
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: front-resistor-data
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: tail-resistor-data
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: calculated-inductance
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: simulation-status
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Dados frescos obtidos para o painel
+2025-06-03 02:48:53 - callbacks.global_updates - WARNING - [global_updates] Dados essenciais ainda ausentes após recarga.
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Usando dados do MCP mesmo que estejam vazios
+2025-06-03 02:48:53 - callbacks.global_updates - DEBUG - [global_updates] Painel de informações global criado em 14.09ms
+2025-06-03 02:48:53 - callbacks.transformer_inputs - DEBUG - [UpdateTransformerCalc] Acionado por: nbi_at
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - AT] Acionado por: norma_iso. Norma: None, Um_kv: None, Tensão: None, Path: /
+2025-06-03 02:48:53 - utils.elec - INFO - [elec] Valores para cálculo: tipo=Trifásico, potencia=None, tensao_at=None, tensao_at_maior=None, tensao_at_menor=None, tensao_bt=None, tensao_terciario=None
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - AT] Valores do MCP: NBI=200, SIL=None, TA=70, TI=None
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - AT-NEUTRO] Acionado por: norma_iso. Norma: None, Um_Neutro: None, Conexão: estrela, Tensão: None
+2025-06-03 02:48:53 - utils.elec - WARNING - [elec] Potência ausente.
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - BT] Acionado por: norma_iso. Norma: None, Um_kv: None, Tensão: None, Path: /
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - AT] Valores salvos: NBI=200, SIL=None, TA=70, TI=None
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - AT-NEUTRO] Valores do MCP: NBI=None, SIL=None
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - [MCP SAVE_TO_DISK] Salvando estado do MCP em disco...
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - BT-NEUTRO] Acionado por: norma_iso. Norma: None, Um_Neutro: None, Conexão: triangulo, Tensão: None
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - BT] Valores do MCP: NBI=None, SIL=None, TA=None, TI=None
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - AT] Um NÃO definido. Populando com opções GERAIS para Norma=IEC.
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - TERCIARIO] Acionado por: norma_iso. Norma: None, Um_kv: None, Tensão: None, Path: /
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - AT-NEUTRO] Valores salvos: NBI=None, SIL=None
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - BT-NEUTRO] Valores do MCP: NBI=None, SIL=None
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - BT] Valores salvos: NBI=None, SIL=None, TA=None, TI=/
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Diretórios para persistência do MCP criados: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state, c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - TERCIARIO] Valores do MCP: NBI=None, SIL=None, TA=None, TI=None
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - AT-NEUTRO] Um_Neutro NÃO definido. Populando com opções GERAIS para Norma=IEC.
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - BT-NEUTRO] Valores salvos: NBI=None, SIL=None
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - BT] Um NÃO definido. Populando com opções GERAIS para Norma=IEC.
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - TERCIARIO] Valores salvos: NBI=None, SIL=None, TA=None, TI=/
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - BT-NEUTRO] Conexão 'triangulo' não tem neutro acessível. Opções N/A.
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - TERCIARIO] Um NÃO definido. Populando com opções GERAIS para Norma=IEC.
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Backup do estado do MCP criado: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups\mcp_state_20250603_024853.json
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - AT-NEUTRO] NBI Neutro opts: 27, SIL Neutro opts: 9
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - AT] Verificando se valor salvo de NBI (200) já está nas opções: False
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - AT] Opções disponíveis para NBI: ['20.0', '40.0', '60.0', '75.0', '95.0', '110.0', '125.0', '145.0', '170.0', '200.0', '250.0', '325.0', '350.0', '450.0', '550.0', '650.0', '750.0', '850.0', '950.0', '1050.0', '1175.0', '1300.0', '1425.0', '1550.0', '1800.0', '1950.0', '2100.0']
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - BT] NBI opts: 27, SIL opts: 9, TA opts: 22
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - TERCIARIO-NEUTRO] Acionado por: norma_iso. Norma: None, Um_Neutro: None, Conexão: estrela, Tensão: None
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Backup antigo removido: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups\mcp_state_20250602_234336.json
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - AT] Adicionando valor salvo de NBI às opções: 200
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - TERCIARIO-NEUTRO] Valores do MCP: NBI=None, SIL=None
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - TERCIARIO] NBI opts: 27, SIL opts: 9, TA opts: 22
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - AT] Adicionando valor salvo de TA às opções: 70
+2025-06-03 02:48:53 - utils.mcp_disk_persistence - INFO - Estado do MCP salvo em disco: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\mcp_state.json
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - TERCIARIO-NEUTRO] Valores salvos: NBI=None, SIL=None
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - AT] NBI opts: 28, SIL opts: 9, TA opts: 23
+2025-06-03 02:48:53 - app_core.transformer_mcp_enhanced - INFO - [MCP SAVE_TO_DISK] Estado do MCP salvo em disco com sucesso.
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - TERCIARIO-NEUTRO] Um_Neutro NÃO definido. Populando com opções GERAIS para Norma=IEC.
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - AT] TI opts: 26
+2025-06-03 02:48:53 - callbacks.transformer_inputs - DEBUG - [UpdateTransformerCalc] MCP atualizado e salvo no disco.
+2025-06-03 02:48:53 - callbacks.transformer_inputs - WARNING - [UpdateTransformerCalc] Dados insuficientes para propagação. Abortando.
+2025-06-03 02:48:53 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - TERCIARIO-NEUTRO] NBI Neutro opts: 27, SIL Neutro opts: 9
+2025-06-03 02:48:57 - callbacks.transformer_inputs - DEBUG - [UpdateTransformerCalc] Acionado por: potencia_mva
+2025-06-03 02:48:57 - utils.elec - INFO - [elec] Valores para cálculo: tipo=Trifásico, potencia=2.0, tensao_at=None, tensao_at_maior=None, tensao_at_menor=None, tensao_bt=None, tensao_terciario=None
+2025-06-03 02:48:57 - utils.elec - WARNING - [elec] Tensão AT ausente.
+2025-06-03 02:48:57 - app_core.transformer_mcp_enhanced - INFO - [MCP SAVE_TO_DISK] Salvando estado do MCP em disco...
+2025-06-03 02:48:57 - utils.mcp_disk_persistence - INFO - Diretórios para persistência do MCP criados: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state, c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups
+2025-06-03 02:48:57 - utils.mcp_disk_persistence - INFO - Backup do estado do MCP criado: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups\mcp_state_20250603_024857.json
+2025-06-03 02:48:57 - utils.mcp_disk_persistence - INFO - Backup antigo removido: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups\mcp_state_20250602_234537.json
+2025-06-03 02:48:57 - utils.mcp_disk_persistence - INFO - Estado do MCP salvo em disco: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\mcp_state.json
+2025-06-03 02:48:57 - app_core.transformer_mcp_enhanced - INFO - [MCP SAVE_TO_DISK] Estado do MCP salvo em disco com sucesso.
+2025-06-03 02:48:57 - callbacks.transformer_inputs - DEBUG - [UpdateTransformerCalc] MCP atualizado e salvo no disco.
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para losses-store
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para impulse-store
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para dieletric-analysis-store
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para applied-voltage-store
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para induced-voltage-store
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para short-circuit-store
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para temperature-rise-store
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para comprehensive-analysis-store
+2025-06-03 02:48:57 - callbacks.transformer_inputs - DEBUG - [UpdateTransformerCalc] Dados propagados para todos os stores alvo.
+2025-06-03 02:48:57 - callbacks.transformer_inputs - DEBUG - [UpdateTransformerCalc] Acionado por: potencia_mva
+2025-06-03 02:48:57 - utils.elec - INFO - [elec] Valores para cálculo: tipo=Trifásico, potencia=20.0, tensao_at=None, tensao_at_maior=None, tensao_at_menor=None, tensao_bt=None, tensao_terciario=None
+2025-06-03 02:48:57 - utils.elec - WARNING - [elec] Tensão AT ausente.
+2025-06-03 02:48:57 - app_core.transformer_mcp_enhanced - INFO - [MCP SAVE_TO_DISK] Salvando estado do MCP em disco...
+2025-06-03 02:48:57 - utils.mcp_disk_persistence - INFO - Diretórios para persistência do MCP criados: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state, c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups
+2025-06-03 02:48:57 - utils.mcp_disk_persistence - INFO - Backup do estado do MCP criado: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups\mcp_state_20250603_024857.json
+2025-06-03 02:48:57 - utils.mcp_disk_persistence - INFO - Estado do MCP salvo em disco: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\mcp_state.json
+2025-06-03 02:48:57 - app_core.transformer_mcp_enhanced - INFO - [MCP SAVE_TO_DISK] Estado do MCP salvo em disco com sucesso.
+2025-06-03 02:48:57 - callbacks.transformer_inputs - DEBUG - [UpdateTransformerCalc] MCP atualizado e salvo no disco.
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para losses-store
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para impulse-store
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para dieletric-analysis-store
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para applied-voltage-store
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para induced-voltage-store
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para short-circuit-store
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para temperature-rise-store
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:57 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para comprehensive-analysis-store
+2025-06-03 02:48:57 - callbacks.transformer_inputs - DEBUG - [UpdateTransformerCalc] Dados propagados para todos os stores alvo.
+2025-06-03 02:48:58 - callbacks.transformer_inputs - DEBUG - [LOAD TransformerInputs] Acionado por: url
+2025-06-03 02:48:58 - callbacks.transformer_inputs - DEBUG - [LOAD TransformerInputs] Não estamos na página de transformer inputs (pathname=/perdas, clean_path=perdas), prevenindo atualização
+2025-06-03 02:48:58 - callbacks.navigation_dcc_links - INFO - 
+=== CALLBACK render_content ACIONADO === URL: /perdas
+
+2025-06-03 02:48:58 - callbacks.navigation_dcc_links - INFO - URL normalizada: perdas
+2025-06-03 02:48:58 - callbacks.global_updates - INFO - [MCP Diagnostics] Iniciando diagnóstico do MCP...
+2025-06-03 02:48:58 - callbacks.navigation_dcc_links - INFO - Carregando layout para: perdas (2. Perdas)
+2025-06-03 02:48:58 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] MCP inicializado e disponível
+2025-06-03 02:48:58 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Store de origem transformer-inputs-store É a fonte-de-verdade para campos básicos
+2025-06-03 02:48:58 - utils.mcp_diagnostics - WARNING - [MCP Diagnostics] Dados essenciais ausentes em transformer-inputs-store: ['potencia_mva', 'tensao_at', 'tensao_bt', 'corrente_nominal_at', 'corrente_nominal_bt']
+2025-06-03 02:48:58 - utils.mcp_persistence - INFO - [ensure_mcp_data_propagation] Dados básicos propagados para losses-store
+2025-06-03 02:48:58 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store transformer-inputs-store contém 58 chaves
+2025-06-03 02:48:58 - callbacks.navigation_dcc_links - INFO - Propagação de dados para losses-store: {'losses-store': True}
+2025-06-03 02:48:58 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store losses-store contém 2 chaves
+2025-06-03 02:48:58 - layouts.losses - INFO - Creating Losses layout...
+2025-06-03 02:48:58 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store impulse-store contém 2 chaves
+2025-06-03 02:48:58 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store dieletric-analysis-store contém 2 chaves
+2025-06-03 02:48:58 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store applied-voltage-store contém 2 chaves
+2025-06-03 02:48:58 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store induced-voltage-store contém 2 chaves
+2025-06-03 02:48:58 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store short-circuit-store contém 2 chaves
+2025-06-03 02:48:58 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store temperature-rise-store contém 2 chaves
+2025-06-03 02:48:58 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store comprehensive-analysis-store contém 2 chaves
+2025-06-03 02:48:58 - utils.mcp_diagnostics - WARNING - [MCP Diagnostics] Store front-resistor-data está vazio
+2025-06-03 02:48:58 - utils.mcp_diagnostics - WARNING - [MCP Diagnostics] Store tail-resistor-data está vazio
+2025-06-03 02:48:58 - utils.mcp_diagnostics - WARNING - [MCP Diagnostics] Store calculated-inductance está vazio
+2025-06-03 02:48:58 - utils.mcp_diagnostics - WARNING - [MCP Diagnostics] Store simulation-status está vazio
+2025-06-03 02:48:58 - callbacks.global_updates - DEBUG - [MCP Diagnostics] Resultado do diagnóstico: ok
+2025-06-03 02:48:58 - callbacks.global_updates - DEBUG - [MCP Diagnostics] MCP em bom estado. Nenhuma correção necessária.
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - AT] Acionado por: url. Norma: None, Um_kv: None, Tensão: None, Path: /perdas
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - AT] Valores do MCP: NBI=200, SIL=None, TA=70, TI=None
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - BT] Acionado por: url. Norma: None, Um_kv: None, Tensão: None, Path: /perdas
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - AT] Valores salvos: NBI=200, SIL=None, TA=70, TI=None
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - TERCIARIO] Acionado por: url. Norma: None, Um_kv: None, Tensão: None, Path: /perdas
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - BT] Valores do MCP: NBI=None, SIL=None, TA=None, TI=None
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - AT] Um NÃO definido. Populando com opções GERAIS para Norma=IEC.
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - AT-NEUTRO] Acionado por: url. Norma: None, Um_Neutro: None, Conexão: estrela, Tensão: None
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - TERCIARIO] Valores do MCP: NBI=None, SIL=None, TA=None, TI=None
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - BT-NEUTRO] Acionado por: url. Norma: None, Um_Neutro: None, Conexão: triangulo, Tensão: None
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - BT] Valores salvos: NBI=None, SIL=None, TA=None, TI=/perdas
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - TERCIARIO-NEUTRO] Acionado por: url. Norma: None, Um_Neutro: None, Conexão: estrela, Tensão: None
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - AT-NEUTRO] Valores do MCP: NBI=None, SIL=None
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - TERCIARIO] Valores salvos: NBI=None, SIL=None, TA=None, TI=/perdas
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - BT-NEUTRO] Valores do MCP: NBI=None, SIL=None
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - BT] Um NÃO definido. Populando com opções GERAIS para Norma=IEC.
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - TERCIARIO-NEUTRO] Valores do MCP: NBI=None, SIL=None
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - AT-NEUTRO] Valores salvos: NBI=None, SIL=None
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - TERCIARIO] Um NÃO definido. Populando com opções GERAIS para Norma=IEC.
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - BT-NEUTRO] Valores salvos: NBI=None, SIL=None
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - TERCIARIO-NEUTRO] Valores salvos: NBI=None, SIL=None
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - AT-NEUTRO] Um_Neutro NÃO definido. Populando com opções GERAIS para Norma=IEC.
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - AT] Verificando se valor salvo de NBI (200) já está nas opções: False
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - BT-NEUTRO] Conexão 'triangulo' não tem neutro acessível. Opções N/A.
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - TERCIARIO-NEUTRO] Um_Neutro NÃO definido. Populando com opções GERAIS para Norma=IEC.
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - AT] Opções disponíveis para NBI: ['20.0', '40.0', '60.0', '75.0', '95.0', '110.0', '125.0', '145.0', '170.0', '200.0', '250.0', '325.0', '350.0', '450.0', '550.0', '650.0', '750.0', '850.0', '950.0', '1050.0', '1175.0', '1300.0', '1425.0', '1550.0', '1800.0', '1950.0', '2100.0']
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - BT] NBI opts: 27, SIL opts: 9, TA opts: 22
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - AT] Adicionando valor salvo de NBI às opções: 200
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - AT-NEUTRO] NBI Neutro opts: 27, SIL Neutro opts: 9
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - TERCIARIO] NBI opts: 27, SIL opts: 9, TA opts: 22
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - AT] Adicionando valor salvo de TA às opções: 70
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - TERCIARIO-NEUTRO] NBI Neutro opts: 27, SIL Neutro opts: 9
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - AT] NBI opts: 28, SIL opts: 9, TA opts: 23
+2025-06-03 02:48:58 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - AT] TI opts: 26
+2025-06-03 02:48:59 - callbacks.losses - CRITICAL - [LOSSES POPULATE CARGA] Acionado. Aba: tab-carga, Trigger: N/A
+2025-06-03 02:48:59 - callbacks.losses - WARNING - [LOSSES POPULATE CARGA] Nenhum dado válido encontrado nas estruturas conhecidas.
+2025-06-03 02:48:59 - callbacks.navigation_dcc_links - INFO - 
+=== CALLBACK render_content ACIONADO === URL: /dados
+
+2025-06-03 02:48:59 - callbacks.global_updates - INFO - [MCP Diagnostics] Iniciando diagnóstico do MCP...
+2025-06-03 02:48:59 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] MCP inicializado e disponível
+2025-06-03 02:48:59 - callbacks.navigation_dcc_links - INFO - URL normalizada: dados
+2025-06-03 02:48:59 - utils.mcp_diagnostics - WARNING - [MCP Diagnostics] Dados essenciais ausentes em transformer-inputs-store: ['potencia_mva', 'tensao_at', 'tensao_bt', 'corrente_nominal_at', 'corrente_nominal_bt']
+2025-06-03 02:48:59 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store transformer-inputs-store contém 58 chaves
+2025-06-03 02:48:59 - callbacks.navigation_dcc_links - INFO - Carregando layout para: dados (1. Dados Básicos)
+2025-06-03 02:48:59 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store losses-store contém 2 chaves
+2025-06-03 02:48:59 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store impulse-store contém 2 chaves
+2025-06-03 02:48:59 - layouts.transformer_inputs - INFO - Criando layout Dados Básicos (v5 - Layout Geral e Pesos em 2 linhas)...
+2025-06-03 02:48:59 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store dieletric-analysis-store contém 2 chaves
+2025-06-03 02:48:59 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store applied-voltage-store contém 2 chaves
+2025-06-03 02:48:59 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store induced-voltage-store contém 2 chaves
+2025-06-03 02:48:59 - layouts.transformer_inputs - INFO - Classes de tensão carregadas para dropdown: 27 opções.
+2025-06-03 02:48:59 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store short-circuit-store contém 2 chaves
+2025-06-03 02:48:59 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store temperature-rise-store contém 2 chaves
+2025-06-03 02:48:59 - utils.mcp_diagnostics - INFO - [MCP Diagnostics] Store comprehensive-analysis-store contém 2 chaves
+2025-06-03 02:48:59 - utils.mcp_diagnostics - WARNING - [MCP Diagnostics] Store front-resistor-data está vazio
+2025-06-03 02:48:59 - utils.mcp_diagnostics - WARNING - [MCP Diagnostics] Store tail-resistor-data está vazio
+2025-06-03 02:48:59 - utils.mcp_diagnostics - WARNING - [MCP Diagnostics] Store calculated-inductance está vazio
+2025-06-03 02:48:59 - utils.mcp_diagnostics - WARNING - [MCP Diagnostics] Store simulation-status está vazio
+2025-06-03 02:48:59 - callbacks.global_updates - DEBUG - [MCP Diagnostics] Resultado do diagnóstico: ok
+2025-06-03 02:48:59 - callbacks.global_updates - DEBUG - [MCP Diagnostics] MCP em bom estado. Nenhuma correção necessária.
+2025-06-03 02:48:59 - callbacks.global_updates - DEBUG - [global_updates] Iniciando atualização global de painéis. Trigger: Initial Load / No Trigger
+2025-06-03 02:48:59 - callbacks.global_updates - DEBUG - [global_updates] Obtendo dados diretamente do MCP
+2025-06-03 02:48:59 - callbacks.transformer_inputs - DEBUG - [LOAD TransformerInputs] Acionado por: None
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - [MCP GET] Forçando recarga dos dados do disco para store 'transformer-inputs-store'
+2025-06-03 02:48:59 - callbacks.transformer_inputs - DEBUG - [LOAD TransformerInputs] Usando dados diretamente do dicionário principal
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Carregando dados do MCP a partir do disco
+2025-06-03 02:48:59 - utils.mcp_disk_persistence - INFO - Diretórios para persistência do MCP criados: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state, c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups
+2025-06-03 02:48:59 - utils.mcp_disk_persistence - INFO - Estado do MCP carregado do disco: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\mcp_state.json
+2025-06-03 02:48:59 - utils.mcp_disk_persistence - INFO - Timestamp dos dados: 2025-06-03T02:48:57.576371
+2025-06-03 02:48:59 - utils.mcp_disk_persistence - INFO - Stores carregados: ['transformer-inputs-store', 'losses-store', 'impulse-store', 'dieletric-analysis-store', 'applied-voltage-store', 'induced-voltage-store', 'short-circuit-store', 'temperature-rise-store', 'comprehensive-analysis-store', 'front-resistor-data', 'tail-resistor-data', 'calculated-inductance', 'simulation-status']
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: transformer-inputs-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: losses-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: impulse-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: dieletric-analysis-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: applied-voltage-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: induced-voltage-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: short-circuit-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: temperature-rise-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: comprehensive-analysis-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: front-resistor-data
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: tail-resistor-data
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: calculated-inductance
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: simulation-status
+2025-06-03 02:48:59 - callbacks.global_updates - WARNING - [global_updates] Dados essenciais ausentes no MCP. Tentando recarregar do disco...
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - [MCP GET] Forçando recarga dos dados do disco para store 'transformer-inputs-store'
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Carregando dados do MCP a partir do disco
+2025-06-03 02:48:59 - utils.mcp_disk_persistence - INFO - Diretórios para persistência do MCP criados: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state, c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups
+2025-06-03 02:48:59 - utils.mcp_disk_persistence - INFO - Estado do MCP carregado do disco: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\mcp_state.json
+2025-06-03 02:48:59 - utils.mcp_disk_persistence - INFO - Timestamp dos dados: 2025-06-03T02:48:57.576371
+2025-06-03 02:48:59 - utils.mcp_disk_persistence - INFO - Stores carregados: ['transformer-inputs-store', 'losses-store', 'impulse-store', 'dieletric-analysis-store', 'applied-voltage-store', 'induced-voltage-store', 'short-circuit-store', 'temperature-rise-store', 'comprehensive-analysis-store', 'front-resistor-data', 'tail-resistor-data', 'calculated-inductance', 'simulation-status']
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: transformer-inputs-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: losses-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: impulse-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: dieletric-analysis-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: applied-voltage-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: induced-voltage-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: short-circuit-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: temperature-rise-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: comprehensive-analysis-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: front-resistor-data
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: tail-resistor-data
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: calculated-inductance
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: simulation-status
+2025-06-03 02:48:59 - callbacks.global_updates - DEBUG - [global_updates] Dados do MCP: potencia=20, tensao_at=None, tensao_bt=None
+2025-06-03 02:48:59 - callbacks.global_updates - DEBUG - [global_updates] Dados essenciais ausentes no MCP e no store
+2025-06-03 02:48:59 - callbacks.global_updates - DEBUG - [global_updates] Usando dados do store apenas para exibição, sem atualizar o MCP
+2025-06-03 02:48:59 - callbacks.global_updates - DEBUG - [global_updates] Ignorando atualização do transformer-inputs-store a partir do store para evitar perda de dados
+2025-06-03 02:48:59 - callbacks.global_updates - DEBUG - [global_updates] Chaves disponíveis no MCP: ['tipo_transformador', 'potencia_mva', 'tensao_at', 'tensao_bt', 'tensao_terciario', 'frequencia', 'impedancia', 'conexao_at', 'conexao_bt', 'conexao_terciario', 'liquido_isolante', 'tipo_isolamento', 'corrente_nominal_at', 'corrente_nominal_bt', 'corrente_nominal_terciario', 'corrente_nominal_at_tap_maior', 'corrente_nominal_at_tap_menor', 'impedancia_tap_maior', 'impedancia_tap_menor', 'tensao_at_tap_maior', 'tensao_at_tap_menor', 'nbi_at', 'nbi_bt', 'nbi_terciario', 'nbi_neutro_at', 'nbi_neutro_bt', 'nbi_neutro_terciario', 'sil_at', 'sil_bt', 'sil_terciario', 'sil_neutro_at', 'sil_neutro_bt', 'sil_neutro_terciario', 'teste_tensao_aplicada_at', 'teste_tensao_aplicada_bt', 'teste_tensao_aplicada_terciario', 'teste_tensao_induzida', 'grupo_ligacao', 'classe_tensao_at', 'classe_tensao_bt', 'classe_tensao_terciario', 'elevacao_oleo_topo', 'elevacao_enrol', 'elevacao_enrol_at', 'elevacao_enrol_bt', 'elevacao_enrol_terciario']
+2025-06-03 02:48:59 - callbacks.global_updates - DEBUG - [global_updates] Potência: None
+2025-06-03 02:48:59 - callbacks.global_updates - DEBUG - [global_updates] Tensão AT: None
+2025-06-03 02:48:59 - callbacks.global_updates - DEBUG - [global_updates] Tensão BT: None
+2025-06-03 02:48:59 - callbacks.global_updates - DEBUG - [global_updates] Corrente AT: None
+2025-06-03 02:48:59 - callbacks.global_updates - DEBUG - [global_updates] Corrente BT: None
+2025-06-03 02:48:59 - callbacks.global_updates - DEBUG - [global_updates] Nenhum dado principal disponível no MCP.
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - [MCP GET] Forçando recarga dos dados do disco para store 'transformer-inputs-store'
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Carregando dados do MCP a partir do disco
+2025-06-03 02:48:59 - utils.mcp_disk_persistence - INFO - Diretórios para persistência do MCP criados: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state, c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups
+2025-06-03 02:48:59 - utils.mcp_disk_persistence - INFO - Estado do MCP carregado do disco: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\mcp_state.json
+2025-06-03 02:48:59 - utils.mcp_disk_persistence - INFO - Timestamp dos dados: 2025-06-03T02:48:57.576371
+2025-06-03 02:48:59 - utils.mcp_disk_persistence - INFO - Stores carregados: ['transformer-inputs-store', 'losses-store', 'impulse-store', 'dieletric-analysis-store', 'applied-voltage-store', 'induced-voltage-store', 'short-circuit-store', 'temperature-rise-store', 'comprehensive-analysis-store', 'front-resistor-data', 'tail-resistor-data', 'calculated-inductance', 'simulation-status']
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: transformer-inputs-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: losses-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: impulse-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: dieletric-analysis-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: applied-voltage-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: induced-voltage-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: short-circuit-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: temperature-rise-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: comprehensive-analysis-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: front-resistor-data
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: tail-resistor-data
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: calculated-inductance
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: simulation-status
+2025-06-03 02:48:59 - callbacks.global_updates - WARNING - [global_updates] Dados essenciais ausentes nos dados frescos. Tentando recarregar do disco...
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - [MCP GET] Forçando recarga dos dados do disco para store 'transformer-inputs-store'
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Carregando dados do MCP a partir do disco
+2025-06-03 02:48:59 - utils.mcp_disk_persistence - INFO - Diretórios para persistência do MCP criados: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state, c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups
+2025-06-03 02:48:59 - utils.mcp_disk_persistence - INFO - Estado do MCP carregado do disco: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\mcp_state.json
+2025-06-03 02:48:59 - utils.mcp_disk_persistence - INFO - Timestamp dos dados: 2025-06-03T02:48:57.576371
+2025-06-03 02:48:59 - utils.mcp_disk_persistence - INFO - Stores carregados: ['transformer-inputs-store', 'losses-store', 'impulse-store', 'dieletric-analysis-store', 'applied-voltage-store', 'induced-voltage-store', 'short-circuit-store', 'temperature-rise-store', 'comprehensive-analysis-store', 'front-resistor-data', 'tail-resistor-data', 'calculated-inductance', 'simulation-status']
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: transformer-inputs-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: losses-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: impulse-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: dieletric-analysis-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: applied-voltage-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: induced-voltage-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: short-circuit-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: temperature-rise-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: comprehensive-analysis-store
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: front-resistor-data
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: tail-resistor-data
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: calculated-inductance
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - Dados carregados do disco para store: simulation-status
+2025-06-03 02:48:59 - callbacks.global_updates - DEBUG - [global_updates] Dados frescos obtidos para o painel
+2025-06-03 02:48:59 - callbacks.global_updates - WARNING - [global_updates] Dados essenciais ainda ausentes após recarga.
+2025-06-03 02:48:59 - callbacks.global_updates - DEBUG - [global_updates] Usando dados do MCP mesmo que estejam vazios
+2025-06-03 02:48:59 - callbacks.global_updates - DEBUG - [global_updates] Painel de informações global criado em 27.0ms
+2025-06-03 02:48:59 - callbacks.transformer_inputs - DEBUG - [UpdateTransformerCalc] Acionado por: nbi_at
+2025-06-03 02:48:59 - utils.elec - INFO - [elec] Valores para cálculo: tipo=Trifásico, potencia=None, tensao_at=None, tensao_at_maior=None, tensao_at_menor=None, tensao_bt=None, tensao_terciario=None
+2025-06-03 02:48:59 - utils.elec - WARNING - [elec] Potência ausente.
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - AT] Acionado por: norma_iso. Norma: None, Um_kv: None, Tensão: None, Path: /dados
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - [MCP SAVE_TO_DISK] Salvando estado do MCP em disco...
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - AT] Valores do MCP: NBI=200, SIL=None, TA=70, TI=None
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - AT-NEUTRO] Acionado por: norma_iso. Norma: None, Um_Neutro: None, Conexão: estrela, Tensão: None
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - AT] Valores salvos: NBI=200, SIL=None, TA=70, TI=None
+2025-06-03 02:48:59 - utils.mcp_disk_persistence - INFO - Diretórios para persistência do MCP criados: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state, c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - AT-NEUTRO] Valores do MCP: NBI=None, SIL=None
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - AT] Um NÃO definido. Populando com opções GERAIS para Norma=IEC.
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - BT] Acionado por: norma_iso. Norma: None, Um_kv: None, Tensão: None, Path: /dados
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - AT-NEUTRO] Valores salvos: NBI=None, SIL=None
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - BT-NEUTRO] Acionado por: norma_iso. Norma: None, Um_Neutro: None, Conexão: triangulo, Tensão: None
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - BT] Valores do MCP: NBI=None, SIL=None, TA=None, TI=None
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - TERCIARIO] Acionado por: norma_iso. Norma: None, Um_kv: None, Tensão: None, Path: /dados
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - AT-NEUTRO] Um_Neutro NÃO definido. Populando com opções GERAIS para Norma=IEC.
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - BT-NEUTRO] Valores do MCP: NBI=None, SIL=None
+2025-06-03 02:48:59 - utils.mcp_disk_persistence - INFO - Backup do estado do MCP criado: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups\mcp_state_20250603_024859.json
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - BT] Valores salvos: NBI=None, SIL=None, TA=None, TI=/dados
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - TERCIARIO] Valores do MCP: NBI=None, SIL=None, TA=None, TI=None
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - BT-NEUTRO] Valores salvos: NBI=None, SIL=None
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - BT] Um NÃO definido. Populando com opções GERAIS para Norma=IEC.
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - TERCIARIO] Valores salvos: NBI=None, SIL=None, TA=None, TI=/dados
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - AT-NEUTRO] NBI Neutro opts: 27, SIL Neutro opts: 9
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - BT-NEUTRO] Conexão 'triangulo' não tem neutro acessível. Opções N/A.
+2025-06-03 02:48:59 - utils.mcp_disk_persistence - INFO - Backup antigo removido: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\backups\mcp_state_20250602_234549.json
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - AT] Verificando se valor salvo de NBI (200) já está nas opções: False
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - TERCIARIO] Um NÃO definido. Populando com opções GERAIS para Norma=IEC.
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - AT] Opções disponíveis para NBI: ['20.0', '40.0', '60.0', '75.0', '95.0', '110.0', '125.0', '145.0', '170.0', '200.0', '250.0', '325.0', '350.0', '450.0', '550.0', '650.0', '750.0', '850.0', '950.0', '1050.0', '1175.0', '1300.0', '1425.0', '1550.0', '1800.0', '1950.0', '2100.0']
+2025-06-03 02:48:59 - utils.mcp_disk_persistence - INFO - Estado do MCP salvo em disco: c:\Users\Alessandro\Downloads\transformer_simulator_V3\data\mcp_state\mcp_state.json
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - TERCIARIO-NEUTRO] Acionado por: norma_iso. Norma: None, Um_Neutro: None, Conexão: estrela, Tensão: None
+2025-06-03 02:48:59 - app_core.transformer_mcp_enhanced - INFO - [MCP SAVE_TO_DISK] Estado do MCP salvo em disco com sucesso.
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - AT] Adicionando valor salvo de NBI às opções: 200
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - BT] NBI opts: 27, SIL opts: 9, TA opts: 22
+2025-06-03 02:48:59 - callbacks.transformer_inputs - DEBUG - [UpdateTransformerCalc] MCP atualizado e salvo no disco.
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - TERCIARIO-NEUTRO] Valores do MCP: NBI=None, SIL=None
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - AT] Adicionando valor salvo de TA às opções: 70
+2025-06-03 02:48:59 - callbacks.transformer_inputs - WARNING - [UpdateTransformerCalc] Dados insuficientes para propagação. Abortando.
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - TERCIARIO] NBI opts: 27, SIL opts: 9, TA opts: 22
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO - [OPTIONS CB - TERCIARIO-NEUTRO] Valores salvos: NBI=None, SIL=None
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - AT] NBI opts: 28, SIL opts: 9, TA opts: 23
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - INFO -   [OPTIONS CB - TERCIARIO-NEUTRO] Um_Neutro NÃO definido. Populando com opções GERAIS para Norma=IEC.
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - AT] TI opts: 26
+2025-06-03 02:48:59 - callbacks.insulation_level_callbacks - DEBUG -   [OPTIONS CB - TERCIARIO-NEUTRO] NBI Neutro opts: 27, SIL Neutro opts: 9

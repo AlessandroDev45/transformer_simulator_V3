@@ -186,18 +186,11 @@ def losses_populate_vazio_inputs(active_tab, losses_data_from_store):
         raise PreventUpdate
 
     # Tentar usar os dados do store primeiro
+    # Tentar usar os dados do store primeiro
     losses_data = losses_data_from_store
 
-    # Se o store estiver vazio, tentar carregar do MCP diretamente
-    if not losses_data or not isinstance(losses_data, dict) or "resultados_perdas_vazio" not in losses_data:
-        log.warning("[LOSSES POPULATE VAZIO] Store vazio ou sem dados de vazio. Tentando carregar do MCP...")
-        if hasattr(app, "mcp") and app.mcp is not None:
-            mcp_data = app.mcp.get_data("losses-store")
-            if mcp_data and isinstance(mcp_data, dict) and "resultados_perdas_vazio" in mcp_data:
-                log.info("[LOSSES POPULATE VAZIO] Dados encontrados no MCP. Usando-os para popular os inputs.")
-                losses_data = mcp_data
-            else:
-                log.warning("[LOSSES POPULATE VAZIO] Nenhum dado encontrado no MCP.")
+    # Se o store estiver vazio, os inputs serão None, o que é o comportamento desejado para "limpar"
+    pass
 
     # Lista de chaves a serem carregadas
     keys_to_load = [
@@ -208,7 +201,6 @@ def losses_populate_vazio_inputs(active_tab, losses_data_from_store):
         "corrente_exc_1_1",
         "corrente_exc_1_2",
     ]
-
     # Sempre retorna valores (None se não encontrado), não no_update.
     outputs = [None] * len(keys_to_load)
 
@@ -261,18 +253,11 @@ def losses_populate_carga_inputs(active_tab, losses_data_from_store):
         raise PreventUpdate
 
     # Tentar usar os dados do store primeiro
+    # Tentar usar os dados do store primeiro
     losses_data = losses_data_from_store
 
-    # Se o store estiver vazio, tentar carregar do MCP diretamente
-    if not losses_data or not isinstance(losses_data, dict) or "resultados_perdas_carga" not in losses_data:
-        log.warning("[LOSSES POPULATE CARGA] Store vazio ou sem dados de carga. Tentando carregar do MCP...")
-        if hasattr(app, "mcp") and app.mcp is not None:
-            mcp_data = app.mcp.get_data("losses-store")
-            if mcp_data and isinstance(mcp_data, dict) and "resultados_perdas_carga" in mcp_data:
-                log.info("[LOSSES POPULATE CARGA] Dados encontrados no MCP. Usando-os para popular os inputs.")
-                losses_data = mcp_data
-            else:
-                log.warning("[LOSSES POPULATE CARGA] Nenhum dado encontrado no MCP.")
+    # Se o store estiver vazio, os inputs serão None, o que é o comportamento desejado para "limpar"
+    pass
 
     # Lista de chaves a serem carregadas
     keys_to_load = [
@@ -281,7 +266,6 @@ def losses_populate_carga_inputs(active_tab, losses_data_from_store):
         "perdas_carga_max",
         "temperatura_referencia",
     ]
-
     # Sempre retorna valores (None se não encontrado), não no_update.
     outputs = [None] * len(keys_to_load)
 
@@ -315,20 +299,6 @@ def losses_populate_carga_inputs(active_tab, losses_data_from_store):
 
 
 # --- Callback para atualizar o painel de informações do transformador na página de perdas ---
-@dash.callback(
-    Output("transformer-info-losses-page", "children"),
-    Input("transformer-info-losses", "children"),
-    prevent_initial_call=False,
-)
-def update_losses_page_info_panel(global_panel_content):
-    """
-    Copia o conteúdo do painel de informações global para o painel local da página de perdas.
-    Este callback é acionado quando o painel global é atualizado pelo callback global_updates_all_transformer_info_panels.
-    """
-    log.debug("Atualizando painel de informações do transformador na página de perdas")
-    return global_panel_content
-
-
 # --- Callback Perdas em Vazio (Unchanged from previous version) ---
 @dash.callback(
     [
@@ -526,9 +496,9 @@ def losses_handle_perdas_vazio(
 
         if (
             fator_perdas is None
-            or fator_perdas <= epsilon
+            or not isinstance(fator_perdas, (int, float)) or fator_perdas <= epsilon
             or fator_potencia_mag is None
-            or fator_potencia_mag <= epsilon
+            or not isinstance(fator_potencia_mag, (int, float)) or fator_potencia_mag <= epsilon
         ):
             error_div = html.Div(
                 f"Fatores de perdas/potência inválidos ({fator_perdas=}, {fator_potencia_mag=}) para Indução {inducao_arredondada}T @ {frequencia_arredondada}Hz.",
@@ -537,10 +507,10 @@ def losses_handle_perdas_vazio(
             return error_div, initial_dut_volt, initial_sut, initial_legend_obs, no_update
 
         # --- Core & Excitation Calculations ---
-        peso_nucleo_calc = perdas_vazio / fator_perdas if fator_perdas > epsilon else 0
-        potencia_mag = fator_potencia_mag * peso_nucleo_calc  # kVAR
+        peso_nucleo_calc = perdas_vazio / fator_perdas if isinstance(fator_perdas, (int, float)) and fator_perdas > epsilon else 0
+        potencia_mag = fator_potencia_mag * peso_nucleo_calc if isinstance(fator_potencia_mag, (int, float)) else 0  # kVAR
         corrente_excitacao_calc = (
-            potencia_mag / (tensao_bt_kv * sqrt_3) if (tensao_bt_kv * sqrt_3) > epsilon else 0
+            potencia_mag / (tensao_bt_kv * sqrt_3) if isinstance(tensao_bt_kv, (int, float)) and isinstance(sqrt_3, (int, float)) and (tensao_bt_kv * sqrt_3) > epsilon else 0
         )  # A
         corrente_excitacao_percentual_calc = (
             (corrente_excitacao_calc / corrente_nominal_bt) * 100

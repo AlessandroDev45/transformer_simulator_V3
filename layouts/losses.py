@@ -52,24 +52,7 @@ PLACEHOLDER_STYLE = {
 
 
 # Helper function
-def create_input_row(label, id, placeholder, input_type="number"):
-    return dbc.Row(
-        [
-            dbc.Col(dbc.Label(label, style=LABEL_STYLE), width=9, className="text-end pe-1"),
-            dbc.Col(
-                dbc.Input(
-                    type=input_type,
-                    id=id,
-                    placeholder=placeholder,
-                    persistence=True,
-                    persistence_type="local",
-                    style={**INPUT_STYLE, "width": "75%"},  # Kept width style from original
-                ),
-                width=3,
-            ),
-        ],
-        className="g-1 mb-1",
-    )
+from utils.components import create_input_row
 
 
 # --- Render Functions ---
@@ -159,26 +142,31 @@ def render_perdas_vazio():
                                                         "Peso do Núcleo (Ton):",
                                                         "peso-projeto-Ton",
                                                         "Peso núcleo",
+                                                        "number"
                                                     ),
                                                     create_input_row(
                                                         "Corrente de Excitação (%):",
                                                         "corrente-excitacao",
                                                         "Corrente excitação",
+                                                        "number"
                                                     ),
                                                     create_input_row(
                                                         "Indução do Núcleo (T):",
                                                         "inducao-nucleo",
                                                         "Ex.: 1.7",
+                                                        "number"
                                                     ),
                                                     create_input_row(
                                                         "Corrente de Excitação 1.1pu (%):",
                                                         "corrente-excitacao-1-1",
                                                         "Corrente 1.1pu",
+                                                        "number"
                                                     ),
                                                     create_input_row(
                                                         "Corrente de Excitação 1.2pu (%):",
                                                         "corrente-excitacao-1-2",
                                                         "Corrente 1.2pu",
+                                                        "number"
                                                     ),
                                                 ],
                                                 style={"flexGrow": 1},
@@ -493,39 +481,8 @@ def create_losses_layout():
     log.info("Creating Losses layout...")
 
     # Import app here to avoid circular imports
-    try:
-        from app import app
-
-        # Obter dados diretamente do MCP em vez de usar o cache
-        if hasattr(app, "mcp") and app.mcp is not None:
-            # Primeiro, tentar obter dados do losses-store
-            losses_data = app.mcp.get_data("losses-store")
-            if losses_data and "transformer_data" in losses_data:
-                transformer_data = losses_data["transformer_data"]
-                log.info("[Losses Layout] Dados do transformador obtidos do losses-store.")
-            else:
-                # Se não houver dados no losses-store, obter do transformer-inputs-store
-                transformer_data = app.mcp.get_data("transformer-inputs-store")
-                log.info(
-                    "[Losses Layout] Dados do transformador obtidos do transformer-inputs-store."
-                )
-        else:
-            transformer_data = (
-                app.transformer_data_cache
-                if hasattr(app, "transformer_data_cache") and app.transformer_data_cache
-                else {}
-            )
-            log.info("[Losses Layout] Dados do transformador obtidos do cache.")
-    except (ImportError, AttributeError) as e:
-        log.warning(f"[Losses Layout] Erro ao acessar MCP ou cache: {e}")
-        transformer_data = {}
-
-    if not transformer_data:
-        log.warning("[Losses Layout] Dados do transformador não encontrados.")
-
     layout = dbc.Container(
         [
-            # Stores are now defined in components/global_stores.py and included in main_layout.py
             # Transformer Info Panel
             dbc.Row(
                 [
@@ -534,47 +491,7 @@ def create_losses_layout():
                             [
                                 html.Div(
                                     id="transformer-info-losses-page", className="mb-1"
-                                ),  # Painel visível que será atualizado pelo callback local
-                                html.Div(
-                                    html.Div(),
-                                    id="transformer-info-losses",
-                                    style={"display": "none"},
-                                ),  # Painel oculto atualizado pelo callback global
-                                html.Div(
-                                    html.Div(),
-                                    id="transformer-info-dieletric",
-                                    style={"display": "none"},
-                                ),  # Compatibility
-                                html.Div(
-                                    html.Div(),
-                                    id="transformer-info-impulse",
-                                    style={"display": "none"},
-                                ),  # Compatibility
-                                html.Div(
-                                    html.Div(),
-                                    id="transformer-info-applied",
-                                    style={"display": "none"},
-                                ),  # Compatibility
-                                html.Div(
-                                    html.Div(),
-                                    id="transformer-info-induced",
-                                    style={"display": "none"},
-                                ),  # Compatibility
-                                html.Div(
-                                    html.Div(),
-                                    id="transformer-info-short-circuit",
-                                    style={"display": "none"},
-                                ),  # Compatibility
-                                html.Div(
-                                    html.Div(),
-                                    id="transformer-info-temperature-rise",
-                                    style={"display": "none"},
-                                ),  # Compatibility
-                                html.Div(
-                                    html.Div(),
-                                    id="transformer-info-comprehensive",
-                                    style={"display": "none"},
-                                ),  # Compatibility
+                                ),  # Painel visível que será atualizado pelo callback global
                             ],
                             className="mb-1",
                         ),

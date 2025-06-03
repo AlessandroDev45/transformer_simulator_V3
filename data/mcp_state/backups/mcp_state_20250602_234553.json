@@ -1,10 +1,10 @@
 {
-  "timestamp": "2025-06-03T02:48:59.508227",
+  "timestamp": "2025-06-02T23:45:51.214413",
   "version": "1.0",
   "stores": {
     "transformer-inputs-store": {
       "tipo_transformador": "Trifásico",
-      "potencia_mva": null,
+      "potencia_mva": 20,
       "tensao_at": null,
       "tensao_bt": null,
       "tensao_terciario": null,
@@ -70,7 +70,7 @@
         "conexao_at": "estrela",
         "conexao_bt": "triangulo",
         "conexao_terciario": "estrela",
-        "potencia_mva": 20,
+        "potencia_mva": 2,
         "tensao_at": 69,
         "tensao_bt": 69,
         "tensao_terciario": 69,
@@ -87,9 +87,7 @@
         "grupo_ligacao": "sd",
         "classe_tensao_at": 25.8,
         "classe_tensao_bt": 7.2,
-        "classe_tensao_terciario": 24,
-        "liquido_isolante": "Mineral",
-        "tipo_isolamento": "Uniforme"
+        "classe_tensao_terciario": 24
       }
     },
     "impulse-store": {
@@ -100,7 +98,7 @@
         "conexao_at": "estrela",
         "conexao_bt": "triangulo",
         "conexao_terciario": "estrela",
-        "potencia_mva": 20,
+        "potencia_mva": 2,
         "tensao_at": 69,
         "tensao_bt": 69,
         "tensao_terciario": 69,
@@ -117,9 +115,7 @@
         "grupo_ligacao": "sd",
         "classe_tensao_at": 25.8,
         "classe_tensao_bt": 7.2,
-        "classe_tensao_terciario": 24,
-        "liquido_isolante": "Mineral",
-        "tipo_isolamento": "Uniforme"
+        "classe_tensao_terciario": 24
       }
     },
     "dieletric-analysis-store": {
@@ -130,7 +126,7 @@
         "conexao_at": "estrela",
         "conexao_bt": "triangulo",
         "conexao_terciario": "estrela",
-        "potencia_mva": 20,
+        "potencia_mva": 2,
         "tensao_at": 69,
         "tensao_bt": 69,
         "tensao_terciario": 69,
@@ -147,9 +143,7 @@
         "grupo_ligacao": "sd",
         "classe_tensao_at": 25.8,
         "classe_tensao_bt": 7.2,
-        "classe_tensao_terciario": 24,
-        "liquido_isolante": "Mineral",
-        "tipo_isolamento": "Uniforme"
+        "classe_tensao_terciario": 24
       }
     },
     "applied-voltage-store": {
@@ -160,7 +154,7 @@
         "conexao_at": "estrela",
         "conexao_bt": "triangulo",
         "conexao_terciario": "estrela",
-        "potencia_mva": 20,
+        "potencia_mva": 2,
         "tensao_at": 69,
         "tensao_bt": 69,
         "tensao_terciario": 69,
@@ -177,9 +171,7 @@
         "grupo_ligacao": "sd",
         "classe_tensao_at": 25.8,
         "classe_tensao_bt": 7.2,
-        "classe_tensao_terciario": 24,
-        "liquido_isolante": "Mineral",
-        "tipo_isolamento": "Uniforme"
+        "classe_tensao_terciario": 24
       }
     },
     "induced-voltage-store": {
@@ -190,7 +182,7 @@
         "conexao_at": "estrela",
         "conexao_bt": "triangulo",
         "conexao_terciario": "estrela",
-        "potencia_mva": 20,
+        "potencia_mva": 2,
         "tensao_at": 69,
         "tensao_bt": 69,
         "tensao_terciario": 69,
@@ -207,9 +199,7 @@
         "grupo_ligacao": "sd",
         "classe_tensao_at": 25.8,
         "classe_tensao_bt": 7.2,
-        "classe_tensao_terciario": 24,
-        "liquido_isolante": "Mineral",
-        "tipo_isolamento": "Uniforme"
+        "classe_tensao_terciario": 24
       }
     },
     "short-circuit-store": {
@@ -220,7 +210,7 @@
         "conexao_at": "estrela",
         "conexao_bt": "triangulo",
         "conexao_terciario": "estrela",
-        "potencia_mva": 20,
+        "potencia_mva": 2,
         "tensao_at": 69,
         "tensao_bt": 69,
         "tensao_terciario": 69,
@@ -237,9 +227,7 @@
         "grupo_ligacao": "sd",
         "classe_tensao_at": 25.8,
         "classe_tensao_bt": 7.2,
-        "classe_tensao_terciario": 24,
-        "liquido_isolante": "Mineral",
-        "tipo_isolamento": "Uniforme"
+        "classe_tensao_terciario": 24
       }
     },
     "temperature-rise-store": {
@@ -250,7 +238,7 @@
         "conexao_at": "estrela",
         "conexao_bt": "triangulo",
         "conexao_terciario": "estrela",
-        "potencia_mva": 20,
+        "potencia_mva": 2,
         "tensao_at": 69,
         "tensao_bt": 69,
         "tensao_terciario": 69,
@@ -267,9 +255,7 @@
         "grupo_ligacao": "sd",
         "classe_tensao_at": 25.8,
         "classe_tensao_bt": 7.2,
-        "classe_tensao_terciario": 24,
-        "liquido_isolante": "Mineral",
-        "tipo_isolamento": "Uniforme"
+        "classe_tensao_terciario": 24
       }
     },
     "comprehensive-analysis-store": {
@@ -280,7 +266,7 @@
         "conexao_at": "estrela",
         "conexao_bt": "triangulo",
         "conexao_terciario": "estrela",
-        "potencia_mva": 20,
+        "potencia_mva": 2,
         "tensao_at": 69,
         "tensao_bt": 69,
         "tensao_terciario": 69,
@@ -297,9 +283,7 @@
         "grupo_ligacao": "sd",
         "classe_tensao_at": 25.8,
         "classe_tensao_bt": 7.2,
-        "classe_tensao_terciario": 24,
-        "liquido_isolante": "Mineral",
-        "tipo_isolamento": "Uniforme"
+        "classe_tensao_terciario": 24
       }
     },
     "front-resistor-data": {},
